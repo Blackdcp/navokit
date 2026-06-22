@@ -1,0 +1,20 @@
+{
+  "id": "social-booster",
+  "title": "AI 社媒爆款文案生成器",
+  "subtitle": "输入一句话，一键生成带网感、带 Emoji 的爆款文案，免费引爆社交圈。",
+  "price": 0,
+  "originalPrice": 19,
+  "originalPriceText": "¥19.9/次",
+  "buyButtonText": "免费使用",
+  "actionType": "link",
+  "linkUrl": "/zh/tools/social-booster",
+  "inStock": true,
+  "isHot": true,
+  "categoryId": "tools",
+  "tags": ["AI工具", "爆款推文", "完全免费", "引流必备"],
+  "features": [
+    "零配置，输入一句话即可生成",
+    "完美适配推特、Instagram和小红书",
+    "使用先进的 Agnes-2.0-Flash 模型"
+  ]
+}

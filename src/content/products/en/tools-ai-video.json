@@ -1,0 +1,26 @@
+{
+  "id": "tools-ai-video",
+  "categoryId": "tools",
+  "categoryName": "AI Tools",
+  "title": "Free AI Video Generator",
+  "subtitle": "Convert your text ideas into stunning cinematic videos instantly using advanced AI models.",
+  "price": 0,
+  "tags": [
+    "🆓 100% Free",
+    "Agnes Video V2.0",
+    "No Watermark"
+  ],
+  "warnings": [],
+  "deliveryNotice": "This is a free tool. Click the button below to start generating.",
+  "features": [
+    "Text to Video generation",
+    "Cinematic quality (768x1152)",
+    "Fast generation speed"
+  ],
+  "inStock": true,
+  "buyButtonText": "Use for Free",
+  "orderName": "Free Tool",
+  "actionType": "link",
+  "linkUrl": "/en/tools/ai-video-generator",
+  "isHot": true
+}

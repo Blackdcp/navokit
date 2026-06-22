@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "NavoKit",
+    "nav": {
+      "ai-accounts": "AI Accounts & Subs",
+      "marketing": "Marketing & Traffic",
+      "tools": "Curated Utilities"
+    }
+  },
+  "common": {
+    "hot": "🔥 Popular",
+    "free": "Free",
+    "soldOut": "Sold Out",
+    "details": "Details",
+    "currency": "$ "
+  },
+  "modal": {
+    "submitRequest": "Submit Request",
+    "confirmOrder": "Confirm Order",
+    "product": "Product/Service: ",
+    "emailStep": "Step 1: Your Email Address",
+    "emailPlaceholder": "you@example.com (We will contact you via this email)",
+    "reqStep": "Step 2: Specific Requirements / Links",
+    "reqPlaceholder": "Please describe your specific requirements or paste target links...",
+    "submitBtnConsult": "Submit Request & Contact Support",
+    "submitBtnPay": "I have completed the payment, notify support",
+    "submitting": "Submitting...",
+    "payStep1": "Step 1: Scan to Pay",
+    "payStep2": "Step 2: Enter Email to Receive Product",
+    "payEmailPlaceholder": "you@example.com (To receive the product after payment)",
+    "success": "Submission Successful",
+    "consultSuccessMsg": "Your request has been sent.\nWe will contact you via email shortly:",
+    "paySuccessMsg": "Your order notification has been sent.\nAfter verifying payment, product will be delivered to:",
+    "alipay": "Alipay",
+    "wechat": "WeChat Pay"
+  },
+  "ppt2pdf": {
+    "back": "Back to Home",
+    "title": "PPT to PDF Lossless HD",
+    "subtitle": "Based on a native document engine, perfectly preserves layout, fonts, and frames.<br/>Completely free, supports up to 20MB.",
+    "clickOrDrag": "Click or drag file here",
+    "supportText": "Supports .ppt, .pptx formats, up to 20MB",
+    "startConvert": "Start Conversion",
+    "processing": "Processing...",
+    "processingHint": "Large files may take over ten seconds, please be patient.",
+    "success": "Conversion Successful!",
+    "downloadHint": "Your PDF file is now downloading.",
+    "convertNext": "Convert Another File",
+    "errInvalidExt": "Only .ppt or .pptx files are supported",
+    "errTooLarge": "File size must not exceed 20MB",
+    "errServer": "Conversion failed, please try again",
+    "errNetwork": "Network error, please check your connection",
+    "faqTitle": "Frequently Asked Questions",
+    "faq1q": "Why is this completely free?",
+    "faq1a": "We understand the pain of high-quality document conversion. We built this high-performance conversion node as a free utility to help users, hoping you might also explore our highly cost-effective AI account subscription services.",
+    "faq2q": "Is the conversion safe? Will my files be saved?",
+    "faq2a": "Absolutely safe. We use a stateless underlying document processing engine. Your PPT files are converted purely in memory and are instantly destroyed from the server after processing. We strictly do not store any user data.",
+    "faq3q": "What is native underlying conversion technology?",
+    "faq3a": "Many converters on the market generate PDFs through simple web screenshots, leading to missing fonts and messed-up layouts. We use native underlying APIs (LibreOffice) to ensure your fonts, vector graphics, and original layouts are perfectly preserved 1:1."
+  },
+  "product": {
+    "features": "Features",
+    "warnings": "Important Notice",
+    "back": "Back to Home"
+  },
+  "meta": {
+    "title": "NavoKit — Premium Tools",
+    "description": "Free SEO Tools",
+    "keywords": [
+      "AI tools",
+      "PPT to PDF lossless"
+    ]
+  },
+  "tools": {
+    "chatExporter": {
+      "meta": {
+        "title": "ChatGPT Markdown to Image/PDF Exporter | Free Tool",
+        "description": "100% Free tool to beautify ChatGPT outputs. Convert raw Markdown to stunning, shareable images or PDFs instantly in your browser. Zero privacy risk."
+      },
+      "hero": {
+        "title": "ChatGPT Beautiful Exporter",
+        "subtitle": "Turn messy Markdown into stunning, shareable cards for Twitter & LinkedIn.",
+        "watermarkText": "Rendered by navokit.com"
+      },
+      "editor": {
+        "placeholder": "Paste your raw Markdown from ChatGPT here...",
+        "previewTitle": "Live Preview",
+        "downloadImage": "Export HD Image",
+        "downloading": "Rendering..."
+      }
+    },
+    "socialBooster": {
+      "title": "AI Social Media Booster",
+      "subtitle": "Turn a simple thought into a viral post in seconds.",
+      "placeholder": "E.g., I had a great coffee today at Starbucks...",
+      "generate": "Generate Magic",
+      "generating": "Generating...",
+      "platforms": { "twitter": "Twitter / X", "instagram": "Instagram", "xiaohongshu": "Xiaohongshu" },
+      "copy": "Copy Text",
+      "copied": "Copied!",
+      "adTitle": "Want to guarantee 1000 likes?",
+      "adDesc": "Great content needs an initial push. Buy our organic follower packages to trigger the algorithm.",
+      "adBtn": "View Marketing Services"
+    }
+  }
+}

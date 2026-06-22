@@ -1,0 +1,22 @@
+{
+  "id": "chat-exporter",
+  "title": "ChatGPT 问答长图导出神器",
+  "subtitle": "把杂乱的 Markdown 瞬间变成排版精美、带苹果视窗风格的长图卡片，引爆你的社交圈。完全免费，纯前端渲染保护隐私。",
+  "price": 0,
+  "originalPriceText": "",
+  "categoryId": "tools",
+  "buyButtonText": "免费使用",
+  "tags": ["效率工具", "Markdown", "免费", "社交分享", "图片生成"],
+  "features": [
+    "✅ 100% 纯前端渲染，数据绝不上云",
+    "✅ 完美支持代码高亮与表格解析",
+    "✅ macOS 视窗风格沉浸式排版",
+    "✅ 支持高清长图一键导出"
+  ],
+  "warnings": [],
+  "orderName": "Chat Exporter Tool",
+  "inStock": true,
+  "actionType": "link",
+  "linkUrl": "/zh/tools/chat-exporter",
+  "isHot": true
+}

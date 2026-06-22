@@ -1,0 +1,106 @@
+{
+  "header": {
+    "title": "NavoKit",
+    "nav": {
+      "ai-accounts": "AI 账号与订阅",
+      "marketing": "营销引流资源",
+      "tools": "精选实用工具"
+    }
+  },
+  "common": {
+    "hot": "🔥 热门",
+    "free": "免费",
+    "soldOut": "已售罄",
+    "details": "详情",
+    "currency": "¥ "
+  },
+  "modal": {
+    "submitRequest": "提交需求",
+    "confirmOrder": "确认订单",
+    "product": "商品/业务：",
+    "emailStep": "第一步：您的接收邮箱",
+    "emailPlaceholder": "you@example.com (客服将通过此邮箱联系您)",
+    "reqStep": "第二步：具体需求 / 链接",
+    "reqPlaceholder": "请描述您的具体要求，或粘贴相关的目标链接...",
+    "submitBtnConsult": "提交需求并联系客服",
+    "submitBtnPay": "我已经付完款，通知客服发货",
+    "submitting": "正在提交...",
+    "payStep1": "第一步：扫码支付",
+    "payStep2": "第二步：输入邮箱接收商品",
+    "payEmailPlaceholder": "you@example.com (支付后用于接收商品)",
+    "success": "提交成功",
+    "consultSuccessMsg": "您的需求已发送给客服。\n我们将尽快通过邮件联系您：",
+    "paySuccessMsg": "您的订单通知已发给客服。\n核对收款后，商品将发送至邮箱：",
+    "alipay": "支付宝",
+    "wechat": "微信支付"
+  },
+  "ppt2pdf": {
+    "back": "返回首页",
+    "title": "PPT 转 PDF 高清无损",
+    "subtitle": "基于底层原生的文档引擎，完美保留原始排版、字体和动画帧。<br/>完全免费，支持最大 20MB 的 PPT/PPTX 文件。",
+    "clickOrDrag": "点击或拖拽文件到这里",
+    "supportText": "支持 .ppt, .pptx 格式，最大 20MB",
+    "startConvert": "开始转换",
+    "processing": "正在处理中...",
+    "processingHint": "大文件可能需要十几秒，请耐心等待",
+    "success": "转换成功！",
+    "downloadHint": "您的 PDF 文件已开始下载。",
+    "convertNext": "转换下一个文件",
+    "errInvalidExt": "只支持 .ppt 或 .pptx 格式的文件",
+    "errTooLarge": "文件大小不能超过 20MB",
+    "errServer": "转换失败，请重试",
+    "errNetwork": "网络错误，请检查您的连接",
+    "faqTitle": "常见问题与工作原理",
+    "faq1q": "为什么它是完全免费的？",
+    "faq1a": "我们深知高质量文档转换的痛点。我们自建了高性能转换节点作为流量引流器，希望借此让更多人体验到我们专业且极具性价比的 AI 账号订阅服务。",
+    "faq2q": "转换过程安全吗？我的文件会被保存吗？",
+    "faq2a": "绝对安全。我们采用无状态的底层文档处理引擎，PPT 文件仅在内存中进行瞬时转换，处理完成后即刻从服务器内存中销毁，绝不保存任何用户数据。",
+    "faq3q": "什么是底层原生转换技术？",
+    "faq3a": "市面上许多转换器通过简单的网页截图来生成 PDF，导致字体丢失和排版错乱。我们调用了 LibreOffice 的原生底层 API，保证您的字体、矢量图形和原始版式被 1:1 完美保留。"
+  },
+  "product": {
+    "features": "功能特性",
+    "warnings": "购买必读",
+    "back": "返回首页"
+  },
+  "meta": {
+    "title": "NavoKit — 免费 SEO 工具",
+    "description": "提供极速免费的长尾 SEO 实用工具箱。",
+    "keywords": [
+      "AI工具",
+      "PPT转PDF免费"
+    ]
+  },
+  "tools": {
+    "chatExporter": {
+      "meta": {
+        "title": "ChatGPT Markdown转长图/PDF生成器 | 免费工具",
+        "description": "完全免费的 ChatGPT 回答美化工具。一键将丑陋的 Markdown 代码转换为排版精美的长图或 PDF 格式。前端生成，零隐私泄露风险。"
+      },
+      "hero": {
+        "title": "ChatGPT 问答长图导出神器",
+        "subtitle": "把杂乱的 Markdown 变成一张精美的卡片，引爆你的社交圈。",
+        "watermarkText": "Rendered by navokit.com"
+      },
+      "editor": {
+        "placeholder": "在这里粘贴 ChatGPT 吐出的 Markdown 格式文本...",
+        "previewTitle": "效果预览",
+        "downloadImage": "生成高清长图",
+        "downloading": "生成中..."
+      }
+    },
+    "socialBooster": {
+      "title": "AI 社媒爆款文案生成器",
+      "subtitle": "输入一句话，一键生成带网感、带 Emoji 的爆款文案。",
+      "placeholder": "比如：今天在星巴克喝了一杯很好喝的咖啡，感觉很治愈...",
+      "generate": "一键生成魔法文案",
+      "generating": "正在生成爆款...",
+      "platforms": { "twitter": "推特 / X", "instagram": "Instagram", "xiaohongshu": "小红书" },
+      "copy": "复制文案",
+      "copied": "已复制！",
+      "adTitle": "有了好文案，想保证 100% 爆款？",
+      "adDesc": "优质的内容需要启动量来触发算法推荐。购买我们的真人刷粉/点赞套餐，瞬间引爆你的帖子！",
+      "adBtn": "查看海外社媒涨粉服务"
+    }
+  }
+}

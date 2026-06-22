@@ -1,0 +1,26 @@
+{
+  "id": "tools-ai-video",
+  "categoryId": "tools",
+  "categoryName": "AI 提效工具",
+  "title": "免费 AI 视频生成器",
+  "subtitle": "使用最先进的 AI 大模型，瞬间将您的文字想法转化为令人惊叹的电影级视频。",
+  "price": 0,
+  "tags": [
+    "🆓 完全免费",
+    "Agnes Video V2.0",
+    "无水印"
+  ],
+  "warnings": [],
+  "deliveryNotice": "此为免费工具，点击下方按钮直接跳转使用。",
+  "features": [
+    "文本生成视频",
+    "电影级画质 (768x1152)",
+    "极速生成"
+  ],
+  "inStock": true,
+  "buyButtonText": "免费使用",
+  "orderName": "免费工具 (无订单)",
+  "actionType": "link",
+  "linkUrl": "/zh/tools/ai-video-generator",
+  "isHot": true
+}

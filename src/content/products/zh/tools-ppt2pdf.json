@@ -1,0 +1,26 @@
+{
+  "id": "tools-ppt2pdf",
+  "categoryId": "tools",
+  "categoryName": "格式转换大全",
+  "title": "PPT 转 PDF 高清无损版",
+  "subtitle": "一键将您的 PPT 演示文稿转换为高清 PDF 格式，完全免费无水印。",
+  "price": 0,
+  "tags": [
+    "🆓 完全免费",
+    "极速转换",
+    "本地处理隐私安全"
+  ],
+  "warnings": [],
+  "deliveryNotice": "此为免费工具，点击下方按钮直接跳转使用。",
+  "features": [
+    "保留所有原始字体和排版",
+    "无文件大小限制",
+    "纯前端 WebAssembly 处理，文件不上传服务器"
+  ],
+  "inStock": true,
+  "buyButtonText": "免费使用",
+  "orderName": "免费工具 (无订单)",
+  "actionType": "link",
+  "linkUrl": "/zh/tools/ppt2pdf",
+  "isHot": false
+}

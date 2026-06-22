@@ -1,0 +1,22 @@
+{
+  "id": "chat-exporter",
+  "title": "ChatGPT Markdown to Image Exporter",
+  "subtitle": "Convert your messy ChatGPT Markdown outputs into stunning, shareable cards with a sleek macOS window style. 100% Free and private (client-side rendering).",
+  "price": 0,
+  "originalPriceText": "",
+  "categoryId": "tools",
+  "buyButtonText": "Use for Free",
+  "tags": ["Productivity", "Markdown", "Free", "Social Sharing", "Image Generator"],
+  "features": [
+    "✅ 100% Client-side rendering, zero data sent to servers",
+    "✅ Perfect syntax highlighting and markdown table parsing",
+    "✅ Immersive macOS window style typography",
+    "✅ 1-Click HD Image Export"
+  ],
+  "warnings": [],
+  "orderName": "Chat Exporter Tool",
+  "inStock": true,
+  "actionType": "link",
+  "linkUrl": "/en/tools/chat-exporter",
+  "isHot": true
+}

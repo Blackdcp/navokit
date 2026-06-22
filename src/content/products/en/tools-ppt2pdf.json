@@ -1,0 +1,28 @@
+{
+  "id": "tools-ppt2pdf",
+  "categoryId": "tools",
+  "categoryName": "Document Tools · Free",
+  "title": "PPT to PDF Lossless HD",
+  "subtitle": "One-click conversion of your PPT presentations to HD PDF format, completely free without watermarks.",
+  "price": 0,
+  "tags": [
+    "Completely Free",
+    "Ultra-fast",
+    "Local Privacy"
+  ],
+  "warnings": [
+    "Max 20MB file size."
+  ],
+  "deliveryNotice": "Download immediately after conversion.",
+  "features": [
+    "Perfectly preserves layout",
+    "Supports large files",
+    "No data retention"
+  ],
+  "inStock": true,
+  "buyButtonText": "Use for Free",
+  "orderName": "Free Tool (No Order)",
+  "actionType": "link",
+  "linkUrl": "/en/tools/ppt2pdf",
+  "isHot": false
+}
