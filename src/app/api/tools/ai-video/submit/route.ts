@@ -6,14 +6,18 @@ export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
 
-    if (!prompt) {
+    if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+    }
+
+    if (prompt.length > 1000) {
+      return NextResponse.json({ error: 'Prompt is too long (max 1000 characters)' }, { status: 400 });
     }
 
     const apiKey = process.env.AGNES_API_KEY;
     if (!apiKey) {
       console.error("Missing AGNES_API_KEY");
-      return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
     // Call Agnes AI Video Generation API
@@ -38,7 +42,7 @@ export async function POST(req: Request) {
     if (!response.ok) {
       console.error("Agnes AI API Error:", data);
       return NextResponse.json(
-        { error: data.error?.message || 'Failed to generate video' },
+        { error: 'Server is currently busy, please try again later' },
         { status: response.status }
       );
     }

@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as htmlToImage from 'html-to-image';
 import Link from 'next/link';
+import SiteFooter from './SiteFooter';
 
 export default function ChatExporter({ dict, lang }: { dict: any; lang: string }) {
   const [markdown, setMarkdown] = useState('');
@@ -33,12 +34,67 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
 
   return (
     <div style={{ minHeight: "100vh", background: "#fafafa", fontFamily: "sans-serif" }}>
-      {/* Standardized Header */}
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #eaeaea", padding: "12px 0", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
-          <Link href={`/${lang}`} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-             <span style={{ fontSize: 24, color: "#111827" }}>←</span>
-             <span style={{ fontSize: 16, fontWeight: 700, color: "#111827" }}>{dict.ppt2pdf?.back || (lang === 'zh' ? '返回首页' : 'Back to Home')}</span>
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          height: 80,
+          background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid #E5E7EB",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link
+            href={`/${lang}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="NavoKit"
+              style={{
+                height: 52,
+                width: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
+            />
+          </Link>
+          <Link
+            href={`/${lang}`}
+            style={{
+              textDecoration: "none",
+              color: "#6B7280",
+              fontSize: 14,
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "color 0.2s",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            {lang === 'zh' ? '返回首页' : 'Back to Home'}
           </Link>
         </div>
       </header>
@@ -160,25 +216,82 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
 
           </div>
         </div>
+      </main>
 
-        {/* Monetization Banner Below the Tool */}
-        <div style={{ marginTop: 80, padding: "40px", background: "#ffffff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", border: "1px solid #eaeaea" }}>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: "#111827", marginBottom: 16, letterSpacing: "-0.02em" }}>
-            Want smarter outputs to export?
+      {/* SEO & Features Section */}
+      <section style={{ maxWidth: 800, margin: "64px auto 96px", padding: "0 24px" }}>
+        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: 24, padding: "48px", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
+          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, color: "#0B1220" }}>
+            {lang === "zh" ? "核心功能特性" : "Core Features"}
           </h2>
-          <p style={{ fontSize: 16, color: "#666666", marginBottom: 32 }}>
-            Stop relying on free AI. Upgrade to a premium intelligence.
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 48px", display: "grid", gap: "16px" }}>
+            {[
+              lang === "zh" ? "100% 纯前端渲染，数据绝不上云" : "100% frontend rendering, no data uploaded to cloud",
+              lang === "zh" ? "完美支持代码高亮与表格解析" : "Perfect support for code highlighting and tables",
+              lang === "zh" ? "macOS 视窗风格沉浸式排版" : "macOS window style immersive layout",
+              lang === "zh" ? "支持高清长图一键导出" : "One-click HD image export supported"
+            ].map((feature, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 16, color: "#4B5563" }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, color: "#0B1220", borderTop: "1px solid #E5E7EB", paddingTop: 48 }}>
+            {lang === "zh" ? "常见问题" : "FAQ"}
+          </h2>
+          <div style={{ display: "grid", gap: "24px" }}>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "我的聊天记录会被保存吗？" : "Will my chat history be saved?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "绝对不会。这是一个纯前端工具，所有的转换和图片生成都在您的浏览器中本地进行，不会上传到任何服务器。" : "Absolutely not. This is a pure frontend tool. All conversions and image generations happen locally in your browser and are not uploaded to any server."}
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "支持哪些 Markdown 语法？" : "What Markdown syntax is supported?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "支持标准的 Markdown 语法，包括加粗、斜体、列表、链接、图片，并且特别优化了代码块的高亮和表格的解析。" : "It supports standard Markdown syntax, including bold, italics, lists, links, images, and is specially optimized for code block highlighting and table parsing."}
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "导出的图片很模糊怎么办？" : "What if the exported image is blurry?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "我们默认使用 @2x 分辨率导出高清图片。如果包含大量内容，生成可能需要几秒钟，请耐心等待高清原图渲染完成。" : "We use @2x resolution by default to export HD images. If it contains a lot of content, generation may take a few seconds, please wait patiently for the HD original image to finish rendering."}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Tools Recommendation */}
+        <div style={{ marginTop: 40, textAlign: "left", padding: "40px", background: "#ffffff", borderRadius: "16px", border: "1px solid #E5E7EB", boxShadow: "0 1px 2px rgba(11,18,32,0.04)" }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: "#0B1220" }}>
+            {lang === "zh" ? "探索更多工具" : "Explore More Tools"}
+          </h2>
+          <p style={{ color: "#6B7280", marginBottom: 24, fontSize: 15 }}>
+            {lang === "zh" ? "NavoKit 还提供了其他多款免费免注册的 AI 工具，提升你的工作效率。" : "NavoKit provides many other free, no-signup AI tools to boost your productivity."}
           </p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
-            <Link href={`/${lang}/products/gemini-pro`} className="vercel-button" style={{ padding: "12px 24px", fontSize: 16, textDecoration: "none" }}>
-              Get Gemini Advanced ($14.99)
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+            <Link href={`/${lang}/tools/social-booster`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "社媒文案生成器 →" : "Social Post Generator →"}
             </Link>
-            <Link href={`/${lang}/products/account`} className="vercel-button-secondary" style={{ padding: "12px 24px", fontSize: 16, textDecoration: "none" }}>
-              Get ChatGPT Plus
+            <Link href={`/${lang}/tools/ppt2pdf`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "PPT转PDF →" : "PPT to PDF →"}
             </Link>
           </div>
         </div>
-      </main>
+      </section>
+
+      <SiteFooter lang={lang} />
     </div>
   );
 }

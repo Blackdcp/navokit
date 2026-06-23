@@ -1,61 +1,173 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@theme {
+  --color-navo-ink: #0B1220;
+  --color-navo-black: #05070A;
+  --color-navo-white: #FFFFFF;
+  --color-navo-surface: #F8FAFC;
+  --color-navo-surface-2: #F3F4F6;
+  --color-navo-border: #E5E7EB;
+  --color-navo-muted: #6B7280;
+  --color-navo-blue: #2563EB;
+  --color-navo-blue-600: #1D4ED8;
+  --color-navo-blue-50: #EFF6FF;
+  --color-navo-green: #16A34A;
+  --color-navo-green-50: #F0FDF4;
+  --color-navo-yellow: #F59E0B;
+  --color-navo-yellow-50: #FFFBEB;
+  --color-navo-red: #DC2626;
+  --color-navo-red-50: #FEF2F2;
+
+  --font-inter: var(--font-inter), "Inter", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+
+  --container-sm: 720px;
+  --container-md: 960px;
+  --container-lg: 1120px;
+  --container-xl: 1280px;
+
+  --radius-navo: 16px;
+  --radius-navo-card: 20px;
+  --radius-navo-panel: 24px;
+}
+
 * { box-sizing: border-box; margin: 0; }
-body { margin: 0; background-color: #fafafa; color: #111827; }
+
+body { 
+  margin: 0; 
+  background-color: var(--color-navo-surface); 
+  color: var(--color-navo-ink); 
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--color-navo-border); border-radius: 3px; }
 
 @layer utilities {
   .font-en {
-    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-inter);
   }
   .font-zh {
-    font-family: var(--font-inter), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-inter), var(--font-zh);
   }
-  .vercel-card {
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    background: #ffffff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  
+  /* Cards */
+  .navo-card {
+    background: var(--color-navo-white);
+    border: 1px solid var(--color-navo-border);
+    border-radius: var(--radius-navo-card);
+    box-shadow: 0 1px 2px rgba(11, 18, 32, 0.04);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .vercel-card:hover {
-    border-color: #eaeaea;
-    box-shadow: 0 4px 14px 0 rgba(0,0,0,0.05);
+  .navo-card:hover {
+    border-color: #D1D5DB;
+    box-shadow: 0 10px 30px rgba(11, 18, 32, 0.08);
+    transform: translateY(-1px);
   }
-  .vercel-button {
-    background: #0a0a0a;
-    color: #ffffff;
-    border: 1px solid #0a0a0a;
-    border-radius: 6px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+
+  /* Buttons */
+  .navo-button-ink {
+    background: var(--color-navo-ink);
+    color: var(--color-navo-white);
+    border-radius: 12px;
+    font-weight: 650;
+    box-shadow: 0 1px 2px rgba(11, 18, 32, 0.08);
+    transition: background-color 0.2s ease;
   }
-  .vercel-button:hover {
-    background: #ffffff;
-    color: #0a0a0a;
+  .navo-button-ink:hover {
+    background: var(--color-navo-black);
   }
-  .vercel-button-secondary {
-    background: #ffffff;
-    color: #666666;
-    border: 1px solid #eaeaea;
-    border-radius: 6px;
+  
+  .navo-button-blue {
+    background: var(--color-navo-blue);
+    color: var(--color-navo-white);
+    border-radius: 12px;
+    font-weight: 650;
+    transition: background-color 0.2s ease;
+  }
+  .navo-button-blue:hover {
+    background: var(--color-navo-blue-600);
+  }
+
+  .navo-button-secondary {
+    background: var(--color-navo-white);
+    color: var(--color-navo-ink);
+    border: 1px solid #D1D5DB;
+    border-radius: 12px;
+    font-weight: 600;
     transition: color 0.2s ease, border-color 0.2s ease;
   }
-  .vercel-button-secondary:hover {
-    color: #0a0a0a;
-    border-color: #0a0a0a;
+  .navo-button-secondary:hover {
+    border-color: var(--color-navo-black);
   }
+
+  /* Vercel Button styles mapping to premium NavoKit look */
+  .vercel-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-navo-ink);
+    color: var(--color-navo-white);
+    border: 1px solid var(--color-navo-ink);
+    border-radius: 10px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .vercel-button:hover {
+    background: var(--color-navo-black);
+    border-color: var(--color-navo-black);
+    box-shadow: 0 4px 12px rgba(11, 18, 32, 0.08);
+  }
+  
+  .vercel-button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-navo-white);
+    color: var(--color-navo-muted);
+    border: 1px solid var(--color-navo-border);
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .vercel-button-secondary:hover {
+    color: var(--color-navo-ink);
+    border-color: #D1D5DB;
+    background: var(--color-navo-surface);
+  }
+
   .nav-link {
-    color: #666666;
+    color: var(--color-navo-muted);
     transition: color 0.2s ease;
   }
   .nav-link:hover {
-    color: #0a0a0a;
+    color: var(--color-navo-ink);
   }
   
+  /* Inputs */
+  .navo-input {
+    background: var(--color-navo-white);
+    border: 1px solid #D1D5DB;
+    border-radius: 16px;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.65;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .navo-input:focus {
+    border-color: var(--color-navo-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    outline: none;
+  }
+
   /* Blog Prose Enhancements */
   .prose h1, .prose h2, .prose h3 {
-    color: #111827 !important;
+    color: var(--color-navo-ink) !important;
     font-weight: 700 !important;
     letter-spacing: -0.02em;
     margin-top: 1.8em !important;
@@ -64,12 +176,12 @@ body { margin: 0; background-color: #fafafa; color: #111827; }
   .prose h2 { font-size: 1.5em !important; }
   .prose h3 { font-size: 1.25em !important; }
   .prose p {
-    color: #374151 !important;
+    color: var(--color-navo-muted) !important;
     line-height: 1.8 !important;
     margin-bottom: 1.25em !important;
   }
   .prose strong {
-    color: #111827 !important;
+    color: var(--color-navo-ink) !important;
     font-weight: 600 !important;
   }
   .prose ul, .prose ol {
@@ -81,29 +193,26 @@ body { margin: 0; background-color: #fafafa; color: #111827; }
     margin-top: 0.5em !important;
     margin-bottom: 0.5em !important;
     line-height: 1.8 !important;
-    color: #374151 !important;
+    color: var(--color-navo-muted) !important;
   }
   
-  /* Inline code styling - remove tailwind default backticks */
   .prose code::before,
   .prose code::after {
     content: none !important;
   }
   
-  /* Disable tailwind typography blockquote quotes */
   .prose blockquote p:first-of-type::before,
   .prose blockquote p:last-of-type::after {
     content: none !important;
   }
   
   .prose code {
-    background-color: #f3f4f6 !important;
-    color: #ef4444 !important;
+    background-color: var(--color-navo-surface-2) !important;
+    color: var(--color-navo-red) !important;
     padding: 0.2em 0.4em !important;
     border-radius: 4px !important;
     font-weight: 500 !important;
     font-size: 0.875em !important;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
   }
   .prose pre code {
     background-color: transparent !important;

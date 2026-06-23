@@ -1,390 +1,350 @@
 "use client";
 
-import { useState } from "react";
 import type { Product } from "../../types/product";
 import { categories } from "../../lib/categories";
-import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import SiteHeader from "../../components/SiteHeader";
+import SiteFooter from "../../components/SiteFooter";
 
-type PaymentMethod = "alipay" | "wechat";
+/* ─── SVG icon components for the hero grid ─── */
+const IconFile = ({ color = "#2563EB" }: { color?: string }) => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+  </svg>
+);
+const IconCode = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="16 18 22 12 16 6" />
+    <polyline points="8 6 2 12 8 18" />
+  </svg>
+);
+const IconImage = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+    <circle cx="8.5" cy="8.5" r="1.5" />
+    <polyline points="21 15 16 10 5 21" />
+  </svg>
+);
+const IconHeadset = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+  </svg>
+);
+const IconCamera = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+  </svg>
+);
 
-const em = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+const heroIcons = [
+  <IconFile key="f1" />,
+  <IconCode key="c1" />,
+  <IconImage key="i1" />,
+  <IconFile key="f2" color="#2563EB" />,
+  <IconHeadset key="h1" />,
+  <IconCamera key="ca1" />,
+];
 
-function genOrderId() {
-  const now = new Date();
-  const d = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,"0")}${String(now.getDate()).padStart(2,"0")}`;
-  const t = `${String(now.getHours()).padStart(2,"0")}${String(now.getMinutes()).padStart(2,"0")}`;
-  const r = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `CZ${d}${t}${r}`;
+/* ─── Small icon for tool cards (varies by product title) ─── */
+function CardIcon({ title }: { title: string }) {
+  if (title.includes("视频") || title.includes("Video"))
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7" />
+        <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+      </svg>
+    );
+  if (title.includes("PDF") || title.includes("PPT"))
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+      </svg>
+    );
+  if (title.includes("文案") || title.includes("Text") || title.includes("社媒"))
+    return (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="4 7 4 4 20 4 20 7" />
+        <line x1="9" y1="20" x2="15" y2="20" />
+        <line x1="12" y1="4" x2="12" y2="20" />
+      </svg>
+    );
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <polyline points="21 15 16 10 5 21" />
+    </svg>
+  );
 }
 
-export default function HomePage({ dict, products, lang }: { dict: any, products: Product[], lang: string }) {
-  const [modal, setModal] = useState<{ name: string; price: number; orderId: string; actionType?: string } | null>(null);
-  const [email, setEmail] = useState("");
-  const [emailErr, setEmailErr] = useState("");
-  const [requirement, setRequirement] = useState("");
-  const [requirementErr, setRequirementErr] = useState("");
-  const [step, setStep] = useState<"pay" | "consult" | "success">("pay");
-  const [payMethod, setPayMethod] = useState<PaymentMethod>("alipay");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+/* ─── Shared card style ─── */
+const cardStyle: React.CSSProperties = {
+  background: "#fff",
+  border: "1px solid #E5E7EB",
+  borderRadius: 20,
+  boxShadow: "0 1px 2px rgba(11,18,32,0.04)",
+  textDecoration: "none",
+  color: "inherit",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  transition: "border-color 0.2s, box-shadow 0.2s, transform 0.2s",
+  position: "relative",
+};
 
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const switchLang = () => {
-    const newLang = lang === 'zh' ? 'en' : 'zh';
-    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
-    router.push(newPath);
-  };
-
-  const buy = (product: Product) => {
-    if (product.actionType === "link" && product.linkUrl) {
-      window.open(product.linkUrl, "_blank");
-      return;
-    }
-    setModal({ name: product.orderName, price: product.price, orderId: genOrderId(), actionType: product.actionType || "buy" });
-    setEmail("");
-    setEmailErr("");
-    setRequirement("");
-    setRequirementErr("");
-    setStep(product.actionType === "consult" ? "consult" : "pay");
-  };
-
-  const submitOrder = async () => {
-    if (!em(email)) { setEmailErr(dict.modal.emailErr || "Invalid email"); return; }
-    setEmailErr("");
-    if (!modal) return;
-    setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: modal.orderId,
-          email: email,
-          productName: modal.name,
-          price: modal.price,
-          payMethod: payMethod
-        })
-      });
-      if (res.ok) {
-        setStep("success");
-      } else {
-        alert("提交失败，请稍后重试 (Submit failed)");
-      }
-    } catch (e) {
-      alert("提交失败，请稍后重试 (Submit failed)");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const submitConsult = async () => {
-    if (!em(email)) { setEmailErr(dict.modal.emailErr || "Invalid email"); return; }
-    setEmailErr("");
-    if (!requirement.trim()) { setRequirementErr("Require details"); return; }
-    setRequirementErr("");
-    
-    if (!modal) return;
-    setIsSubmitting(true);
-    try {
-      const res = await fetch("/api/consult", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          requirement: requirement,
-          productName: modal.name,
-        })
-      });
-      if (res.ok) {
-        setStep("success");
-      } else {
-        alert("提交失败，请稍后重试 (Submit failed)");
-      }
-    } catch (e) {
-      alert("提交失败，请稍后重试 (Submit failed)");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+/* ─── Main component ─── */
+export default function HomePage({
+  dict,
+  products,
+  lang,
+}: {
+  dict: any;
+  products: Product[];
+  lang: string;
+}) {
   const productsByCategory: Record<string, Product[]> = {};
-  products.forEach(p => {
-    if (!productsByCategory[p.categoryId]) {
-      productsByCategory[p.categoryId] = [];
-    }
+  products.forEach((p) => {
+    if (!productsByCategory[p.categoryId]) productsByCategory[p.categoryId] = [];
     productsByCategory[p.categoryId].push(p);
   });
 
   return (
-    <div style={{ minHeight: "100vh", lineHeight: 1.5, background: "#fafafa" }}>
+    <div style={{ minHeight: "100vh", background: "#F8FAFC", color: "#0B1220" }}>
+      <SiteHeader lang={lang} />
 
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #eaeaea", padding: "12px 0", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 24, height: 24, background: "#0a0a0a", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderBottom: "8px solid #ffffff", marginTop: "-2px" }} />
-            </div>
-            <span style={{ fontSize: 16, fontWeight: 700, color: "#111827", letterSpacing: "-0.01em" }}>
-              {dict.header.title}
-            </span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 24, fontSize: 14, fontWeight: 500 }}>
-            {categories.map(cat => (
-              <a key={cat.id} href={`#${cat.id}`} className="nav-link" style={{ textDecoration: "none" }}>
-                {dict.header.nav[cat.id] || cat.name}
-              </a>
-            ))}
-            <Link href={`/${lang}/blog`} className="nav-link" style={{ textDecoration: "none" }}>
-              {lang === 'zh' ? '博客 & 教程' : 'Blog'}
-            </Link>
-            <button onClick={switchLang} style={{ background: "none", border: "1px solid #eaeaea", borderRadius: "6px", padding: "4px 8px", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#666" }}>
-              {lang === 'zh' ? 'EN' : '中文'}
-            </button>
-          </div>
+      {/* ══════ HERO ══════ */}
+      <section
+        className="hero-section"
+        style={{
+          maxWidth: 800,
+          margin: "0 auto",
+          padding: "80px 24px 60px",
+          textAlign: "center",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
+          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
+            {lang === "zh" ? "100% 免费" : "100% Free"}
+          </span>
+          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
+            {lang === "zh" ? "无需注册" : "No Signup"}
+          </span>
+          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
+            {lang === "zh" ? "隐私优先" : "Privacy First"}
+          </span>
         </div>
-      </header>
 
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "40px 24px 80px" }}>
-        
-        {categories.map(category => {
-          const categoryProducts = productsByCategory[category.id];
-          if (!categoryProducts || categoryProducts.length === 0) return null;
+        <h1
+          style={{
+            fontSize: "clamp(36px, 5vw, 56px)",
+            lineHeight: 1.15,
+            letterSpacing: "-0.04em",
+            fontWeight: 780,
+            color: "#0B1220",
+            margin: "0 0 16px",
+          }}
+        >
+          {lang === "zh" ? "免费 AI 小工具箱" : "Free AI Tools for Faster Everyday Work"}
+        </h1>
+        <p
+          style={{
+            fontSize: 18,
+            lineHeight: 1.6,
+            color: "#6B7280",
+            margin: "0 auto 32px",
+            maxWidth: 640,
+          }}
+        >
+          {lang === "zh"
+            ? "文档、内容、社媒工作，快一点完成。NavoKit 提供一组无需注册、打开即用的免费工具：PPT 转 PDF、ChatGPT 长图导出、社媒文案生成、AI 视频生成等。"
+            : "Convert files, export ChatGPT answers, generate social posts, and create AI videos — no signup required."}
+        </p>
+      </section>
 
+      {/* ══════ TOOLS ══════ */}
+      <section id="tools" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 24px 64px" }}>
+        {categories.map((category) => {
+          const items = productsByCategory[category.id];
+          if (!items || items.length === 0) return null;
           return (
-            <div key={category.id} id={category.id} style={{ marginBottom: 64 }}>
-              <h2 style={{ fontSize: 20, fontWeight: 600, color: "#111827", marginBottom: 20, letterSpacing: "-0.01em" }}>
-                {dict.header.nav[category.id] || category.name}
+            <div key={category.id} style={{ marginBottom: 56 }}>
+              <h2 style={{ fontSize: 20, fontWeight: 700, color: "#0B1220", marginBottom: 24, letterSpacing: "-0.01em" }}>
+                {lang === "zh" ? category.nameZh : category.nameEn}
               </h2>
-              
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}>
-                {categoryProducts.map(product => (
-                  <div 
-                    key={product.id} 
-                    className="vercel-card" 
-                    style={{ display: "flex", flexDirection: "column", padding: "32px", position: "relative" }}
-                  >
-                    
-                    {product.isHot && (
-                      <div style={{ position: "absolute", top: 16, right: 16, border: "1px solid #ff6600", color: "#ff6600", padding: "2px 8px", fontSize: 11, fontWeight: 600, borderRadius: "999px" }}>
-                        {dict.common.hot}
-                      </div>
-                    )}
-                    
-                    <h3 style={{ fontSize: 20, fontWeight: 600, color: "#111827", margin: "0 0 12px", lineHeight: 1.3, letterSpacing: "-0.02em", paddingRight: product.isHot ? 50 : 0 }}>
-                      {product.title}
-                    </h3>
-                    
-                    <div style={{ marginBottom: 16, display: "flex", alignItems: "baseline", flexWrap: "wrap" }}>
-                      {product.price > 0 ? (
-                        <>
-                          <span style={{ fontSize: 32, fontWeight: 700, color: "#111827", letterSpacing: "-0.03em" }}>{dict.common.currency}{product.price}</span>
-                          {product.originalPriceText && (
-                            <span style={{ fontSize: 16, color: "#999", textDecoration: "line-through", marginLeft: 8 }}>{product.originalPriceText}</span>
-                          )}
-                        </>
-                      ) : (
-                        <span style={{ fontSize: 32, fontWeight: 700, color: "#111827", letterSpacing: "-0.03em" }}>{dict.common.free}</span>
-                      )}
-                    </div>
+              <div
+                className="tools-grid"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                  gap: 24,
+                }}
+              >
+                {items.map((product) => {
+                  const toolUrl = product.linkUrl 
+                    ? product.linkUrl.replace(/^\/(zh|en)\//, `/${lang}/`) 
+                    : `/${lang}/tools/${product.id}`;
 
-                    <p style={{ fontSize: 14, color: "#666666", margin: "0 0 24px", flexGrow: 1, lineHeight: 1.6 }} dangerouslySetInnerHTML={{__html: product.subtitle}}></p>
-
-                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>
-                      {product.tags.slice(0, 3).map(t => (
-                        <span key={t} style={{ padding: "4px 10px", background: "#fafafa", border: "1px solid #eaeaea", borderRadius: "999px", fontSize: 12, color: "#666666", fontWeight: 500 }}>{t}</span>
-                      ))}
-                      {product.tags.length > 3 && <span style={{ padding: "4px 10px", background: "#fafafa", border: "1px solid #eaeaea", borderRadius: "999px", fontSize: 12, color: "#666666", fontWeight: 500 }}>...</span>}
-                    </div>
-
-                    <div style={{ display: 'flex', gap: 12, marginTop: "auto" }}>
-                       {product.inStock ? (
-                          <button 
-                            onClick={() => buy(product)} 
-                            className="vercel-button" 
-                            style={{ flex: 1, padding: "12px 0", fontSize: 14, fontWeight: 500, cursor: "pointer" }}
+                  return (
+                    <Link
+                      key={product.id}
+                      href={toolUrl}
+                      style={cardStyle}
+                      className="tool-card group"
+                    >
+                      {/* Card body */}
+                      <div style={{ padding: "32px 28px", flex: 1, display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                          <div
+                            style={{
+                              width: 48,
+                              height: 48,
+                              borderRadius: 14,
+                              background: "#F8FAFC",
+                              border: "1px solid #E5E7EB",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
                           >
-                            {product.buyButtonText}
-                          </button>
-                       ) : (
-                          <div style={{ flex: 1, padding: "12px 0", background: "#fafafa", color: "#999999", textAlign: "center", fontSize: 14, fontWeight: 500, border: "1px solid #eaeaea", borderRadius: "6px" }}>{dict.common.soldOut}</div>
-                       )}
-                       {product.actionType !== "link" && (
-                         <Link href={`/${lang}/products/${product.id}`} className="vercel-button-secondary" style={{ padding: "12px 24px", textAlign: "center", fontSize: 14, fontWeight: 500, textDecoration: "none" }}>
-                           {dict.common.details}
-                         </Link>
-                       )}
-                    </div>
-                  </div>
-                ))}
+                            <CardIcon title={product.title} />
+                          </div>
+                          {product.isHot && (
+                            <span style={{ fontSize: 11, fontWeight: 700, color: "#6B7280", border: "1px solid #E5E7EB", background: "#F8FAFC", padding: "2px 8px", borderRadius: 10, letterSpacing: "0.05em" }}>
+                              HOT
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 style={{ fontSize: 18, fontWeight: 700, color: "#0B1220", margin: "0 0 8px", lineHeight: 1.3 }}>
+                          {product.title}
+                        </h3>
+                        <p style={{ fontSize: 14, color: "#6B7280", margin: 0, lineHeight: 1.6, flex: 1 }}>
+                          {product.subtitle.replace(/<[^>]*>?/gm, "")}
+                        </p>
+                      </div>
+
+                      {/* Footer hover indicator */}
+                      <div
+                        className="tool-card-footer"
+                        style={{
+                          padding: "16px 28px",
+                          borderTop: "1px solid #E5E7EB",
+                          background: "#F8FAFC",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          transition: "background 0.2s",
+                        }}
+                      >
+                        <img
+                          src="/logo.png"
+                          alt="NavoKit"
+                          style={{
+                            height: 36,
+                            width: "auto",
+                            display: "block",
+                            objectFit: "contain",
+                            opacity: 0.6,
+                            transition: "opacity 0.2s"
+                          }}
+                          className="card-logo"
+                        />
+                        <span className="try-now-text" style={{ fontSize: 14, fontWeight: 650, color: "#2563EB", display: "flex", alignItems: "center", gap: 4, opacity: 0, transform: "translateX(-10px)", transition: "all 0.2s" }}>
+                          {lang === "zh" ? "立即使用" : "Try Now"}
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           );
         })}
-      </div>
+      </section>
 
-      {modal && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
-          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)" }} onClick={() => setModal(null)} />
-          <div style={{ position: "relative", width: "100%", maxWidth: 420, background: "#ffffff", border: "1px solid #eaeaea", borderRadius: "12px", boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}>
-            <div style={{ padding: "32px" }}>
-               <h3 style={{ margin: "0 0 20px", fontSize: 20, fontWeight: 600, color: "#111827", letterSpacing: "-0.01em" }}>
-                 {step === "consult" ? dict.modal.submitRequest : dict.modal.confirmOrder}
-               </h3>
-               <p style={{ margin: "0 0 16px", color: "#666666", fontSize: 14 }}>
-                 {dict.modal.product}<span style={{ color: "#111827", fontWeight: 500 }}>{modal.name}</span>
-               </p>
-               
-               {step !== "consult" && (
-                 <div style={{ fontSize: 32, fontWeight: 700, color: "#111827", marginBottom: 32, letterSpacing: "-0.02em" }}>{dict.common.currency}{modal.price}</div>
-               )}
-               
-               {step === "consult" ? (
-                 <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>{dict.modal.emailStep}</div>
-                    <input 
-                      type="email" 
-                      placeholder={dict.modal.emailPlaceholder} 
-                      value={email} 
-                      onChange={e => { setEmail(e.target.value); if(emailErr) setEmailErr(""); }} 
-                      style={{ width: "100%", padding: "12px", border: emailErr ? "1px solid #e00000" : "1px solid #eaeaea", borderRadius: "6px", fontSize: 14, outline: "none", transition: "border-color 0.2s", boxSizing: "border-box", marginBottom: 20 }} 
-                      onFocus={(e) => { if (!emailErr) e.target.style.borderColor = "#0a0a0a" }} 
-                      onBlur={(e) => { if (!emailErr) e.target.style.borderColor = "#eaeaea" }} 
-                    />
-                    {emailErr && <div style={{ color: "#e00000", fontSize: 12, marginTop: -16, marginBottom: 20, textAlign: "left" }}>{emailErr}</div>}
-
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>{dict.modal.reqStep}</div>
-                    <textarea 
-                      placeholder={dict.modal.reqPlaceholder} 
-                      value={requirement} 
-                      onChange={e => { setRequirement(e.target.value); if(requirementErr) setRequirementErr(""); }} 
-                      rows={4}
-                      style={{ width: "100%", padding: "12px", border: requirementErr ? "1px solid #e00000" : "1px solid #eaeaea", borderRadius: "6px", fontSize: 14, outline: "none", transition: "border-color 0.2s", boxSizing: "border-box", resize: "none", marginBottom: 20 }} 
-                      onFocus={(e) => { if (!requirementErr) e.target.style.borderColor = "#0a0a0a" }} 
-                      onBlur={(e) => { if (!requirementErr) e.target.style.borderColor = "#eaeaea" }} 
-                    />
-                    {requirementErr && <div style={{ color: "#e00000", fontSize: 12, marginTop: -16, marginBottom: 20, textAlign: "left" }}>{requirementErr}</div>}
-
-                    <button 
-                      onClick={submitConsult} 
-                      disabled={isSubmitting}
-                      className="vercel-button" 
-                      style={{ width: "100%", padding: "12px 0", fontSize: 14, fontWeight: 500, cursor: isSubmitting ? "not-allowed" : "pointer", opacity: isSubmitting ? 0.7 : 1 }}
-                    >
-                      {isSubmitting ? dict.modal.submitting : dict.modal.submitBtnConsult}
-                    </button>
-                 </div>
-               ) : step === "pay" ? (
-                 <div style={{ textAlign: "center" }}>
-                    {lang === 'en' ? (
-                      <>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>1. Send Payment via PayPal</div>
-                        <div style={{ background: "#f0f5ff", border: "1px solid #1677ff", borderRadius: "8px", padding: "20px", marginBottom: 24 }}>
-                          <p style={{ margin: "0 0 12px", fontSize: 14, color: "#111827" }}>Please send <strong style={{color:"#1677ff"}}>{dict.common.currency}{modal.price}</strong> to our PayPal account:</p>
-                          <div style={{ fontSize: 18, fontWeight: 700, color: "#1677ff", wordBreak: "break-all", userSelect: "all" }}>CHENGZIAI2026@163.COM</div>
-                        </div>
-                        <div style={{ borderTop: "1px dashed #eaeaea", paddingTop: 20, marginBottom: 20 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>2. Confirm Your Email</div>
-                          <input 
-                            type="email" 
-                            placeholder={dict.modal.payEmailPlaceholder} 
-                            value={email} 
-                            onChange={e => { setEmail(e.target.value); if(emailErr) setEmailErr(""); }} 
-                            style={{ width: "100%", padding: "12px", border: emailErr ? "1px solid #e00000" : "1px solid #eaeaea", borderRadius: "6px", fontSize: 14, outline: "none", transition: "border-color 0.2s", boxSizing: "border-box" }} 
-                            onFocus={(e) => { if (!emailErr) e.target.style.borderColor = "#0a0a0a" }} 
-                            onBlur={(e) => { if (!emailErr) e.target.style.borderColor = "#eaeaea" }} 
-                          />
-                          {emailErr && <div style={{ color: "#e00000", fontSize: 12, marginTop: 8, textAlign: "left" }}>{emailErr}</div>}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>{dict.modal.payStep1}</div>
-                    <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
-                      <button 
-                        onClick={() => setPayMethod("alipay")}
-                        style={{ flex: 1, padding: "8px", borderRadius: "6px", border: payMethod === "alipay" ? "2px solid #1677ff" : "1px solid #eaeaea", background: payMethod === "alipay" ? "#f0f5ff" : "#fff", color: payMethod === "alipay" ? "#1677ff" : "#666", fontWeight: 600, cursor: "pointer", transition: "all 0.2s", fontSize: 13 }}
-                      >
-                        {dict.modal.alipay}
-                      </button>
-                      <button 
-                        onClick={() => setPayMethod("wechat")}
-                        style={{ flex: 1, padding: "8px", borderRadius: "6px", border: payMethod === "wechat" ? "2px solid #07c160" : "1px solid #eaeaea", background: payMethod === "wechat" ? "#f0fdf4" : "#fff", color: payMethod === "wechat" ? "#07c160" : "#666", fontWeight: 600, cursor: "pointer", transition: "all 0.2s", fontSize: 13 }}
-                      >
-                        {dict.modal.wechat}
-                      </button>
-                    </div>
-
-                    <div style={{ width: 180, height: 180, margin: "0 auto 24px", background: "#fafafa", border: "1px solid #eaeaea", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", color: "#999999", flexDirection: "column", overflow: "hidden" }}>
-                      <img 
-                        src={payMethod === "alipay" ? "/images/alipay.jpg" : "/images/wechat.jpg"} 
-                        alt="QR Code" 
-                        style={{ width: "100%", height: "100%", objectFit: "contain" }} 
-                        onError={(e) => { e.currentTarget.style.display = 'none'; const next = e.currentTarget.nextElementSibling; if (next) { (next as HTMLElement).style.setProperty('display', 'block'); } }}
-                      />
-                    </div>
-
-                    <div style={{ borderTop: "1px dashed #eaeaea", paddingTop: 20, marginBottom: 20 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: "#111827", marginBottom: 12, textAlign: "left" }}>{dict.modal.payStep2}</div>
-                      <input 
-                        type="email" 
-                        placeholder={dict.modal.payEmailPlaceholder} 
-                        value={email} 
-                        onChange={e => { setEmail(e.target.value); if(emailErr) setEmailErr(""); }} 
-                        style={{ width: "100%", padding: "12px", border: emailErr ? "1px solid #e00000" : "1px solid #eaeaea", borderRadius: "6px", fontSize: 14, outline: "none", transition: "border-color 0.2s", boxSizing: "border-box" }} 
-                        onFocus={(e) => { if (!emailErr) e.target.style.borderColor = "#0a0a0a" }} 
-                        onBlur={(e) => { if (!emailErr) e.target.style.borderColor = "#eaeaea" }} 
-                      />
-                      {emailErr && <div style={{ color: "#e00000", fontSize: 12, marginTop: 8, textAlign: "left" }}>{emailErr}</div>}
-                    </div>
-
-                      </>
-                    )}
-
-                    <button 
-                      onClick={submitOrder} 
-                      disabled={isSubmitting}
-                      className="vercel-button" 
-                      style={{ width: "100%", padding: "12px 0", fontSize: 14, fontWeight: 500, cursor: isSubmitting ? "not-allowed" : "pointer", opacity: isSubmitting ? 0.7 : 1 }}
-                    >
-                      {isSubmitting ? dict.modal.submitting : dict.modal.submitBtnPay}
-                    </button>
-                 </div>
-               ) : (
-                 <div style={{ textAlign: "center", padding: "10px 0" }}>
-                    <div style={{ width: 64, height: 64, background: "#0a0a0a", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 32, margin: "0 auto 20px" }}>
-                      ✓
-                    </div>
-                    <h4 style={{ fontSize: 18, color: "#111827", margin: "0 0 12px" }}>{dict.modal.success}</h4>
-                    <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, whiteSpace: "pre-wrap", marginBottom: 16 }}>
-                      {modal.actionType === 'consult' ? dict.modal.consultSuccessMsg : dict.modal.paySuccessMsg}
-                      <br/>
-                      <strong style={{ color: "#111827" }}>{email}</strong>
-                    </p>
-                    <div style={{ background: "#fafafa", padding: "12px", borderRadius: "8px", fontSize: 13, color: "#666" }}>
-                      {lang === 'zh' ? '如有任何问题，请联系客服：' : 'If you have any questions, contact: '}
-                      <a href="mailto:chengziai2026@163.com" style={{ color: "#111827", fontWeight: 600, textDecoration: "none" }}>chengziai2026@163.com</a>
-                    </div>
-                 </div>
-               )}
-            </div>
-            <button onClick={() => setModal(null)} style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", fontSize: 24, cursor: "pointer", color: "#999999", lineHeight: 1 }}>×</button>
-          </div>
+      {/* ══════ ABOUT / BRAND SECTION ══════ */}
+      <section id="about" style={{ background: "#0B1220", color: "#fff", padding: "80px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 700, marginBottom: 20, letterSpacing: "-0.02em" }}>
+            {lang === "zh" ? "小工具，快一点完成工作。" : "Small tools. Faster work."}
+          </h2>
+          <p style={{ fontSize: 18, lineHeight: 1.6, color: "#9CA3AF", marginBottom: 32, maxWidth: 600, margin: "0 auto 32px" }}>
+            {lang === "zh" 
+              ? "NavoKit 小工具箱，是给创作者、开发者和运营人的免费 AI 工具箱。我们坚信好工具不该有门槛——无需注册、无需付费、隐私优先。"
+              : "NavoKit is a free AI tools hub for creators, developers, and marketers. We believe great tools should have no barriers — no signup, no payment, privacy-first."}
+          </p>
+          <a
+            href="mailto:chengziai2026@163.com"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "12px 24px",
+              background: "#1F2937",
+              color: "#fff",
+              borderRadius: 12,
+              fontWeight: 600,
+              fontSize: 15,
+              textDecoration: "none",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#374151")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#1F2937")}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            {lang === "zh" ? "联系我们" : "Contact Us"}
+          </a>
         </div>
-      )}
+      </section>
 
-      {/* Footer */}
-      <footer style={{ borderTop: "1px solid #eaeaea", padding: "40px 24px", textAlign: "center", color: "#666", fontSize: 14 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", flexDirection: "column", gap: "12px" }}>
-          <div>© {new Date().getFullYear()} {dict.header.title}. All rights reserved.</div>
-          <div>
-            {lang === 'zh' ? '联系客服：' : 'Contact Support: '} 
-            <a href="mailto:chengziai2026@163.com" style={{ color: "#111827", textDecoration: "none", fontWeight: 500 }}>chengziai2026@163.com</a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter lang={lang} />
+
+      {/* ══════ RESPONSIVE ══════ */}
+      <style>{`
+        html {
+          scroll-behavior: smooth;
+        }
+
+        .tool-card:hover {
+          border-color: #CBD5E1 !important;
+          box-shadow: 0 12px 32px rgba(11,18,32,0.06), 0 4px 12px rgba(11,18,32,0.04) !important;
+          transform: translateY(-4px);
+        }
+
+        .tool-card:hover .tool-card-footer {
+          background: #EFF6FF !important;
+          border-top-color: #DBEAFE !important;
+        }
+        
+        .tool-card:hover .card-logo {
+          opacity: 1 !important;
+        }
+
+        .tool-card:hover .try-now-text {
+          opacity: 1 !important;
+          transform: translateX(0) !important;
+        }
+
+        @media (max-width: 860px) {
+          .hero-section { padding: 60px 20px 40px !important; }
+          .hero-section h1 { font-size: clamp(32px, 8vw, 42px) !important; }
+          .hero-section p { font-size: 16px !important; }
+        }
+
+        @media (max-width: 640px) {
+          .tools-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import SiteFooter from "../../../../components/SiteFooter";
 import Link from 'next/link';
 
 interface AiVideoClientProps {
@@ -100,13 +101,67 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
 
   return (
     <div style={{ minHeight: "100vh", background: "#fafafa", fontFamily: "sans-serif" }}>
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #eaeaea", padding: "12px 0", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
-          <Link href={`/${lang}`} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-             <span style={{ fontSize: 24, color: "#111827" }}>←</span>
-             <span style={{ fontSize: 16, fontWeight: 700, color: "#111827" }}>
-               {lang === 'zh' ? '返回工具集合' : 'Back to Tools'}
-             </span>
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          height: 80,
+          background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid #E5E7EB",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link
+            href={`/${lang}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="NavoKit"
+              style={{
+                height: 52,
+                width: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
+            />
+          </Link>
+          <Link
+            href={`/${lang}`}
+            style={{
+              textDecoration: "none",
+              color: "#6B7280",
+              fontSize: 14,
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "color 0.2s",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            {lang === 'zh' ? '返回首页' : 'Back to Home'}
           </Link>
         </div>
       </header>
@@ -234,9 +289,28 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
           ) : null}
         </div>
 
-        {/* SEO FAQ Section */}
+        {/* SEO Features Section */}
         <div style={{ marginTop: 80, textAlign: "left", padding: "40px", background: "#ffffff", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: "#111827", marginBottom: 32, letterSpacing: "-0.02em" }}>
+          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, color: "#0B1220" }}>
+            {lang === "zh" ? "核心功能特性" : "Core Features"}
+          </h2>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "grid", gap: "16px" }}>
+            {[
+              lang === "zh" ? "文本生成视频" : "Text to Video generation",
+              lang === "zh" ? "电影级画质 (768x1152)" : "Cinematic quality (768x1152)",
+              lang === "zh" ? "极速生成" : "Lightning fast generation"
+            ].map((feature, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 16, color: "#4B5563" }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <h2 style={{ fontSize: 24, fontWeight: 700, color: "#111827", marginBottom: 32, letterSpacing: "-0.02em", borderTop: "1px solid #E5E7EB", paddingTop: 40 }}>
             {lang === 'zh' ? '常见问题' : 'Frequently Asked Questions'}
           </h2>
           
@@ -260,15 +334,35 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
           
           <div>
             <h3 style={{ fontSize: 18, fontWeight: 600, color: "#111827", marginBottom: 8 }}>
-              {lang === 'zh' ? '如何让我的视频火爆全网？' : 'How can I make my video go viral?'}
+              {lang === 'zh' ? '如何写出更好的视频提示词？' : 'How can I write better video prompts?'}
             </h3>
             <p style={{ fontSize: 15, color: "#666666", lineHeight: 1.6 }}>
-              {lang === 'zh' ? '生成惊艳的视频后，您可以使用我们的社交媒体推广服务（Social Media Booster），我们可以为您保证上万次的真实曝光。' : 'After generating a stunning video, you can use our Social Media Booster service to guarantee tens of thousands of real views.'}
+              {lang === 'zh' ? '建议详细描述画面主体、动作、环境光线以及摄像机运动（例如：电影级特写镜头，一只金毛在落日余晖下的沙滩上奔跑，慢动作）。' : 'We recommend detailing the subject, action, lighting, and camera movement (e.g., Cinematic close-up, a golden retriever running on the beach at sunset, slow motion).'}
             </p>
           </div>
         </div>
 
+        {/* Related Tools Recommendation */}
+        <div style={{ marginTop: 40, textAlign: "left", padding: "40px", background: "#ffffff", borderRadius: "16px", border: "1px solid #E5E7EB", boxShadow: "0 1px 2px rgba(11,18,32,0.04)" }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: "#0B1220" }}>
+            {lang === "zh" ? "探索更多工具" : "Explore More Tools"}
+          </h2>
+          <p style={{ color: "#6B7280", marginBottom: 24, fontSize: 15 }}>
+            {lang === "zh" ? "NavoKit 还提供了其他多款免费免注册的 AI 工具，提升你的工作效率。" : "NavoKit provides many other free, no-signup AI tools to boost your productivity."}
+          </p>
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+            <Link href={`/${lang}/tools/chat-exporter`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "ChatGPT 长图导出 →" : "ChatGPT Exporter →"}
+            </Link>
+            <Link href={`/${lang}/tools/social-booster`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "社媒文案生成器 →" : "Social Post Generator →"}
+            </Link>
+          </div>
+        </div>
+
       </main>
+
+      <SiteFooter lang={lang} />
     </div>
   );
 }

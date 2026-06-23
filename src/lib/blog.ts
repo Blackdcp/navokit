@@ -12,8 +12,7 @@ export interface BlogPost {
 }
 
 export function getBlogPosts(lang: 'en' | 'zh'): BlogPost[] {
-  // We keep all SEO generated articles strictly inside `seo-batch` for easy deletion.
-  const postsDirectory = path.join(process.cwd(), 'src', 'content', 'blog', lang, 'seo-batch');
+  const postsDirectory = path.join(process.cwd(), 'src', 'content', 'blog', lang);
   
   if (!fs.existsSync(postsDirectory)) {
     return [];

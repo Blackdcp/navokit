@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import SiteFooter from "./SiteFooter";
 
 interface Props {
   dict: any;
@@ -122,7 +124,7 @@ export default function SocialBoosterClient({ dict, lang }: Props) {
       </div>
 
       {result && (
-        <div style={{ background: "#fff", borderRadius: 12, padding: 32, boxShadow: "0 4px 24px rgba(0,0,0,0.04)", border: "1px solid #eaeaea", position: "relative" }}>
+        <div style={{ background: "#fff", borderRadius: 12, padding: 32, boxShadow: "0 4px 24px rgba(0,0,0,0.04)", border: "1px solid #eaeaea", position: "relative", marginBottom: 64 }}>
           <button
             onClick={handleCopy}
             style={{ position: "absolute", top: 16, right: 16, padding: "6px 12px", background: "#f3f4f6", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer", color: "#374151" }}
@@ -135,18 +137,80 @@ export default function SocialBoosterClient({ dict, lang }: Props) {
         </div>
       )}
 
-      {/* Cross-selling Ad Block */}
-      <div style={{ marginTop: 40, padding: 32, background: "linear-gradient(135deg, #f0f5ff 0%, #e6f0ff 100%)", borderRadius: 12, border: "1px solid #1677ff", textAlign: "center" }}>
-        <h3 style={{ margin: "0 0 12px", fontSize: 20, color: "#111827", fontWeight: 700 }}>
-          {t.adTitle}
-        </h3>
-        <p style={{ margin: "0 0 24px", color: "#4b5563", fontSize: 15, maxWidth: 480, marginLeft: "auto", marginRight: "auto" }}>
-          {t.adDesc}
-        </p>
-        <a href={`/${lang}/products/marketing-followers`} className="vercel-button" style={{ padding: "12px 32px", fontSize: 16, display: "inline-block", textDecoration: "none" }}>
-          {t.adBtn}
-        </a>
-      </div>
+      {/* SEO & Features Section */}
+      <section style={{ maxWidth: 800, margin: "64px auto 96px", padding: "0" }}>
+        <div style={{ background: "#fff", border: "1px solid #E5E7EB", borderRadius: 24, padding: "48px", boxShadow: "0 4px 20px rgba(0,0,0,0.02)" }}>
+          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, color: "#0B1220" }}>
+            {lang === "zh" ? "核心功能特性" : "Core Features"}
+          </h2>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 48px", display: "grid", gap: "16px" }}>
+            {[
+              lang === "zh" ? "零配置，输入一句话即可生成" : "Zero configuration, generate with a single sentence",
+              lang === "zh" ? "完美适配推特、Instagram和小红书" : "Perfectly adapted for Twitter, Instagram, and Xiaohongshu",
+              lang === "zh" ? "使用先进的 Agnes-2.0-Flash 模型" : "Powered by advanced Agnes-2.0-Flash model"
+            ].map((feature, i) => (
+              <li key={i} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 16, color: "#4B5563" }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <h2 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24, color: "#0B1220", borderTop: "1px solid #E5E7EB", paddingTop: 48 }}>
+            {lang === "zh" ? "常见问题" : "FAQ"}
+          </h2>
+          <div style={{ display: "grid", gap: "24px" }}>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "这是免费的吗？" : "Is this free?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "是的，完全免费。无需登录或注册即可生成社交媒体文案初稿，高峰期可能需要短暂排队等待。" : "Yes, it is completely free. Generate social media copy drafts without login or registration. You may need to wait briefly during peak hours."}
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "支持哪些平台？" : "What platforms are supported?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "目前支持推特 (Twitter/X)、Instagram 和 小红书。模型会根据不同平台的特性（例如小红书的 Emoji 和标题党风格，推特的精炼风格）自动调整输出。" : "Currently supports Twitter (X), Instagram, and Xiaohongshu. The model automatically adjusts output based on platform characteristics (e.g. Xiaohongshu's emoji and clickbait style, Twitter's concise style)."}
+              </p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0B1220", margin: "0 0 8px" }}>
+                {lang === "zh" ? "支持其他语言吗？" : "Does it support other languages?"}
+              </h3>
+              <p style={{ margin: 0, color: "#6B7280", fontSize: 15, lineHeight: 1.6 }}>
+                {lang === "zh" ? "您可以输入中文或英文，模型都能理解并生成对应语言的高质量文案。" : "You can input in Chinese or English, and the model will understand and generate high-quality copy in the corresponding language."}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Tools Recommendation */}
+        <div style={{ marginTop: 40, textAlign: "left", padding: "40px", background: "#ffffff", borderRadius: "16px", border: "1px solid #E5E7EB", boxShadow: "0 1px 2px rgba(11,18,32,0.04)" }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: "#0B1220" }}>
+            {lang === "zh" ? "探索更多工具" : "Explore More Tools"}
+          </h2>
+          <p style={{ color: "#6B7280", marginBottom: 24, fontSize: 15 }}>
+            {lang === "zh" ? "NavoKit 还提供了其他多款免费免注册的 AI 工具，提升你的工作效率。" : "NavoKit provides many other free, no-signup AI tools to boost your productivity."}
+          </p>
+          <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+            <Link href={`/${lang}/tools/chat-exporter`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "ChatGPT 长图导出 →" : "ChatGPT Exporter →"}
+            </Link>
+            <Link href={`/${lang}/tools/ppt2pdf`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
+              {lang === "zh" ? "PPT转PDF →" : "PPT to PDF →"}
+            </Link>
+          </div>
+        </div>
+
+      </section>
+
+      <SiteFooter lang={lang} />
     </div>
   );
 }

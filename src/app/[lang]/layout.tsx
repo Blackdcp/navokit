@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
 import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: 'swap' });
-
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh' | 'en' }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const dict = await getDictionary(resolvedParams.lang);
@@ -46,7 +42,7 @@ export default async function RootLayout({
 }) {
   const { lang } = await params;
   return (
-    <html lang={lang} className={inter.variable}>
+    <html lang={lang}>
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>
         {children}
         <Analytics />

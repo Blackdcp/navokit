@@ -13,19 +13,68 @@ export default async function SocialBoosterPage({
 
   return (
     <div style={{ minHeight: '100vh', background: '#fafafa' }}>
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #eaeaea", padding: "12px 0", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
-          <Link href={`/${lang}`} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <div style={{ width: 24, height: 24, background: "#0a0a0a", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderBottom: "8px solid #ffffff", marginTop: "-2px" }} />
-            </div>
-            <span style={{ fontSize: 16, fontWeight: 700, color: "#111827", letterSpacing: "-0.01em" }}>
-              {dict.header.title}
-            </span>
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          height: 80,
+          background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid #E5E7EB",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link
+            href={`/${lang}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="NavoKit"
+              style={{
+                height: 52,
+                width: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
+            />
           </Link>
-          <div style={{ display: "flex", gap: 24, fontSize: 14, fontWeight: 500 }}>
-             <Link href={`/${lang}`} style={{ textDecoration: "none", color: "#666" }}>{lang === 'zh' ? '← 返回首页' : '← Back to Home'}</Link>
-          </div>
+          <Link
+            href={`/${lang}`}
+            style={{
+              textDecoration: "none",
+              color: "#6B7280",
+              fontSize: 14,
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "color 0.2s",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            {lang === 'zh' ? '返回首页' : 'Back to Home'}
+          </Link>
         </div>
       </header>
 

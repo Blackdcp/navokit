@@ -4,6 +4,8 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { notFound } from 'next/navigation'
+import SiteHeader from '../../../../components/SiteHeader'
+import SiteFooter from '../../../../components/SiteFooter'
 
 export async function generateStaticParams() {
   const zhPosts = getBlogPosts('zh')
@@ -37,50 +39,129 @@ export default async function BlogPostPage({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fafafa', paddingBottom: 80 }}>
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #eaeaea", padding: "12px 0", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: "48px" }}>
-          <Link href={`/${lang}`} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <div style={{ width: 24, height: 24, background: "#0a0a0a", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderBottom: "8px solid #ffffff", marginTop: "-2px" }} />
-            </div>
-            <span style={{ fontSize: 16, fontWeight: 700, color: "#111827", letterSpacing: "-0.01em" }}>
-              {dict.header.title}
-            </span>
-          </Link>
-          <div style={{ display: "flex", gap: 24, fontSize: 14, fontWeight: 500 }}>
-             <Link href={`/${lang}/blog`} style={{ textDecoration: "none", color: "#666" }}>{lang === 'zh' ? '← 返回博客' : '← Back to Blog'}</Link>
+    <div style={{ minHeight: "100vh", background: "#F8FAFC", color: "#0B1220", display: "flex", flexDirection: "column", fontFamily: "sans-serif" }}>
+      <SiteHeader lang={lang} />
+
+      <main style={{ flex: 1, width: "100%", paddingBottom: "96px" }}>
+        {/* Breadcrumb / Back Link */}
+        <div style={{ padding: "32px 24px 0" }}>
+          <div style={{ maxWidth: 800, margin: "0 auto" }}>
+            <Link 
+              href={`/${lang}/blog`} 
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                color: "#6B7280",
+                textDecoration: "none",
+                fontSize: "14px",
+                fontWeight: 600,
+                transition: "color 0.2s"
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              {lang === 'zh' ? '返回教程列表' : 'Back to Articles'}
+            </Link>
           </div>
         </div>
-      </header>
 
-      <article style={{ maxWidth: 720, margin: "0 auto", padding: "40px 24px", background: "#fff", marginTop: 40, borderRadius: 8, border: "1px solid #eaeaea" }}>
-        <h1 style={{ fontSize: 32, fontWeight: 700, color: "#111827", marginBottom: 12, letterSpacing: "-0.02em", lineHeight: 1.3 }}>
-          {post.title}
-        </h1>
-        <div style={{ fontSize: 14, color: "#999", marginBottom: 40, paddingBottom: 24, borderBottom: "1px solid #eaeaea" }}>
-          {post.date}
-        </div>
-        
-        <div className="prose prose-slate max-w-none" style={{ lineHeight: 1.8, color: "#333", fontSize: 16 }}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
-        </div>
+        <article style={{ maxWidth: 800, margin: "32px auto 0", padding: "0 24px" }}>
+          {/* Article Header */}
+          <div style={{ marginBottom: 40 }}>
+            <span style={{
+              display: "inline-block",
+              padding: "4px 12px",
+              background: "#EFF6FF",
+              color: "#2563EB",
+              borderRadius: "100px",
+              fontSize: 12,
+              fontWeight: 600,
+              marginBottom: 16
+            }}>
+              {lang === 'zh' ? '实操指南' : 'Guides & Tutorials'}
+            </span>
+            <h1 style={{
+              fontSize: "clamp(28px, 5vw, 40px)",
+              fontWeight: 800,
+              color: "#0B1220",
+              margin: "0 0 16px",
+              letterSpacing: "-0.03em",
+              lineHeight: 1.25
+            }}>
+              {post.title}
+            </h1>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              fontSize: 14,
+              color: "#6B7280",
+              fontWeight: 500,
+            }}>
+              <span>{post.date}</span>
+              <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#D1D5DB" }} />
+              <span>{lang === 'zh' ? '阅读约 5 分钟' : '5 min read'}</span>
+            </div>
+          </div>
 
-        {/* monetization block at the end */}
-        <div style={{ marginTop: 60, padding: 32, background: "#f0f5ff", borderRadius: 8, border: "1px solid #1677ff", textAlign: "center" }}>
-          <h3 style={{ margin: "0 0 12px", fontSize: 20, color: "#111827", fontWeight: 600 }}>
-             {lang === 'zh' ? '🔥 需要升级 ChatGPT Plus 或获取 API？' : '🔥 Need ChatGPT Plus or APIs?'}
-          </h3>
-          <p style={{ margin: "0 0 24px", color: "#666", fontSize: 15 }}>
-             {lang === 'zh' ? '安全、稳定、极速交付。查看我们提供的开发者优质资源，直接购买免折腾。' : 'Safe, stable, and instant delivery. Check out our premium resources.'}
-          </p>
-          <Link href={`/${lang}`} className="vercel-button" style={{ padding: "12px 32px", fontSize: 16, display: "inline-block", textDecoration: "none" }}>
-            {lang === 'zh' ? '前往商城选购' : 'Visit Store'}
-          </Link>
-        </div>
-      </article>
+          {/* Article body in a clean white card */}
+          <div style={{
+            background: "#ffffff",
+            padding: "40px 32px",
+            borderRadius: 24,
+            border: "1px solid #E5E7EB",
+            boxShadow: "0 1px 2px rgba(11,18,32,0.04)"
+          }}>
+            <div className="prose prose-slate max-w-none" style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151" }}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {post.content}
+              </ReactMarkdown>
+            </div>
+          </div>
+
+          {/* Related Tools Recommendation */}
+          <div style={{
+            marginTop: 48,
+            padding: "40px 32px",
+            background: "#fff",
+            borderRadius: 24,
+            border: "1px solid #E5E7EB",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            boxShadow: "0 1px 2px rgba(11,18,32,0.04)"
+          }}>
+            <h3 style={{ margin: "0 0 12px", fontSize: 18, fontWeight: 700, color: "#0B1220" }}>
+              {lang === 'zh' ? '💡 想试试上面提到的效果吗？' : '💡 Want to try these workflows?'}
+            </h3>
+            <p style={{ margin: "0 0 24px", fontSize: 15, color: "#6B7280", lineHeight: 1.6, maxWidth: 480 }}>
+              {lang === 'zh' 
+                ? 'NavoKit 收集了全套 100% 免费的 AI 转换工具与排版神器，打开即用，无需注册。' 
+                : 'NavoKit provides a complete suite of 100% free online conversion and post generation tools.'}
+            </p>
+            <Link 
+              href={`/${lang}#tools`} 
+              style={{
+                display: "inline-block",
+                padding: "10px 24px",
+                background: "#0B1220",
+                color: "#fff",
+                borderRadius: 12,
+                fontWeight: 650,
+                fontSize: 14,
+                textDecoration: "none",
+                boxShadow: "0 1px 2px rgba(11,18,32,0.08)",
+                transition: "opacity 0.2s"
+              }}
+            >
+              {lang === 'zh' ? '浏览免费工具箱' : 'Explore Free Tools'}
+            </Link>
+          </div>
+        </article>
+      </main>
+
+      <SiteFooter lang={lang} />
     </div>
   )
 }
