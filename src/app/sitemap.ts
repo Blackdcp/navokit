@@ -1,28 +1,8 @@
 import { MetadataRoute } from 'next'
-import { getProducts } from '../lib/api'
 import { getBlogPosts } from '../lib/blog'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://cheng-zi-ai.com'
-  const products = getProducts('zh')
-
-  // Only index real product detail pages
-  const validProducts = products.filter(p => p.actionType !== 'link')
-
-  const productUrls = validProducts.flatMap(p => [
-    {
-      url: `${baseUrl}/zh/products/${p.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/en/products/${p.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }
-  ])
+  const baseUrl = 'https://navokit.com'
 
   // Get blog posts for SEO
   const zhPosts = getBlogPosts('zh')
@@ -99,7 +79,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    ...productUrls,
+    {
+      url: `${baseUrl}/zh/tools/ai-video-generator`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/en/tools/ai-video-generator`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
     ...blogUrls
   ]
 }

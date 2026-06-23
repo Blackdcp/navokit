@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/'],
     },
-    sitemap: 'https://cheng-zi-ai.com/sitemap.xml',
+    sitemap: 'https://navokit.com/sitemap.xml',
   }
 }
