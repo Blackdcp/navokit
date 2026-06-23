@@ -39,7 +39,7 @@ export default function TermsOfServicePage({ params: { lang } }: { params: { lan
 
                 <h3>6. 联系我们</h3>
                 <p>如对本条款有疑问，请联系：</p>
-                <p><a href="mailto:chengziai2026@163.com">chengziai2026@163.com</a></p>
+                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
               </>
             ) : (
               <>
@@ -67,7 +67,7 @@ export default function TermsOfServicePage({ params: { lang } }: { params: { lan
 
                 <h3>6. Contact Us</h3>
                 <p>If you have any questions regarding these terms, please contact:</p>
-                <p><a href="mailto:chengziai2026@163.com">chengziai2026@163.com</a></p>
+                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
               </>
             )}
           </div>

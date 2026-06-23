@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage({ params: { lang } }: { params: { lang
 
                 <h3>5. 联系我们</h3>
                 <p>如果您对本隐私政策有任何疑问，请通过以下邮箱联系我们：</p>
-                <p><a href="mailto:chengziai2026@163.com">chengziai2026@163.com</a></p>
+                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
               </>
             ) : (
               <>
@@ -69,7 +69,7 @@ export default function PrivacyPolicyPage({ params: { lang } }: { params: { lang
 
                 <h3>5. Contact Us</h3>
                 <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-                <p><a href="mailto:chengziai2026@163.com">chengziai2026@163.com</a></p>
+                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
               </>
             )}
           </div>

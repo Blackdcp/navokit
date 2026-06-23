@@ -282,7 +282,7 @@ export default function HomePage({
               : "NavoKit is a free AI tools hub for creators, developers, and marketers. We believe great tools should have no barriers — no signup, no payment, privacy-first."}
           </p>
           <a
-            href="mailto:chengziai2026@163.com"
+            href="mailto:admin@navokit.com"
             style={{
               display: "inline-flex",
               alignItems: "center",

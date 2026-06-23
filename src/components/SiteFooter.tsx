@@ -3,12 +3,12 @@ import Link from "next/link";
 export default function SiteFooter({ lang }: { lang: string }) {
   const links = lang === "zh" ? [
     { label: "关于我们", href: `/${lang}#about` },
-    { label: "联系我们", href: "mailto:chengziai2026@163.com" },
+    { label: "联系我们", href: "mailto:admin@navokit.com" },
     { label: "隐私政策", href: `/${lang}/privacy` },
     { label: "服务条款", href: `/${lang}/terms` },
   ] : [
     { label: "About Us", href: `/${lang}#about` },
-    { label: "Contact", href: "mailto:chengziai2026@163.com" },
+    { label: "Contact", href: "mailto:admin@navokit.com" },
     { label: "Privacy Policy", href: `/${lang}/privacy` },
     { label: "Terms of Service", href: `/${lang}/terms` },
   ];

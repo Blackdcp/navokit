@@ -6,7 +6,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh
   const dict = await getDictionary(lang);
   
   return {
-    title: lang === 'en' ? 'Free AI Video Generator - Text to Video | ChengZi AI' : '免费 AI 视频生成器 - 文字生视频 | 橙子 AI',
+    title: lang === 'en' ? 'Free AI Video Generator - Text to Video | NavoKit' : '免费 AI 视频生成器 - 文本转视频 | NavoKit',
     description: lang === 'en' ? 'Convert text to stunning cinematic videos instantly using advanced AI models. Free to use.' : '使用高级 AI 模型将文字创意瞬间转化为电影级视频。完全免费使用。',
   };
 }
