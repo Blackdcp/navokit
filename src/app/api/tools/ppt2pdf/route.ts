@@ -35,7 +35,8 @@ export async function POST(req: Request) {
     if (!res.ok) {
       const errText = await res.text();
       console.error("Gotenberg error:", res.status, errText);
-      return NextResponse.json({ error: '文档转换引擎处理失败' }, { status: 502 });
+      // Expose the raw error from the Gotenberg server to help debugging
+      return NextResponse.json({ error: `引擎报错 (${res.status}): ${errText.substring(0, 100)}` }, { status: 502 });
     }
 
     // Return the PDF stream back to the client
@@ -48,6 +49,6 @@ export async function POST(req: Request) {
     });
   } catch (error: any) {
     console.error('Error proxying to Gotenberg:', error);
-    return NextResponse.json({ error: '服务器内部处理错误' }, { status: 500 });
+    return NextResponse.json({ error: `连接引擎失败: ${error.message}` }, { status: 500 });
   }
 }
