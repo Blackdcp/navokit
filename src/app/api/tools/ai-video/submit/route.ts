@@ -4,7 +4,7 @@ export const maxDuration = 30; // Serverless function timeout: 30s
 
 export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
+    const { prompt, duration = 81, aspectRatio = 'landscape' } = await req.json();
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
@@ -20,6 +20,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
+    // Determine dimensions based on aspectRatio
+    let width = 1152;
+    let height = 768;
+    if (aspectRatio === 'portrait') {
+      width = 768;
+      height = 1152;
+    }
+
+    // Determine frames based on duration
+    const validDurations = [81, 121, 241, 361];
+    let num_frames = 81;
+    if (validDurations.includes(Number(duration))) {
+      num_frames = Number(duration);
+    }
+
     // Call Agnes AI Video Generation API
     const response = await fetch('https://apihub.agnes-ai.com/v1/videos', {
       method: 'POST',
@@ -30,9 +45,9 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         model: "agnes-video-v2.0",
         prompt: prompt,
-        height: 768,
-        width: 1152,
-        num_frames: 81, // 81 frames @ 24 fps = ~3.3 seconds (good for quick free tool)
+        height: height,
+        width: width,
+        num_frames: num_frames,
         frame_rate: 24
       })
     });
