@@ -22,9 +22,7 @@ export async function POST(req: Request) {
     // Forward the file to Gotenberg
     // Gotenberg requires multipart/form-data with the key "files"
     const outgoingFormData = new FormData();
-    const buffer = await (file as Blob).arrayBuffer();
-    const newBlob = new Blob([buffer], { type: (file as Blob).type });
-    outgoingFormData.append('files', newBlob, (file as File).name || 'document.pptx');
+    outgoingFormData.append('files', file, (file as File).name || 'document.pptx');
 
     const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
