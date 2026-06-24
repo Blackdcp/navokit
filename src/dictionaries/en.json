@@ -64,23 +64,20 @@
     "back": "Back to Home"
   },
   "meta": {
-    "title": "NavoKit — Premium Tools",
-    "description": "Free SEO Tools",
-    "keywords": [
-      "AI tools",
-      "PPT to PDF lossless"
-    ]
+    "title": "NavoKit | Free AI Tools for Faster Everyday Work (No Signup)",
+    "description": "NavoKit is a free, privacy-first AI tools hub. Convert files without losing formatting, export ChatGPT chats as images, generate viral social posts, and create cinematic AI videos. 100% Free, no watermarks, no signup required.",
+    "keywords": "free AI tools, no signup, no watermark, free PPT to PDF converter, AI social media post generator, free AI video generator, chatgpt exporter, productivity tools, privacy first"
   },
   "tools": {
     "chatExporter": {
       "meta": {
-        "title": "ChatGPT Markdown to Image/PDF Exporter | Free Tool",
-        "description": "100% Free tool to beautify ChatGPT outputs. Convert raw Markdown to stunning, shareable images or PDFs instantly in your browser. Zero privacy risk."
+        "title": "Markdown to Image Converter - Export ChatGPT Responses as Images | NavoKit",
+        "description": "Turn Markdown, ChatGPT responses, and AI-generated text into clean, shareable PNG images with NavoKit's free Markdown to Image converter."
       },
       "hero": {
-        "title": "ChatGPT Beautiful Exporter",
-        "subtitle": "Turn messy Markdown into stunning, shareable cards for Twitter & LinkedIn.",
-        "watermarkText": "Rendered by navokit.com"
+        "title": "Markdown to Image Converter",
+        "subtitle": "Convert Markdown, ChatGPT responses, and AI-generated text into clean, shareable PNG images.",
+        "watermarkText": "Generated for free on navokit.com"
       },
       "editor": {
         "placeholder": "Paste your raw Markdown from ChatGPT here...",
@@ -95,7 +92,11 @@
       "placeholder": "E.g., I had a great coffee today at Starbucks...",
       "generate": "Generate Magic",
       "generating": "Generating...",
-      "platforms": { "twitter": "Twitter / X", "instagram": "Instagram", "xiaohongshu": "Xiaohongshu" },
+      "platforms": {
+        "twitter": "Twitter / X",
+        "instagram": "Instagram",
+        "xiaohongshu": "Xiaohongshu"
+      },
       "copy": "Copy Text",
       "copied": "Copied!",
       "adTitle": "Want to guarantee 1000 likes?",

@@ -64,23 +64,20 @@
     "back": "返回首页"
   },
   "meta": {
-    "title": "NavoKit — 免费 SEO 工具",
-    "description": "提供极速免费的长尾 SEO 实用工具箱。",
-    "keywords": [
-      "AI工具",
-      "PPT转PDF免费"
-    ]
+    "title": "NavoKit | 免费 AI 工具箱，让日常工作快一点（免登录）",
+    "description": "NavoKit 是一个免费且保护隐私的 AI 工具箱。支持高质量 PPT 转 PDF、ChatGPT 聊天记录转长图、AI 社媒爆款文案生成以及文本转 AI 视频。100% 免费，无水印，即开即用免注册。",
+    "keywords": "免费 AI 工具, 免登录, 无水印, PPT转PDF在线免费, AI文案生成器, 免费AI视频生成, ChatGPT导出图片, 工作效率工具, 保护隐私"
   },
   "tools": {
     "chatExporter": {
       "meta": {
-        "title": "ChatGPT Markdown转长图/PDF生成器 | 免费工具",
-        "description": "完全免费的 ChatGPT 回答美化工具。一键将丑陋的 Markdown 代码转换为排版精美的长图或 PDF 格式。前端生成，零隐私泄露风险。"
+        "title": "Markdown 转图片工具 - 将 ChatGPT 回复导出为图片 | NavoKit",
+        "description": "使用 NavoKit 免费的 Markdown 转图片工具，将 Markdown、ChatGPT 回复和 AI 生成的文本转换为排版整洁、易于分享的高清 PNG 图片。"
       },
       "hero": {
-        "title": "ChatGPT 问答长图导出神器",
-        "subtitle": "把杂乱的 Markdown 变成一张精美的卡片，引爆你的社交圈。",
-        "watermarkText": "Rendered by navokit.com"
+        "title": "Markdown 转图片",
+        "subtitle": "将 Markdown、ChatGPT 回复和 AI 生成文本转换为排版整洁、易于分享的高清图片卡片。",
+        "watermarkText": "在线免费制作于 navokit.com"
       },
       "editor": {
         "placeholder": "在这里粘贴 ChatGPT 吐出的 Markdown 格式文本...",
@@ -95,7 +92,11 @@
       "placeholder": "比如：今天在星巴克喝了一杯很好喝的咖啡，感觉很治愈...",
       "generate": "一键生成魔法文案",
       "generating": "正在生成爆款...",
-      "platforms": { "twitter": "推特 / X", "instagram": "Instagram", "xiaohongshu": "小红书" },
+      "platforms": {
+        "twitter": "推特 / X",
+        "instagram": "Instagram",
+        "xiaohongshu": "小红书"
+      },
       "copy": "复制文案",
       "copied": "已复制！",
       "adTitle": "有了好文案，想保证 100% 爆款？",

@@ -1,5 +1,5 @@
 {
-  "id": "tools-ppt2pdf",
+  "id": "ppt-to-pdf",
   "categoryId": "doc_tools",
   "categoryName": "Document Tools · Free",
   "title": "PPT to PDF Lossless HD",
@@ -23,6 +23,6 @@
   "buyButtonText": "Use for Free",
   "orderName": "Free Tool (No Order)",
   "actionType": "link",
-  "linkUrl": "/en/tools/ppt2pdf",
+  "linkUrl": "/en/tools/ppt-to-pdf",
   "isHot": false
 }

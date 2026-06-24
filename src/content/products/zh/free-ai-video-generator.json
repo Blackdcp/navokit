@@ -1,5 +1,5 @@
 {
-  "id": "tools-ai-video",
+  "id": "free-ai-video-generator",
   "categoryId": "ai_generation",
   "categoryName": "AI 提效工具",
   "title": "免费 AI 视频生成器",
@@ -21,6 +21,6 @@
   "buyButtonText": "免费使用",
   "orderName": "免费工具 (无订单)",
   "actionType": "link",
-  "linkUrl": "/zh/tools/ai-video-generator",
+  "linkUrl": "/zh/tools/free-ai-video-generator",
   "isHot": true
 }

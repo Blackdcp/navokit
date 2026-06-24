@@ -1,5 +1,5 @@
 {
-  "id": "tools-ai-video",
+  "id": "free-ai-video-generator",
   "categoryId": "ai_generation",
   "categoryName": "AI Tools",
   "title": "Free AI Video Generator",
@@ -21,6 +21,6 @@
   "buyButtonText": "Use for Free",
   "orderName": "Free Tool",
   "actionType": "link",
-  "linkUrl": "/en/tools/ai-video-generator",
+  "linkUrl": "/en/tools/free-ai-video-generator",
   "isHot": true
 }

@@ -1,5 +1,5 @@
 {
-  "id": "social-booster",
+  "id": "ai-social-booster",
   "title": "AI Social Booster",
   "subtitle": "Turn a simple thought into a viral post in seconds. 100% Free.",
   "price": 0,
@@ -7,11 +7,16 @@
   "originalPriceText": "$9.9/mo",
   "buyButtonText": "Use for Free",
   "actionType": "link",
-  "linkUrl": "/en/tools/social-booster",
+  "linkUrl": "/en/tools/ai-social-booster",
   "inStock": true,
   "isHot": true,
   "categoryId": "content_tools",
-  "tags": ["AI Tool", "Viral Post", "100% Free", "Marketing"],
+  "tags": [
+    "AI Tool",
+    "Viral Post",
+    "100% Free",
+    "Marketing"
+  ],
   "features": [
     "Zero config, input a sentence to generate",
     "Perfectly formatted for Twitter, Instagram & Xiaohongshu",

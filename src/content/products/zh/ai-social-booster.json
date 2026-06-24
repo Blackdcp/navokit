@@ -1,5 +1,5 @@
 {
-  "id": "social-booster",
+  "id": "ai-social-booster",
   "title": "AI 社媒文案生成器",
   "subtitle": "输入一句话，一键生成高质量社媒文案初稿，完美适配各平台风格。",
   "price": 0,
@@ -7,11 +7,16 @@
   "originalPriceText": "",
   "buyButtonText": "免费使用",
   "actionType": "link",
-  "linkUrl": "/zh/tools/social-booster",
+  "linkUrl": "/zh/tools/ai-social-booster",
   "inStock": true,
   "isHot": true,
   "categoryId": "content_tools",
-  "tags": ["AI工具", "社媒文案", "完全免费", "内容创作"],
+  "tags": [
+    "AI工具",
+    "社媒文案",
+    "完全免费",
+    "内容创作"
+  ],
   "features": [
     "输入一句话快速生成初稿",
     "完美适配推特、Instagram和小红书",
