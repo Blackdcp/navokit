@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as htmlToImage from 'html-to-image';
 import Link from 'next/link';
+import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
 
 export default function ChatExporter({ dict, lang }: { dict: any; lang: string }) {
@@ -34,70 +35,7 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
 
   return (
     <div style={{ minHeight: "100vh", background: "#fafafa", fontFamily: "sans-serif" }}>
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          height: 80,
-          background: "rgba(255,255,255,0.88)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid #E5E7EB",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1120,
-            margin: "0 auto",
-            padding: "0 24px",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Link
-            href={`/${lang}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              textDecoration: "none",
-              transition: "transform 0.2s ease",
-            }}
-          >
-            <img
-              src="/logo.png"
-              alt="NavoKit"
-              style={{
-                height: 52,
-                width: "auto",
-                display: "block",
-                objectFit: "contain",
-              }}
-            />
-          </Link>
-          <Link
-            href={`/${lang}`}
-            style={{
-              textDecoration: "none",
-              color: "#6B7280",
-              fontSize: 14,
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              transition: "color 0.2s",
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            {lang === 'zh' ? '返回首页' : 'Back to Home'}
-          </Link>
-        </div>
-      </header>
+      <SiteHeader lang={lang} />
 
       {/* Main Content Area */}
       <main style={{ maxWidth: 1080, margin: "60px auto", padding: "0 24px", textAlign: "center" }}>
@@ -333,9 +271,9 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
             {lang === 'zh' ? '探索更多工具' : 'Explore More Tools'}
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
-            <Link href={`/${lang}/guides/how-to-export-chatgpt-response-as-image`} style={{ textDecoration: "none", color: "#111827", fontWeight: 500, fontSize: 16, padding: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, display: "block", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.borderColor = "#9CA3AF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
-              <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? '使用指南' : 'Guide'}</div>
-              {lang === 'zh' ? '如何将 ChatGPT 回复导出为图片' : 'How to Export ChatGPT Responses as Images'} →
+            <Link href={`/${lang}/blog/how-to-write-viral-social-media-posts-with-ai`} style={{ textDecoration: "none", color: "#111827", fontWeight: 500, fontSize: 16, padding: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, display: "block", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.borderColor = "#9CA3AF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
+              <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? '博客教程' : 'Blog Tutorial'}</div>
+              {lang === 'zh' ? '如何用 AI 创作爆款社媒文案' : 'How to Write Viral Social Media Posts with AI'} →
             </Link>
             <Link href={`/${lang}/tools/free-ai-video-generator`} style={{ textDecoration: "none", color: "#111827", fontWeight: 500, fontSize: 16, padding: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, display: "block", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.borderColor = "#9CA3AF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
               <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? 'AI 视频' : 'AI Video'}</div>
