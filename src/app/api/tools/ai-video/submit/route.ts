@@ -35,49 +35,77 @@ export async function POST(req: Request) {
       num_frames = Number(duration);
     }
 
-    // Call Agnes AI Video Generation API
-    const response = await fetch('https://apihub.agnes-ai.com/v1/videos', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: "agnes-video-v2.0",
-        prompt: prompt,
-        height: height,
-        width: width,
-        num_frames: num_frames,
-        frame_rate: 24
-      })
-    });
+    // Call Agnes AI Video Generation API with a timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout to prevent Serverless timeout
 
-    const data = await response.json();
+    try {
+      const response = await fetch('https://apihub.agnes-ai.com/v1/videos', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: "agnes-video-v2.0",
+          prompt: prompt,
+          height: height,
+          width: width,
+          num_frames: num_frames,
+          frame_rate: 24
+        }),
+        signal: controller.signal
+      });
 
-    if (!response.ok) {
-      console.error("Agnes AI API Error:", data);
-      
-      const isPolicyViolation = 
-        data.code === 'content_policy_violation' || 
-        data.error?.code === 'content_policy_violation';
-      
-      if (isPolicyViolation) {
+      clearTimeout(timeoutId);
+
+      // Check if response is JSON to prevent backend crash
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error("Non-JSON upstream response:", text);
         return NextResponse.json(
-          { error: '提示词未通过内容安全过滤，请修改提示词后重试。 / Prompt triggered content safety policy. Please modify your prompt and try again.' },
-          { status: 400 }
+          { error: '视频生成服务暂时不可用，请稍后再试。 / Upstream service is temporarily unavailable. Please try again later.' },
+          { status: 502 }
         );
       }
 
-      return NextResponse.json(
-        { error: 'Server is currently busy, please try again later' },
-        { status: response.status }
-      );
-    }
+      const data = await response.json();
 
-    return NextResponse.json({
-      video_id: data.video_id,
-      task_id: data.task_id
-    });
+      if (!response.ok) {
+        console.error("Agnes AI API Error:", data);
+        
+        const isPolicyViolation = 
+          data.code === 'content_policy_violation' || 
+          data.error?.code === 'content_policy_violation';
+        
+        if (isPolicyViolation) {
+          return NextResponse.json(
+            { error: '提示词未通过内容安全过滤，请修改提示词后重试。 / Prompt triggered content safety policy. Please modify your prompt and try again.' },
+            { status: 400 }
+          );
+        }
+
+        return NextResponse.json(
+          { error: '视频服务器繁忙，请稍后再试。 / Server is currently busy, please try again later.' },
+          { status: response.status }
+        );
+      }
+
+      return NextResponse.json({
+        video_id: data.video_id,
+        task_id: data.task_id
+      });
+    } catch (err: any) {
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        return NextResponse.json(
+          { error: '请求视频服务器超时，请稍后再试。 / Request to video server timed out. Please try again.' },
+          { status: 504 }
+        );
+      }
+      throw err;
+    }
   } catch (error) {
     console.error('Video generation error:', error);
     return NextResponse.json(
