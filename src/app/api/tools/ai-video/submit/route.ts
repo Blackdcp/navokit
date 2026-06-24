@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       
       if (isPolicyViolation) {
         return NextResponse.json(
-          { error: '提示词触发了内容安全过滤策略（请尝试避免“压迫感”、“高潮”等敏感词）。 / Prompt triggered content safety policy (please avoid words like "oppression", "climax").' },
+          { error: '提示词未通过内容安全过滤，请修改提示词后重试。 / Prompt triggered content safety policy. Please modify your prompt and try again.' },
           { status: 400 }
         );
       }
