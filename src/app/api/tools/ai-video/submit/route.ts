@@ -41,6 +41,18 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       console.error("Agnes AI API Error:", data);
+      
+      const isPolicyViolation = 
+        data.code === 'content_policy_violation' || 
+        data.error?.code === 'content_policy_violation';
+      
+      if (isPolicyViolation) {
+        return NextResponse.json(
+          { error: '提示词触发了内容安全过滤策略（请尝试避免“压迫感”、“高潮”等敏感词）。 / Prompt triggered content safety policy (please avoid words like "oppression", "climax").' },
+          { status: 400 }
+        );
+      }
+
       return NextResponse.json(
         { error: 'Server is currently busy, please try again later' },
         { status: response.status }
