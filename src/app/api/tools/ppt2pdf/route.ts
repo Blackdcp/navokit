@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const maxDuration = 60; // Serverless function timeout: 60s
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -15,12 +17,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: '服务端转换引擎未配置，请联系管理员' }, { status: 500 });
     }
 
+    const baseUrl = gotenbergUrl.replace(/\/+$/, '');
+
     // Forward the file to Gotenberg
     // Gotenberg requires multipart/form-data with the key "files"
     const outgoingFormData = new FormData();
-    outgoingFormData.append('files', file, (file as File).name || 'document.pptx');
+    const buffer = await (file as Blob).arrayBuffer();
+    const newBlob = new Blob([buffer], { type: (file as Blob).type });
+    outgoingFormData.append('files', newBlob, (file as File).name || 'document.pptx');
 
-    const res = await fetch(`${gotenbergUrl}/forms/libreoffice/convert`, {
+    const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
       body: outgoingFormData,
       // Increase timeout for large conversions if supported by the environment, default fetch handles it but Vercel limits functions to 10s-60s based on plan.
