@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const maxDuration = 30; // Serverless function timeout: 30s
+export const maxDuration = 60; // Serverless function timeout: 60s
 
 export async function POST(req: Request) {
   let lang = 'en';
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
 
     // Call Agnes AI Video Generation API with a timeout
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout to prevent Serverless timeout
+    const timeoutId = setTimeout(() => controller.abort(), 55000); // 55s timeout to prevent Serverless timeout
 
     try {
       const response = await fetch('https://apihub.agnes-ai.com/v1/videos', {
