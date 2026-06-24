@@ -36,11 +36,19 @@ export async function GET(req: Request) {
       );
     }
 
-    // Extract relevant data for the frontend
+    // Extract relevant data for the frontend and rewrite the URL to hide the backend domain
+    const rawUrl = data.remixed_from_video_id || null;
+    let videoUrl = null;
+    if (rawUrl && rawUrl.startsWith('https://platform-outputs.agnes-ai.space/videos/')) {
+      videoUrl = rawUrl.replace('https://platform-outputs.agnes-ai.space/videos/', '/assets/video/');
+    } else {
+      videoUrl = rawUrl;
+    }
+
     return NextResponse.json({
       status: data.status,
       progress: data.progress,
-      video_url: data.remixed_from_video_id || null
+      video_url: videoUrl
     });
   } catch (error) {
     console.error('Video status error:', error);

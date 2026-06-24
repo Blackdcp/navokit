@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         destination: 'https://1key6868.com/api/:path*',
       },
+      {
+        source: '/assets/video/:path*',
+        destination: 'https://platform-outputs.agnes-ai.space/videos/:path*',
+      },
     ];
   },
 };
