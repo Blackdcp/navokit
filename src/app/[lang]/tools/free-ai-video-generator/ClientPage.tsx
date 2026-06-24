@@ -191,10 +191,71 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
           {status === "idle" || status === "error" ? (
             <div>
                <div style={{ fontSize: 48, marginBottom: 16 }}>🎬</div>
-               <div style={{ fontSize: 18, fontWeight: 600, color: "#111827", marginBottom: 16 }}>
+               <div style={{ fontSize: 18, fontWeight: 600, color: "#111827", marginBottom: 24 }}>
                  {lang === 'zh' ? '输入视频提示词' : 'Enter Video Prompt'}
                </div>
-               
+
+               {/* Aspect Ratio Selector */}
+               <div style={{ display: "flex", gap: 12, maxWidth: "500px", margin: "0 auto 12px" }}>
+                 {[
+                   { value: 'landscape', label: lang === 'zh' ? '横屏 16:9 🖥️' : 'Landscape 16:9 🖥️' },
+                   { value: 'portrait', label: lang === 'zh' ? '竖屏 9:16 📱' : 'Portrait 9:16 📱' },
+                 ].map(item => (
+                   <button
+                     key={item.value}
+                     onClick={() => setAspectRatio(item.value as 'landscape' | 'portrait')}
+                     style={{
+                       flex: 1,
+                       padding: "12px 0",
+                       borderRadius: 8,
+                       border: aspectRatio === item.value ? "2px solid #000" : "1px solid #eaeaea",
+                       background: aspectRatio === item.value ? "#000" : "#fff",
+                       color: aspectRatio === item.value ? "#fff" : "#666",
+                       fontWeight: 600,
+                       fontSize: 14,
+                       cursor: "pointer",
+                       transition: "all 0.2s"
+                     }}
+                   >
+                     {item.label}
+                   </button>
+                 ))}
+               </div>
+
+               {/* Duration Selector */}
+               <div style={{ display: "flex", gap: 8, maxWidth: "500px", margin: "0 auto 20px" }}>
+                 {[
+                   { value: 81, label: lang === 'zh' ? '3.3 秒' : '3.3s', desc: lang === 'zh' ? '极速' : 'Fast' },
+                   { value: 121, label: lang === 'zh' ? '5.0 秒' : '5.0s', desc: lang === 'zh' ? '均衡' : 'Balanced' },
+                   { value: 241, label: lang === 'zh' ? '10 秒' : '10s', desc: lang === 'zh' ? '较慢' : 'Slow' },
+                   { value: 361, label: lang === 'zh' ? '15 秒' : '15s', desc: lang === 'zh' ? '长视频' : 'Long' },
+                 ].map(item => (
+                   <button
+                     key={item.value}
+                     onClick={() => setDuration(item.value)}
+                     style={{
+                       flex: 1,
+                       display: "flex",
+                       flexDirection: "column",
+                       alignItems: "center",
+                       justifyContent: "center",
+                       padding: "6px 0",
+                       borderRadius: 8,
+                       border: duration === item.value ? "2px solid #000" : "1px solid #eaeaea",
+                       background: duration === item.value ? "#000" : "#fff",
+                       color: duration === item.value ? "#fff" : "#666",
+                       fontWeight: 600,
+                       fontSize: 13,
+                       cursor: "pointer",
+                       transition: "all 0.2s"
+                     }}
+                   >
+                     <span style={{ fontSize: "13px", fontWeight: 600 }}>{item.label}</span>
+                     <span style={{ fontSize: "9px", opacity: 0.7, marginTop: "1px", fontWeight: 400 }}>{item.desc}</span>
+                   </button>
+                 ))}
+               </div>
+
                <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
@@ -215,81 +276,6 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
                     outline: "none"
                   }}
                />
-
-               {/* Aspect Ratio Selector */}
-               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
-                 <div style={{ fontSize: "14px", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
-                   {lang === 'zh' ? '视频比例' : 'Aspect Ratio'}
-                 </div>
-                 <div style={{ display: "flex", gap: "10px" }}>
-                   {[
-                     { value: 'landscape', label: lang === 'zh' ? '横屏 16:9' : 'Landscape 16:9', icon: '🖥️' },
-                     { value: 'portrait', label: lang === 'zh' ? '竖屏 9:16' : 'Portrait 9:16', icon: '📱' },
-                   ].map((item) => (
-                     <button
-                       key={item.value}
-                       onClick={() => setAspectRatio(item.value as 'landscape' | 'portrait')}
-                       style={{
-                         display: "flex",
-                         alignItems: "center",
-                         gap: "6px",
-                         padding: "8px 16px",
-                         borderRadius: "20px",
-                         border: "1px solid",
-                         borderColor: aspectRatio === item.value ? "#111827" : "#E5E7EB",
-                         background: aspectRatio === item.value ? "#111827" : "#FFFFFF",
-                         color: aspectRatio === item.value ? "#FFFFFF" : "#4B5563",
-                         fontSize: "14px",
-                         fontWeight: 500,
-                         cursor: "pointer",
-                         transition: "all 0.2s ease",
-                         boxShadow: aspectRatio === item.value ? "0 2px 4px rgba(0,0,0,0.1)" : "none",
-                       }}
-                     >
-                       <span>{item.icon}</span>
-                       {item.label}
-                     </button>
-                   ))}
-                 </div>
-               </div>
-
-               {/* Duration Selector */}
-               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px" }}>
-                 <div style={{ fontSize: "14px", fontWeight: 600, color: "#4B5563", marginBottom: "8px" }}>
-                   {lang === 'zh' ? '视频时长' : 'Video Duration'}
-                 </div>
-                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center", maxWidth: "500px" }}>
-                   {[
-                     { value: 81, label: lang === 'zh' ? '3.3 秒' : '3.3s', desc: lang === 'zh' ? '生成极速' : 'Fastest' },
-                     { value: 121, label: lang === 'zh' ? '5.0 秒' : '5.0s', desc: lang === 'zh' ? '效果均衡' : 'Balanced' },
-                     { value: 241, label: lang === 'zh' ? '10.0 秒' : '10.0s', desc: lang === 'zh' ? '渲染较慢' : 'Slower' },
-                     { value: 361, label: lang === 'zh' ? '15.0 秒' : '15.0s', desc: lang === 'zh' ? '消耗额度多' : 'More credits' },
-                   ].map((item) => (
-                     <button
-                       key={item.value}
-                       onClick={() => setDuration(item.value)}
-                       style={{
-                         display: "flex",
-                         flexDirection: "column",
-                         alignItems: "center",
-                         padding: "6px 14px",
-                         borderRadius: "12px",
-                         border: "1px solid",
-                         borderColor: duration === item.value ? "#111827" : "#E5E7EB",
-                         background: duration === item.value ? "#111827" : "#FFFFFF",
-                         color: duration === item.value ? "#FFFFFF" : "#4B5563",
-                         cursor: "pointer",
-                         transition: "all 0.2s ease",
-                         minWidth: "90px",
-                         boxShadow: duration === item.value ? "0 2px 4px rgba(0,0,0,0.1)" : "none",
-                       }}
-                     >
-                       <span style={{ fontSize: "14px", fontWeight: 600 }}>{item.label}</span>
-                       <span style={{ fontSize: "10px", opacity: 0.7, marginTop: "2px" }}>{item.desc}</span>
-                     </button>
-                   ))}
-                 </div>
-               </div>
 
                {errorMsg && (
                  <div style={{ marginBottom: 24, color: "#e00000", fontSize: 14, fontWeight: 500, padding: "8px 16px", background: "#ffeeee", borderRadius: "8px", display: "inline-block" }}>
