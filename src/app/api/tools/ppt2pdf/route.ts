@@ -4,13 +4,6 @@ export const maxDuration = 60; // Serverless function timeout: 60s
 
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
-    const file = formData.get('files');
-
-    if (!file || !(file instanceof Blob)) {
-      return NextResponse.json({ error: 'No file provided or invalid file' }, { status: 400 });
-    }
-
     const gotenbergUrl = process.env.GOTENBERG_URL;
     if (!gotenbergUrl) {
       console.error("GOTENBERG_URL is not set in environment variables");
@@ -19,15 +12,19 @@ export async function POST(req: Request) {
 
     const baseUrl = gotenbergUrl.replace(/\/+$/, '');
 
-    // Forward the file to Gotenberg
-    // Gotenberg requires multipart/form-data with the key "files"
-    const outgoingFormData = new FormData();
-    outgoingFormData.append('files', file, (file as File).name || 'document.pptx');
+    // Proxy the raw multipart stream directly to Gotenberg to prevent Node.js fetch hang
+    const contentType = req.headers.get('content-type');
+    if (!contentType || !contentType.includes('multipart/form-data')) {
+      return NextResponse.json({ error: 'Invalid content type' }, { status: 400 });
+    }
 
     const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
-      body: outgoingFormData,
-      // Increase timeout for large conversions if supported by the environment, default fetch handles it but Vercel limits functions to 10s-60s based on plan.
+      headers: {
+        'Content-Type': contentType,
+      },
+      body: req.body as any, // Pass the raw ReadableStream
+      duplex: 'half' // Required by Node.js when body is a stream
     });
 
     if (!res.ok) {
