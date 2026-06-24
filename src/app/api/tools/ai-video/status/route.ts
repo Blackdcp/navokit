@@ -3,17 +3,25 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 30; // Serverless function timeout: 30s
 
 export async function GET(req: Request) {
+  let lang = 'en';
   try {
     const { searchParams } = new URL(req.url);
     const video_id = searchParams.get('video_id');
+    lang = searchParams.get('lang') || 'en';
 
     if (!video_id) {
-      return NextResponse.json({ error: 'video_id is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: lang === 'zh' ? '缺少 video_id 参数。' : 'video_id is required.' },
+        { status: 400 }
+      );
     }
 
     const apiKey = process.env.AGNES_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
+      return NextResponse.json(
+        { error: lang === 'zh' ? '服务器配置错误。' : 'Server misconfiguration.' },
+        { status: 500 }
+      );
     }
 
     // Call Agnes AI Status API with a timeout
@@ -38,7 +46,7 @@ export async function GET(req: Request) {
         const text = await response.text();
         console.error("Non-JSON upstream status response:", text);
         return NextResponse.json(
-          { error: '无法获取视频生成状态，服务暂时不可用。 / Failed to get video status. Upstream service is temporarily unavailable.' },
+          { error: lang === 'zh' ? '无法获取视频生成状态，服务暂时不可用。' : 'Failed to get video status. Upstream service is temporarily unavailable.' },
           { status: 502 }
         );
       }
@@ -48,7 +56,7 @@ export async function GET(req: Request) {
       if (!response.ok) {
         console.error("Agnes AI API Error (Status):", data);
         return NextResponse.json(
-          { error: data.error?.message || 'Failed to check status' },
+          { error: data.error?.message || (lang === 'zh' ? '获取状态失败。' : 'Failed to check status.') },
           { status: response.status }
         );
       }
@@ -71,7 +79,7 @@ export async function GET(req: Request) {
       clearTimeout(timeoutId);
       if (err.name === 'AbortError') {
         return NextResponse.json(
-          { error: '请求视频服务器超时。 / Request to video status server timed out.' },
+          { error: lang === 'zh' ? '请求视频服务器超时。' : 'Request to video status server timed out.' },
           { status: 504 }
         );
       }
@@ -80,7 +88,7 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error('Video status error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: lang === 'zh' ? '内部服务器错误。' : 'Internal server error.' },
       { status: 500 }
     );
   }

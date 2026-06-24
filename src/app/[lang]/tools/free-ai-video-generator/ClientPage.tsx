@@ -36,7 +36,7 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
     
     pollIntervalRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`/api/tools/ai-video/status?video_id=${vId}`);
+        const res = await fetch(`/api/tools/ai-video/status?video_id=${vId}&lang=${lang}`);
         const data = await res.json();
         
         // If rate limited, just skip this tick and try again next time
@@ -84,7 +84,7 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
       const res = await fetch('/api/tools/ai-video/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, duration, aspectRatio })
+        body: JSON.stringify({ prompt, duration, aspectRatio, lang })
       });
       
       const data = await res.json();

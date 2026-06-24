@@ -3,21 +3,33 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 30; // Serverless function timeout: 30s
 
 export async function POST(req: Request) {
+  let lang = 'en';
   try {
-    const { prompt, duration = 81, aspectRatio = 'landscape' } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const { prompt, duration = 81, aspectRatio = 'landscape' } = body;
+    lang = body.lang || 'en';
 
     if (!prompt || typeof prompt !== 'string') {
-      return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: lang === 'zh' ? '提示词不能为空。' : 'Prompt is required.' },
+        { status: 400 }
+      );
     }
 
     if (prompt.length > 1000) {
-      return NextResponse.json({ error: 'Prompt is too long (max 1000 characters)' }, { status: 400 });
+      return NextResponse.json(
+        { error: lang === 'zh' ? '提示词字数超限（最多支持 1000 字）。' : 'Prompt is too long (max 1000 characters).' },
+        { status: 400 }
+      );
     }
 
     const apiKey = process.env.AGNES_API_KEY;
     if (!apiKey) {
       console.error("Missing AGNES_API_KEY");
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+      return NextResponse.json(
+        { error: lang === 'zh' ? '服务器配置错误。' : 'Server configuration error.' },
+        { status: 500 }
+      );
     }
 
     // Determine dimensions based on aspectRatio
@@ -65,7 +77,7 @@ export async function POST(req: Request) {
         const text = await response.text();
         console.error("Non-JSON upstream response:", text);
         return NextResponse.json(
-          { error: '视频生成服务暂时不可用，请稍后再试。 / Upstream service is temporarily unavailable. Please try again later.' },
+          { error: lang === 'zh' ? '视频生成服务暂时不可用，请稍后再试。' : 'Upstream service is temporarily unavailable. Please try again later.' },
           { status: 502 }
         );
       }
@@ -81,13 +93,13 @@ export async function POST(req: Request) {
         
         if (isPolicyViolation) {
           return NextResponse.json(
-            { error: '提示词未通过内容安全过滤，请修改提示词后重试。 / Prompt triggered content safety policy. Please modify your prompt and try again.' },
+            { error: lang === 'zh' ? '提示词未通过内容安全过滤，请修改提示词后重试。' : 'Prompt triggered content safety policy. Please modify your prompt and try again.' },
             { status: 400 }
           );
         }
 
         return NextResponse.json(
-          { error: '视频服务器繁忙，请稍后再试。 / Server is currently busy, please try again later.' },
+          { error: lang === 'zh' ? '视频服务器繁忙，请稍后再试。' : 'Server is currently busy, please try again later.' },
           { status: response.status }
         );
       }
@@ -100,7 +112,7 @@ export async function POST(req: Request) {
       clearTimeout(timeoutId);
       if (err.name === 'AbortError') {
         return NextResponse.json(
-          { error: '请求视频服务器超时，请稍后再试。 / Request to video server timed out. Please try again.' },
+          { error: lang === 'zh' ? '请求视频服务器超时，请稍后再试。' : 'Request to video server timed out. Please try again.' },
           { status: 504 }
         );
       }
@@ -109,7 +121,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Video generation error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: lang === 'zh' ? '内部服务器错误。' : 'Internal server error.' },
       { status: 500 }
     );
   }
