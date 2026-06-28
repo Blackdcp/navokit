@@ -12,20 +12,11 @@ export async function POST(req: Request) {
 
     const baseUrl = gotenbergUrl.replace(/\/+$/, '');
 
-    // Proxy the raw multipart stream directly to Gotenberg to prevent Node.js fetch hang
-    const contentType = req.headers.get('content-type');
-    if (!contentType || !contentType.includes('multipart/form-data')) {
-      return NextResponse.json({ error: 'Invalid content type' }, { status: 400 });
-    }
+    const formData = await req.formData();
 
     const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
-      headers: {
-        'Content-Type': contentType,
-      },
-      body: req.body as any, // Pass the raw ReadableStream
-      // @ts-ignore: duplex is required by Node.js fetch for streams but not in standard RequestInit types
-      duplex: 'half' // Required by Node.js when body is a stream
+      body: formData,
     });
 
     if (!res.ok) {
