@@ -275,10 +275,7 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
               <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? '博客教程' : 'Blog Tutorial'}</div>
               {lang === 'zh' ? '如何用 AI 创作爆款社媒文案' : 'How to Write Viral Social Media Posts with AI'} →
             </Link>
-            <Link href={`/${lang}/tools/free-ai-video-generator`} style={{ textDecoration: "none", color: "#111827", fontWeight: 500, fontSize: 16, padding: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, display: "block", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.borderColor = "#9CA3AF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
-              <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? 'AI 视频' : 'AI Video'}</div>
-              {lang === 'zh' ? '免费 AI 视频生成器' : 'Free AI Video Generator'} →
-            </Link>
+
             <Link href={`/${lang}/tools/ppt-to-pdf`} style={{ textDecoration: "none", color: "#111827", fontWeight: 500, fontSize: 16, padding: "20px", background: "#fff", border: "1px solid #E5E7EB", borderRadius: 16, display: "block", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.borderColor = "#9CA3AF"} onMouseLeave={e => e.currentTarget.style.borderColor = "#E5E7EB"}>
               <div style={{ fontSize: 13, color: "#6B7280", marginBottom: 8 }}>{lang === 'zh' ? '文档工具' : 'Document'}</div>
               {lang === 'zh' ? 'PPT 转 PDF' : 'PPT to PDF'} →
