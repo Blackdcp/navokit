@@ -34,7 +34,25 @@ function postMultipart(urlString: string, body: Buffer, contentType: string) {
       outgoingRequest.destroy(new Error('Gotenberg request timed out'));
     });
     outgoingRequest.on('error', reject);
-    outgoingRequest.end(body);
+    outgoingRequest.setNoDelay(true);
+
+    let offset = 0;
+    const writeNextChunk = () => {
+      while (offset < body.byteLength) {
+        const nextOffset = Math.min(offset + 64 * 1024, body.byteLength);
+        const canContinue = outgoingRequest.write(body.subarray(offset, nextOffset));
+        offset = nextOffset;
+
+        if (!canContinue) {
+          outgoingRequest.once('drain', writeNextChunk);
+          return;
+        }
+      }
+
+      outgoingRequest.end();
+    };
+
+    writeNextChunk();
   });
 }
 
