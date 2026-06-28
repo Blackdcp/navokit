@@ -65,8 +65,8 @@
   },
   "meta": {
     "title": "NavoKit | 免费 AI 工具箱，让日常工作快一点（免登录）",
-    "description": "NavoKit 是一个免费且保护隐私的 AI 工具箱。支持高质量 PPT 转 PDF、ChatGPT 聊天记录转长图、AI 社媒爆款文案生成以及文本转 AI 视频。100% 免费，无水印，即开即用免注册。",
-    "keywords": "免费 AI 工具, 免登录, 无水印, PPT转PDF在线免费, AI文案生成器, 免费AI视频生成, ChatGPT导出图片, 工作效率工具, 保护隐私"
+    "description": "NavoKit 是一个免费且保护隐私的 AI 工具箱。支持高质量 PPT 转 PDF、ChatGPT 聊天记录转长图以及 AI 社媒爆款文案生成。100% 免费，无水印，即开即用免注册。",
+    "keywords": "免费 AI 工具, 免登录, 无水印, PPT转PDF在线免费, AI文案生成器, ChatGPT导出图片, 工作效率工具, 保护隐私"
   },
   "tools": {
     "chatExporter": {

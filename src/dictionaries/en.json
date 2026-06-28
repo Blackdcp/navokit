@@ -65,8 +65,8 @@
   },
   "meta": {
     "title": "NavoKit | Free AI Tools for Faster Everyday Work (No Signup)",
-    "description": "NavoKit is a free, privacy-first AI tools hub. Convert files without losing formatting, export ChatGPT chats as images, generate viral social posts, and create cinematic AI videos. 100% Free, no watermarks, no signup required.",
-    "keywords": "free AI tools, no signup, no watermark, free PPT to PDF converter, AI social media post generator, free AI video generator, chatgpt exporter, productivity tools, privacy first"
+    "description": "NavoKit is a free, privacy-first AI tools hub. Convert files without losing formatting, export ChatGPT chats as images, and generate viral social posts. 100% Free, no watermarks, no signup required.",
+    "keywords": "free AI tools, no signup, no watermark, free PPT to PDF converter, AI social media post generator, chatgpt exporter, productivity tools, privacy first"
   },
   "tools": {
     "chatExporter": {

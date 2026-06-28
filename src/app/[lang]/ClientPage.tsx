@@ -53,13 +53,6 @@ const heroIcons = [
 
 /* ─── Small icon for tool cards (varies by product title) ─── */
 function CardIcon({ title }: { title: string }) {
-  if (title.includes("视频") || title.includes("Video"))
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="23 7 16 12 23 17 23 7" />
-        <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-      </svg>
-    );
   if (title.includes("PDF") || title.includes("PPT"))
     return (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -153,18 +146,10 @@ export default function HomePage({
         >
           {lang === "zh" ? "免费 AI 小工具箱" : "Free AI Tools for Faster Everyday Work"}
         </h1>
-        <p
-          style={{
-            fontSize: 18,
-            lineHeight: 1.6,
-            color: "#6B7280",
-            margin: "0 auto 32px",
-            maxWidth: 640,
-          }}
-        >
-          {lang === "zh"
-            ? "文档、内容、社媒工作，快一点完成。NavoKit 提供一组无需注册、打开即用的免费工具：PPT 转 PDF、ChatGPT 长图导出、社媒文案生成、AI 视频生成等。"
-            : "Convert files, export ChatGPT answers, generate social posts, and create AI videos — no signup required."}
+        <p style={{ fontSize: "1.125rem", color: "#4B5563", maxWidth: "42rem", margin: "0 auto", lineHeight: "1.6" }}>
+          {lang === 'zh'
+            ? "文档处理、图文生成。NavoKit 提供一系列免注册、开箱即用的工具，如 PPT 转 PDF、ChatGPT 长图导出、社媒文案生成等。"
+            : "Convert files, export ChatGPT answers, and generate social posts — no signup required."}
         </p>
       </section>
 
