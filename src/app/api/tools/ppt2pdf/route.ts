@@ -13,10 +13,22 @@ export async function POST(req: Request) {
     const baseUrl = gotenbergUrl.replace(/\/+$/, '');
 
     const formData = await req.formData();
+    const file = formData.get('files') as File;
+    
+    if (!file) {
+      return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+    }
+
+    // Force buffer into memory to prevent Node.js fetch from hanging on stream or chunked encoding
+    const arrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([arrayBuffer], { type: file.type });
+    
+    const outgoingData = new FormData();
+    outgoingData.append('files', blob, file.name);
 
     const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
-      body: formData,
+      body: outgoingData,
     });
 
     if (!res.ok) {
