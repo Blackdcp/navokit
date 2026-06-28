@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export const maxDuration = 60; // Serverless function timeout: 60s
+export const runtime = 'nodejs';
 
 export async function POST(req: Request) {
   try {
@@ -19,16 +20,33 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    // Force buffer into memory to prevent Node.js fetch from hanging on stream or chunked encoding
+    // Build the multipart body as one fixed-length byte array. Forwarding FormData
+    // from Vercel as a stream can leave Gotenberg waiting for the closing boundary.
     const arrayBuffer = await file.arrayBuffer();
-    const blob = new Blob([arrayBuffer], { type: file.type });
-    
-    const outgoingData = new FormData();
-    outgoingData.append('files', blob, file.name);
+    const extension = file.name.toLowerCase().endsWith('.pptx') ? '.pptx' : '.ppt';
+    const filename = `presentation${extension}`;
+    const boundary = `----NavoKitBoundary${crypto.randomUUID().replaceAll('-', '')}`;
+    const encoder = new TextEncoder();
+    const preamble = encoder.encode(
+      `--${boundary}\r\n` +
+      `Content-Disposition: form-data; name="files"; filename="${filename}"\r\n` +
+      `Content-Type: ${file.type || 'application/octet-stream'}\r\n\r\n`
+    );
+    const closing = encoder.encode(`\r\n--${boundary}--\r\n`);
+    const outgoingBody = new Uint8Array(
+      preamble.byteLength + arrayBuffer.byteLength + closing.byteLength
+    );
+    outgoingBody.set(preamble, 0);
+    outgoingBody.set(new Uint8Array(arrayBuffer), preamble.byteLength);
+    outgoingBody.set(closing, preamble.byteLength + arrayBuffer.byteLength);
 
     const res = await fetch(`${baseUrl}/forms/libreoffice/convert`, {
       method: 'POST',
-      body: outgoingData,
+      headers: {
+        'Content-Type': `multipart/form-data; boundary=${boundary}`,
+        'Content-Length': String(outgoingBody.byteLength),
+      },
+      body: outgoingBody,
     });
 
     if (!res.ok) {
