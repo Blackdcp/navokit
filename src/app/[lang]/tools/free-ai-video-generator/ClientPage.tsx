@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import SiteHeader from "../../../../components/SiteHeader";
 import SiteFooter from "../../../../components/SiteFooter";
 import Link from 'next/link';
 
@@ -36,7 +35,7 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
     
     pollIntervalRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`/api/tools/ai-video/status?video_id=${vId}&lang=${lang}`);
+        const res = await fetch(`/api/tools/ai-video/status?video_id=${vId}`);
         const data = await res.json();
         
         // If rate limited, just skip this tick and try again next time
@@ -84,7 +83,7 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
       const res = await fetch('/api/tools/ai-video/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, duration, aspectRatio, lang })
+        body: JSON.stringify({ prompt, duration, aspectRatio })
       });
       
       const data = await res.json();
@@ -104,7 +103,70 @@ export default function AiVideoClient({ dict, lang }: AiVideoClientProps) {
 
   return (
     <div style={{ minHeight: "100vh", background: "#fafafa", fontFamily: "sans-serif" }}>
-      <SiteHeader lang={lang} />
+      <header
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          height: 80,
+          background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: "1px solid #E5E7EB",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1120,
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link
+            href={`/${lang}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              transition: "transform 0.2s ease",
+            }}
+          >
+            <img
+              src="/logo.png"
+              alt="NavoKit"
+              style={{
+                height: 52,
+                width: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
+            />
+          </Link>
+          <Link
+            href={`/${lang}`}
+            style={{
+              textDecoration: "none",
+              color: "#6B7280",
+              fontSize: 14,
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              transition: "color 0.2s",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            {lang === 'zh' ? '返回首页' : 'Back to Home'}
+          </Link>
+        </div>
+      </header>
 
       <main style={{ maxWidth: 800, margin: "60px auto", padding: "0 24px", textAlign: "center" }}>
         <h1 style={{ fontSize: 36, fontWeight: 800, color: "#111827", marginBottom: 16, letterSpacing: "-0.04em" }}>
