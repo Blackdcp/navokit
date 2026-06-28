@@ -24,6 +24,7 @@ export async function POST(req: Request) {
         'Content-Type': contentType,
       },
       body: req.body as any, // Pass the raw ReadableStream
+      // @ts-ignore: duplex is required by Node.js fetch for streams but not in standard RequestInit types
       duplex: 'half' // Required by Node.js when body is a stream
     });
 
