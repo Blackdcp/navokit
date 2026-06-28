@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage({ params: { lang } }: { params: { lang
                 <h3>1. 信息收集</h3>
                 <p>我们提供完全免费的工具，且<strong>不要求注册账号</strong>。我们尽可能少地收集信息：</p>
                 <ul>
-                  <li><strong>本地处理：</strong> 像 PPT转PDF 等许多工具完全在您的浏览器前端运行（基于 WebAssembly），您的文件<strong>不会</strong>被上传到我们的服务器。</li>
+                  <li><strong>本地处理：</strong> 部分工具（如 Markdown 转图片）完全在您的浏览器前端运行，您输入的内容<strong>不会</strong>被上传到我们的服务器。</li>
                   <li><strong>日志信息：</strong> 当您访问网站时，我们会自动收集某些标准日志信息（如 IP 地址、浏览器类型），这仅用于维护网站安全和基本统计分析。</li>
                 </ul>
 
@@ -50,7 +50,7 @@ export default function PrivacyPolicyPage({ params: { lang } }: { params: { lang
                 <h3>1. Information Collection</h3>
                 <p>We provide completely free tools and <strong>do not require account registration</strong>. We collect as little information as possible:</p>
                 <ul>
-                  <li><strong>Local Processing:</strong> Many of our tools (like PPT to PDF) run entirely in your browser using WebAssembly. Your files are <strong>never</strong> uploaded to our servers.</li>
+                  <li><strong>Local Processing:</strong> Some tools, such as Markdown to Image, run entirely in your browser. Your input is <strong>never</strong> uploaded to our servers.</li>
                   <li><strong>Log Information:</strong> When you visit our website, we automatically collect certain standard log information (like IP address and browser type) strictly for security and basic analytics purposes.</li>
                 </ul>
 

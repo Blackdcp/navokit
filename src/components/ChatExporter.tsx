@@ -222,9 +222,6 @@ export default function ChatExporter({ dict, lang }: { dict: any; lang: string }
             <Link href={`/${lang}/tools/social-booster`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
               {lang === "zh" ? "社媒文案生成器 →" : "Social Post Generator →"}
             </Link>
-            <Link href={`/${lang}/tools/ppt2pdf`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
-              {lang === "zh" ? "PPT转PDF →" : "PPT to PDF →"}
-            </Link>
           </div>
         </div>
       </section>

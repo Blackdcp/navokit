@@ -19,7 +19,7 @@ export default function TermsOfServicePage({ params: { lang } }: { params: { lan
                 <p>欢迎使用 NavoKit。访问或使用我们的免费工具集合，即表示您同意遵守本服务条款。如果您不同意这些条款，请勿使用我们的网站。</p>
 
                 <h3>1. 服务说明</h3>
-                <p>NavoKit 提供一系列基于 Web 的免费生产力工具（包括但不限于社媒文案生成、PPT转PDF等）。我们保留随时修改、暂停或停止服务（全部或部分）的权利，无需事先通知。</p>
+                <p>NavoKit 提供一系列基于 Web 的免费生产力工具。我们保留随时修改、暂停或停止服务（全部或部分）的权利，无需事先通知。</p>
 
                 <h3>2. 免责声明</h3>
                 <p>我们按"原样"和"可用"提供所有工具，不提供任何明示或暗示的保证。<strong>由于工具均为免费提供，NavoKit 不对您使用工具所产生的任何直接、间接、附带、特殊或后果性损害承担责任。</strong> 这包括但不限于利润损失、数据丢失或其他无形损失。</p>
@@ -47,7 +47,7 @@ export default function TermsOfServicePage({ params: { lang } }: { params: { lan
                 <p>Welcome to NavoKit. By accessing or using our collection of free tools, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
 
                 <h3>1. Description of Service</h3>
-                <p>NavoKit provides a suite of free, web-based productivity tools (including but not limited to social media copywriting, and PPT to PDF conversion). We reserve the right to modify, suspend, or discontinue the Service (or any part thereof) at any time without notice.</p>
+                <p>NavoKit provides a suite of free, web-based productivity tools. We reserve the right to modify, suspend, or discontinue the Service (or any part thereof) at any time without notice.</p>
 
                 <h3>2. Disclaimer of Warranties</h3>
                 <p>All tools are provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied. <strong>Because the tools are provided for free, NavoKit shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from your use of the tools.</strong> This includes, but is not limited to, loss of profits, data loss, or other intangible losses.</p>

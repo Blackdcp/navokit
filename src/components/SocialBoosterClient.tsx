@@ -202,9 +202,6 @@ export default function SocialBoosterClient({ dict, lang }: Props) {
             <Link href={`/${lang}/tools/chat-exporter`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
               {lang === "zh" ? "ChatGPT 长图导出 →" : "ChatGPT Exporter →"}
             </Link>
-            <Link href={`/${lang}/tools/ppt2pdf`} style={{ textDecoration: "none", color: "#2563EB", fontWeight: 600, fontSize: 15, background: "#EFF6FF", padding: "8px 16px", borderRadius: "8px" }}>
-              {lang === "zh" ? "PPT转PDF →" : "PPT to PDF →"}
-            </Link>
           </div>
         </div>
 
