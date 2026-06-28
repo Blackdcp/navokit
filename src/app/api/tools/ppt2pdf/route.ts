@@ -4,6 +4,7 @@ import { request as httpsRequest } from 'node:https';
 
 export const maxDuration = 60; // Serverless function timeout: 60s
 export const runtime = 'nodejs';
+export const preferredRegion = 'sin1';
 
 function postMultipart(urlString: string, body: Buffer, contentType: string) {
   return new Promise<{ status: number; body: Buffer }>((resolve, reject) => {
