@@ -24,21 +24,6 @@ function isDuration(value: unknown): value is keyof typeof durations {
   return typeof value === "string" && value in durations;
 }
 
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_REQUESTS = 3;
-const attempts = new Map<string, number[]>();
-
-function isRateLimited(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  const client = forwarded?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
-  const now = Date.now();
-  const recent = (attempts.get(client) ?? []).filter(timestamp => now - timestamp < WINDOW_MS);
-  if (recent.length >= MAX_REQUESTS) return true;
-  recent.push(now);
-  attempts.set(client, recent);
-  return false;
-}
-
 function errorMessage(status: number) {
   if (status === 401) return "Video generation is temporarily unavailable.";
   if (status === 503) return "Video generation is busy. Please try again shortly.";
@@ -60,13 +45,6 @@ export async function POST(request: Request) {
         { status: 503 },
       );
     }
-    if (isRateLimited(request)) {
-      return NextResponse.json(
-        { error: "Generation limit reached. Please try again in a few minutes." },
-        { status: 429, headers: { "Retry-After": "600" } },
-      );
-    }
-
     const body = await request.json();
     const prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
     const format = body.format;
