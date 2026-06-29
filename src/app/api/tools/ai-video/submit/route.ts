@@ -16,6 +16,14 @@ const durations = {
   "5": 121,
 } as const;
 
+function isFormat(value: unknown): value is keyof typeof formats {
+  return typeof value === "string" && value in formats;
+}
+
+function isDuration(value: unknown): value is keyof typeof durations {
+  return typeof value === "string" && value in durations;
+}
+
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 3;
 const attempts = new Map<string, number[]>();
@@ -38,6 +46,11 @@ function errorMessage(status: number) {
   return "The video service could not start this request.";
 }
 
+function isTimeoutError(error: unknown) {
+  if (!(error instanceof Error)) return false;
+  return error.name === "TimeoutError" || error.name === "AbortError";
+}
+
 export async function POST(request: Request) {
   try {
     const apiKey = process.env.AGNES_API_KEY;
@@ -56,8 +69,8 @@ export async function POST(request: Request) {
 
     const body = await request.json();
     const prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
-    const format = body.format as keyof typeof formats;
-    const duration = String(body.duration) as keyof typeof durations;
+    const format = body.format;
+    const duration = String(body.duration ?? "");
 
     if (prompt.length < 10 || prompt.length > 1200) {
       return NextResponse.json(
@@ -65,7 +78,7 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-    if (!(format in formats) || !(duration in durations)) {
+    if (!isFormat(format) || !isDuration(duration)) {
       return NextResponse.json({ error: "Invalid video settings." }, { status: 400 });
     }
 
@@ -106,7 +119,7 @@ export async function POST(request: Request) {
       size: data.size ?? null,
     });
   } catch (error) {
-    const timedOut = error instanceof Error && error.name === "TimeoutError";
+    const timedOut = isTimeoutError(error);
     console.error("Agnes video submit exception", error);
     return NextResponse.json(
       { error: timedOut ? "The video service timed out. Please try again." : "Unable to start video generation." },
