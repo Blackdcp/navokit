@@ -1,0 +1,23 @@
+{
+  "id": "markdown-to-image",
+  "categoryId": "text_export",
+  "categoryName": "Text & Export",
+  "title": "Markdown to Image",
+  "subtitle": "Turn Markdown, AI responses, and structured notes into clean, shareable image cards.",
+  "tags": ["Markdown", "Image export", "Local rendering"],
+  "features": [
+    "Local browser rendering; Markdown content is not uploaded to NavoKit servers",
+    "Supports common Markdown such as headings, lists, tables, and code blocks",
+    "Clean card layout for social sharing and document archives",
+    "PNG image export"
+  ],
+  "status": "available",
+  "processingNote": "Rendering and export happen in your browser.",
+  "isFeatured": false,
+  "homePriority": 2,
+  "homeAccent": "green",
+  "homeIcon": "▧",
+  "homePreviewTitle": "# Project notes",
+  "homePreviewText": "Turn Markdown, AI answers, or notes into a clean image card for sharing.",
+  "homePreviewMeta": "Local render · PNG export"
+}

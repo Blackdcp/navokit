@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
+import { localizedCanonical, SITE_URL } from "../../lib/site";
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh' | 'en' }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const dict = await getDictionary(resolvedParams.lang);
   
   return {
-    metadataBase: new URL("https://navokit.com"),
+    metadataBase: new URL(SITE_URL),
     title: dict.meta.title,
     description: dict.meta.description,
     keywords: dict.meta.keywords,
+    alternates: localizedCanonical(resolvedParams.lang),
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
@@ -42,7 +44,7 @@ export default async function RootLayout({
 }) {
   const { lang } = await params;
   return (
-    <html lang={lang}>
+    <html lang={lang} data-scroll-behavior="smooth">
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>
         {children}
         <Analytics />

@@ -1,0 +1,23 @@
+{
+  "id": "markdown-to-image",
+  "categoryId": "text_export",
+  "categoryName": "文本与导出",
+  "title": "Markdown 转图片",
+  "subtitle": "将 Markdown、AI 回复和结构化笔记转换为整洁、易于分享的图片卡片。",
+  "tags": ["Markdown", "图片导出", "本地渲染"],
+  "features": [
+    "浏览器本地渲染，Markdown 内容不上传到 NavoKit 服务端",
+    "支持标题、列表、表格和代码块等常见 Markdown",
+    "干净的卡片排版，适合社交分享和文档归档",
+    "支持 PNG 图片导出"
+  ],
+  "status": "available",
+  "processingNote": "渲染和导出在你的浏览器中完成。",
+  "isFeatured": false,
+  "homePriority": 2,
+  "homeAccent": "green",
+  "homeIcon": "▧",
+  "homePreviewTitle": "# 项目笔记",
+  "homePreviewText": "把 Markdown、AI 回复或笔记整理成一张干净的分享图片。",
+  "homePreviewMeta": "本地渲染 · PNG 导出"
+}

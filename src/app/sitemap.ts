@@ -1,73 +1,54 @@
 import { MetadataRoute } from 'next'
 import { getBlogPosts } from '../lib/blog'
+import { SITE_URL, SUPPORTED_LANGUAGES } from '../lib/site'
+
+function sitemapAlternates(path: string) {
+  return {
+    languages: {
+      en: `${SITE_URL}/en${path}`,
+      zh: `${SITE_URL}/zh${path}`,
+      "x-default": `${SITE_URL}/en${path}`,
+    },
+  }
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://navokit.com'
-
-  // Get blog posts for SEO
-  const zhPosts = getBlogPosts('zh')
-  const enPosts = getBlogPosts('en')
-  
-  const zhBlogUrls = zhPosts.map(post => ({
-    url: `${baseUrl}/zh/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  const enBlogUrls = enPosts.map(post => ({
-    url: `${baseUrl}/en/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }))
-
-  const blogUrls = [...zhBlogUrls, ...enBlogUrls]
-
-  return [
-    {
-      url: `${baseUrl}/zh`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/en`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/zh/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/zh/tools/chat-exporter`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/en/tools/chat-exporter`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/zh/tools/social-booster`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/en/tools/social-booster`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-
-    ...blogUrls
+  const siteLastModified = new Date('2026-06-29')
+  const staticPaths = [
+    { path: '', priority: 1, changeFrequency: 'weekly' as const },
+    { path: '/tools', priority: 0.9, changeFrequency: 'weekly' as const },
+    { path: '/tools/free-ai-video-generator', priority: 0.9, changeFrequency: 'weekly' as const },
+    { path: '/tools/markdown-to-image', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: '/tools/ai-social-booster', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: '/blog', priority: 0.7, changeFrequency: 'weekly' as const },
+    { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: '/terms', priority: 0.3, changeFrequency: 'yearly' as const },
+    { path: '/contact', priority: 0.3, changeFrequency: 'yearly' as const },
   ]
+
+  const staticUrls = SUPPORTED_LANGUAGES.flatMap(lang =>
+    staticPaths.map(item => ({
+      url: `${SITE_URL}/${lang}${item.path}`,
+      lastModified: siteLastModified,
+      changeFrequency: item.changeFrequency,
+      priority: item.priority,
+      alternates: sitemapAlternates(item.path),
+    }))
+  )
+
+  const blogUrls = SUPPORTED_LANGUAGES.flatMap(lang =>
+    getBlogPosts(lang).map(post => {
+      const path = `/blog/${post.slug}`
+
+      return {
+        url: `${SITE_URL}/${lang}${path}`,
+        lastModified: new Date(post.updatedAt || post.date),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+        alternates: sitemapAlternates(path),
+      }
+    })
+  )
+
+  return [...staticUrls, ...blogUrls]
 }

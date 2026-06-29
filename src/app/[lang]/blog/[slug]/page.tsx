@@ -1,161 +1,185 @@
-import { getBlogPostBySlug, getBlogPosts } from '../../../../lib/blog'
-import { getDictionary } from '../../../../lib/dictionaries'
-import Link from 'next/link'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { notFound } from 'next/navigation'
-import SiteHeader from '../../../../components/SiteHeader'
-import SiteFooter from '../../../../components/SiteFooter'
+import {
+  formatBlogIntent,
+  formatDifficulty,
+  formatReadingTime,
+  getBlogPostBySlug,
+  getBlogPosts,
+  getRelatedBlogPosts,
+} from "../../../../lib/blog";
+import { getTools } from "../../../../lib/api";
+import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { notFound } from "next/navigation";
+import SiteHeader from "../../../../components/SiteHeader";
+import SiteFooter from "../../../../components/SiteFooter";
+import type { Metadata } from "next";
+import { localizedCanonical, SITE_URL } from "../../../../lib/site";
+import { breadcrumbList, safeJsonLd } from "../../../../lib/schema";
 
 export async function generateStaticParams() {
-  const zhPosts = getBlogPosts('zh')
-  const enPosts = getBlogPosts('en')
-  
-  const zhParams = zhPosts.map((post) => ({
-    lang: 'zh',
-    slug: post.slug,
-  }))
-  
-  const enParams = enPosts.map((post) => ({
-    lang: 'en',
-    slug: post.slug,
-  }))
+  const zhPosts = getBlogPosts("zh");
+  const enPosts = getBlogPosts("en");
 
-  return [...zhParams, ...enParams]
+  return [
+    ...zhPosts.map(post => ({ lang: "zh", slug: post.slug })),
+    ...enPosts.map(post => ({ lang: "en", slug: post.slug })),
+  ];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: "en" | "zh"; slug: string }>;
+}): Promise<Metadata> {
+  const { lang, slug } = await params;
+  const post = getBlogPostBySlug(lang, slug);
+  if (!post) return {};
+
+  return {
+    title: `${post.title} | NavoKit`,
+    description: post.description,
+    alternates: localizedCanonical(lang, `/blog/${slug}`),
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url: `${SITE_URL}/${lang}/blog/${slug}`,
+      publishedTime: post.date,
+    },
+  };
 }
 
 export default async function BlogPostPage({
-  params
+  params,
 }: {
-  params: Promise<{ lang: 'en' | 'zh', slug: string }>
+  params: Promise<{ lang: "en" | "zh"; slug: string }>;
 }) {
-  const resolvedParams = await params
-  const { lang, slug } = resolvedParams
-  const dict = await getDictionary(lang)
-  const post = getBlogPostBySlug(lang, slug)
+  const { lang, slug } = await params;
+  const post = getBlogPostBySlug(lang, slug);
 
   if (!post) {
-    notFound()
+    notFound();
   }
+  const relatedPosts = getRelatedBlogPosts(lang, post);
+  const relatedToolIds = new Set(post.relatedTools);
+  const relatedTools = getTools(lang).filter(tool => relatedToolIds.has(tool.id)).slice(0, 3);
+  const difficulty = formatDifficulty(post.difficulty, lang);
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: post.updatedAt ?? post.date,
+        inLanguage: lang === "zh" ? "zh-CN" : "en",
+        mainEntityOfPage: `${SITE_URL}/${lang}/blog/${slug}`,
+        publisher: {
+          "@type": "Organization",
+          name: "NavoKit",
+          url: SITE_URL,
+          logo: `${SITE_URL}/logo.png`,
+        },
+        about: [
+          post.workflowId,
+          ...post.toolIds,
+          post.intent,
+        ].filter(Boolean),
+      },
+      breadcrumbList([
+        { name: "NavoKit", url: `${SITE_URL}/${lang}` },
+        { name: lang === "zh" ? "指南" : "Guides", url: `${SITE_URL}/${lang}/blog` },
+        { name: post.title, url: `${SITE_URL}/${lang}/blog/${slug}` },
+      ]),
+    ],
+  };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F8FAFC", color: "#0B1220", display: "flex", flexDirection: "column", fontFamily: "sans-serif" }}>
+    <div className="site-shell">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
       <SiteHeader lang={lang} />
 
-      <main style={{ flex: 1, width: "100%", paddingBottom: "96px" }}>
-        {/* Breadcrumb / Back Link */}
-        <div style={{ padding: "32px 24px 0" }}>
-          <div style={{ maxWidth: 800, margin: "0 auto" }}>
-            <Link 
-              href={`/${lang}/blog`} 
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "#6B7280",
-                textDecoration: "none",
-                fontSize: "14px",
-                fontWeight: 600,
-                transition: "color 0.2s"
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-              {lang === 'zh' ? '返回教程列表' : 'Back to Articles'}
+      <main className="blog-post-page">
+        <div className="blog-back-wrap">
+          <div className="blog-article">
+            <Link href={`/${lang}/blog`} className="blog-back">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+              {lang === "zh" ? "返回指南列表" : "Back to guides"}
             </Link>
           </div>
         </div>
 
-        <article style={{ maxWidth: 800, margin: "32px auto 0", padding: "0 24px" }}>
-          {/* Article Header */}
-          <div style={{ marginBottom: 40 }}>
-            <span style={{
-              display: "inline-block",
-              padding: "4px 12px",
-              background: "#EFF6FF",
-              color: "#2563EB",
-              borderRadius: "100px",
-              fontSize: 12,
-              fontWeight: 600,
-              marginBottom: 16
-            }}>
-              {lang === 'zh' ? '实操指南' : 'Guides & Tutorials'}
-            </span>
-            <h1 style={{
-              fontSize: "clamp(28px, 5vw, 40px)",
-              fontWeight: 800,
-              color: "#0B1220",
-              margin: "0 0 16px",
-              letterSpacing: "-0.03em",
-              lineHeight: 1.25
-            }}>
-              {post.title}
-            </h1>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 16,
-              fontSize: 14,
-              color: "#6B7280",
-              fontWeight: 500,
-            }}>
+        <article className="blog-article blog-article--body">
+          <header className="blog-article__header">
+            <span>{formatBlogIntent(post.intent, lang)}</span>
+            <h1>{post.title}</h1>
+            <div>
               <span>{post.date}</span>
-              <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#D1D5DB" }} />
-              <span>{lang === 'zh' ? '阅读约 5 分钟' : '5 min read'}</span>
+              <i />
+              <span>{formatReadingTime(post, lang)}</span>
+              {difficulty && (
+                <>
+                  <i />
+                  <span>{difficulty}</span>
+                </>
+              )}
+            </div>
+          </header>
+
+          <div className="article-card">
+            <div className="prose prose-slate max-w-none article-prose">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
             </div>
           </div>
 
-          {/* Article body in a clean white card */}
-          <div style={{
-            background: "#ffffff",
-            padding: "40px 32px",
-            borderRadius: 24,
-            border: "1px solid #E5E7EB",
-            boxShadow: "0 1px 2px rgba(11,18,32,0.04)"
-          }}>
-            <div className="prose prose-slate max-w-none" style={{ fontSize: "16px", lineHeight: 1.8, color: "#374151" }}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {post.content}
-              </ReactMarkdown>
-            </div>
-          </div>
+          {(relatedTools.length > 0 || relatedPosts.length > 0) && (
+            <section className="article-related">
+              {relatedTools.length > 0 && (
+                <div>
+                  <span className="eyebrow">{lang === "zh" ? "相关工具" : "Related tools"}</span>
+                  <div className="article-related-grid">
+                    {relatedTools.map(tool => (
+                      <Link key={tool.id} href={`/${lang}/tools/${tool.id}`}>
+                        <strong>{tool.title}</strong>
+                        <p>{tool.subtitle}</p>
+                        <b>{lang === "zh" ? "打开工具 →" : "Open tool →"}</b>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-          {/* Related Tools Recommendation */}
-          <div style={{
-            marginTop: 48,
-            padding: "40px 32px",
-            background: "#fff",
-            borderRadius: 24,
-            border: "1px solid #E5E7EB",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            boxShadow: "0 1px 2px rgba(11,18,32,0.04)"
-          }}>
-            <h3 style={{ margin: "0 0 12px", fontSize: 18, fontWeight: 700, color: "#0B1220" }}>
-              {lang === 'zh' ? '💡 想试试上面提到的效果吗？' : '💡 Want to try these workflows?'}
-            </h3>
-            <p style={{ margin: "0 0 24px", fontSize: 15, color: "#6B7280", lineHeight: 1.6, maxWidth: 480 }}>
-              {lang === 'zh' 
-                ? 'NavoKit 收集了全套 100% 免费的 AI 转换工具与排版神器，打开即用，无需注册。' 
-                : 'NavoKit provides a complete suite of 100% free online conversion and post generation tools.'}
+              {relatedPosts.length > 0 && (
+                <div>
+                  <span className="eyebrow">{lang === "zh" ? "继续阅读" : "Keep reading"}</span>
+                  <div className="article-related-grid">
+                    {relatedPosts.map(item => (
+                      <Link key={item.slug} href={`/${lang}/blog/${item.slug}`}>
+                        <strong>{item.title}</strong>
+                        <p>{item.description}</p>
+                        <b>{lang === "zh" ? "阅读指南 →" : "Read guide →"}</b>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          <div className="article-cta-card">
+            <h3>{lang === "zh" ? "想把方法直接跑一遍吗？" : "Want to run the workflow now?"}</h3>
+            <p>
+              {lang === "zh"
+                ? "NavoKit 提供轻量的 AI 生成、内容转换和文案辅助工具，并清晰说明当前限制。"
+                : "NavoKit provides lightweight AI generation, content conversion, and writing tools with clear limitations."}
             </p>
-            <Link 
-              href={`/${lang}#tools`} 
-              style={{
-                display: "inline-block",
-                padding: "10px 24px",
-                background: "#0B1220",
-                color: "#fff",
-                borderRadius: 12,
-                fontWeight: 650,
-                fontSize: 14,
-                textDecoration: "none",
-                boxShadow: "0 1px 2px rgba(11,18,32,0.08)",
-                transition: "opacity 0.2s"
-              }}
-            >
-              {lang === 'zh' ? '浏览免费工具箱' : 'Explore Free Tools'}
+            <Link href={`/${lang}/tools`} className="button button--ink">
+              {lang === "zh" ? "浏览工具箱" : "Explore tools"}
             </Link>
           </div>
         </article>
@@ -163,5 +187,5 @@ export default async function BlogPostPage({
 
       <SiteFooter lang={lang} />
     </div>
-  )
+  );
 }

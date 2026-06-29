@@ -2,82 +2,58 @@
   "header": {
     "title": "NavoKit",
     "nav": {
-      "ai-accounts": "AI 账号与订阅",
-      "marketing": "营销引流资源",
-      "tools": "精选实用工具"
+      "tools": "工具",
+      "guides": "指南",
+      "contact": "联系"
     }
   },
-  "common": {
-    "hot": "🔥 热门",
-    "free": "免费",
-    "soldOut": "已售罄",
-    "details": "详情",
-    "currency": "¥ "
-  },
-  "modal": {
-    "submitRequest": "提交需求",
-    "confirmOrder": "确认订单",
-    "product": "商品/业务：",
-    "emailStep": "第一步：您的接收邮箱",
-    "emailPlaceholder": "you@example.com (客服将通过此邮箱联系您)",
-    "reqStep": "第二步：具体需求 / 链接",
-    "reqPlaceholder": "请描述您的具体要求，或粘贴相关的目标链接...",
-    "submitBtnConsult": "提交需求并联系客服",
-    "submitBtnPay": "我已经付完款，通知客服发货",
-    "submitting": "正在提交...",
-    "payStep1": "第一步：扫码支付",
-    "payStep2": "第二步：输入邮箱接收商品",
-    "payEmailPlaceholder": "you@example.com (支付后用于接收商品)",
-    "success": "提交成功",
-    "consultSuccessMsg": "您的需求已发送给客服。\n我们将尽快通过邮件联系您：",
-    "paySuccessMsg": "您的订单通知已发给客服。\n核对收款后，商品将发送至邮箱：",
-    "alipay": "支付宝",
-    "wechat": "微信支付"
-  },
-  "product": {
-    "features": "功能特性",
-    "warnings": "购买必读",
-    "back": "返回首页"
-  },
   "meta": {
-    "title": "NavoKit | 免费 AI 工具箱，让日常工作快一点（免登录）",
-    "description": "NavoKit 是一个免费且保护隐私的 AI 工具箱。支持 ChatGPT 聊天记录转长图以及 AI 社媒爆款文案生成。100% 免费，无水印，即开即用免注册。",
-    "keywords": "免费 AI 工具, 免登录, 无水印, AI文案生成器, ChatGPT导出图片, 工作效率工具, 保护隐私"
+    "title": "NavoKit | 让创作更快的实用 AI 工具",
+    "description": "使用轻量在线工具生成 AI 短视频、将 Markdown 和 AI 回复转成图片，并起草社交媒体文案。",
+    "keywords": "AI视频生成器, 文生视频, Markdown转图片, AI社媒文案生成器, 创作者工具"
   },
   "tools": {
     "chatExporter": {
       "meta": {
-        "title": "Markdown 转图片工具 - 将 ChatGPT 回复导出为图片 | NavoKit",
-        "description": "使用 NavoKit 免费的 Markdown 转图片工具，将 Markdown、ChatGPT 回复和 AI 生成的文本转换为排版整洁、易于分享的高清 PNG 图片。"
+        "title": "Markdown 转图片工具 - 将 AI 回复导出为图片 | NavoKit",
+        "description": "使用 NavoKit 的 Markdown 转图片工具，将 Markdown、AI 回复和结构化文本转换为排版整洁、易于分享的 PNG 图片。"
       },
       "hero": {
         "title": "Markdown 转图片",
-        "subtitle": "将 Markdown、ChatGPT 回复和 AI 生成文本转换为排版整洁、易于分享的高清图片卡片。",
-        "watermarkText": "在线免费制作于 navokit.com"
+        "subtitle": "将 Markdown、AI 回复和结构化文本转换为排版整洁、易于分享的图片卡片。",
+        "watermarkText": "Made with NavoKit"
       },
       "editor": {
-        "placeholder": "在这里粘贴 ChatGPT 吐出的 Markdown 格式文本...",
+        "placeholder": "在这里粘贴 Markdown、AI 回复或结构化笔记...",
         "previewTitle": "效果预览",
-        "downloadImage": "生成高清长图",
+        "downloadImage": "导出 PNG",
         "downloading": "生成中..."
       }
     },
     "socialBooster": {
-      "title": "AI 社媒爆款文案生成器",
-      "subtitle": "输入一句话，一键生成带网感、带 Emoji 的爆款文案。",
-      "placeholder": "比如：今天在星巴克喝了一杯很好喝的咖啡，感觉很治愈...",
-      "generate": "一键生成魔法文案",
-      "generating": "正在生成爆款...",
-      "platforms": {
-        "twitter": "推特 / X",
+      "title": "AI 社交媒体文案生成器",
+      "subtitle": "输入一个想法，一次生成 X 短帖、LinkedIn 帖子、Instagram 文案和开场句。",
+      "placeholder": "比如：今天整理了一个让工作更快完成的小技巧，想分享给创作者、创业者和营销人。语气要自然、实用，不要太像广告...",
+      "generate": "生成多版初稿",
+      "generating": "正在生成...",
+      "inputTitle": "描述你的想法",
+      "resultTitle": "多平台文案初稿",
+      "emptyTitle": "生成结果会显示在这里",
+      "emptyDesc": "输入一个具体想法，NavoKit 会整理成几种可继续修改的发布版本。",
+      "guidance": ["X 短帖", "LinkedIn 帖子", "Instagram 文案", "开场句"],
+      "outputLabels": {
+        "x": "X / Twitter",
+        "linkedin": "LinkedIn",
         "instagram": "Instagram",
-        "xiaohongshu": "小红书"
+        "hooks": "开场句"
       },
-      "copy": "复制文案",
+      "copyAll": "复制全部",
+      "copySection": "复制",
       "copied": "已复制！",
-      "adTitle": "有了好文案，想保证 100% 爆款？",
-      "adDesc": "优质的内容需要启动量来触发算法推荐。购买我们的真人刷粉/点赞套餐，瞬间引爆你的帖子！",
-      "adBtn": "查看海外社媒涨粉服务"
+      "processingNote": "你的想法会由 AI 服务处理，用于生成可编辑初稿。请勿输入敏感或机密信息。",
+      "adTitle": "让初稿更像你",
+      "adDesc": "发布前请加入你的真实经历，并检查事实和表达。",
+      "adBtn": "探索更多工具"
     }
   }
 }

@@ -2,82 +2,58 @@
   "header": {
     "title": "NavoKit",
     "nav": {
-      "ai-accounts": "AI Accounts & Subs",
-      "marketing": "Marketing & Traffic",
-      "tools": "Curated Utilities"
+      "tools": "Tools",
+      "guides": "Guides",
+      "contact": "Contact"
     }
   },
-  "common": {
-    "hot": "🔥 Popular",
-    "free": "Free",
-    "soldOut": "Sold Out",
-    "details": "Details",
-    "currency": "$ "
-  },
-  "modal": {
-    "submitRequest": "Submit Request",
-    "confirmOrder": "Confirm Order",
-    "product": "Product/Service: ",
-    "emailStep": "Step 1: Your Email Address",
-    "emailPlaceholder": "you@example.com (We will contact you via this email)",
-    "reqStep": "Step 2: Specific Requirements / Links",
-    "reqPlaceholder": "Please describe your specific requirements or paste target links...",
-    "submitBtnConsult": "Submit Request & Contact Support",
-    "submitBtnPay": "I have completed the payment, notify support",
-    "submitting": "Submitting...",
-    "payStep1": "Step 1: Scan to Pay",
-    "payStep2": "Step 2: Enter Email to Receive Product",
-    "payEmailPlaceholder": "you@example.com (To receive the product after payment)",
-    "success": "Submission Successful",
-    "consultSuccessMsg": "Your request has been sent.\nWe will contact you via email shortly:",
-    "paySuccessMsg": "Your order notification has been sent.\nAfter verifying payment, product will be delivered to:",
-    "alipay": "Alipay",
-    "wechat": "WeChat Pay"
-  },
-  "product": {
-    "features": "Features",
-    "warnings": "Important Notice",
-    "back": "Back to Home"
-  },
   "meta": {
-    "title": "NavoKit | Free AI Tools for Faster Everyday Work (No Signup)",
-    "description": "NavoKit is a free, privacy-first AI tools hub. Export ChatGPT chats as images and generate viral social posts. 100% free, no watermarks, no signup required.",
-    "keywords": "free AI tools, no signup, no watermark, AI social media post generator, chatgpt exporter, productivity tools, privacy first"
+    "title": "NavoKit | Practical AI Tools for Faster Creative Work",
+    "description": "Create short AI videos, turn Markdown and AI responses into images, and draft social posts with lightweight online tools.",
+    "keywords": "AI video generator, text to video, markdown to image, AI social post generator, creator tools"
   },
   "tools": {
     "chatExporter": {
       "meta": {
-        "title": "Markdown to Image Converter - Export ChatGPT Responses as Images | NavoKit",
-        "description": "Turn Markdown, ChatGPT responses, and AI-generated text into clean, shareable PNG images with NavoKit's free Markdown to Image converter."
+        "title": "Markdown to Image Converter - Export AI Responses as Images | NavoKit",
+        "description": "Turn Markdown, AI responses, and structured notes into clean, shareable PNG images with NavoKit's Markdown to Image converter."
       },
       "hero": {
-        "title": "Markdown to Image Converter",
-        "subtitle": "Convert Markdown, ChatGPT responses, and AI-generated text into clean, shareable PNG images.",
-        "watermarkText": "Generated for free on navokit.com"
+        "title": "Markdown to Image",
+        "subtitle": "Convert Markdown, AI responses, and structured notes into clean, shareable image cards.",
+        "watermarkText": "Made with NavoKit"
       },
       "editor": {
-        "placeholder": "Paste your raw Markdown from ChatGPT here...",
+        "placeholder": "Paste Markdown, an AI response, or structured notes here...",
         "previewTitle": "Live Preview",
-        "downloadImage": "Export HD Image",
+        "downloadImage": "Export PNG",
         "downloading": "Rendering..."
       }
     },
     "socialBooster": {
-      "title": "AI Social Media Booster",
-      "subtitle": "Turn a simple thought into a viral post in seconds.",
-      "placeholder": "E.g., I had a great coffee today at Starbucks...",
-      "generate": "Generate Magic",
+      "title": "AI Social Post Generator",
+      "subtitle": "Turn one rough idea into editable drafts for X, LinkedIn, Instagram, and hooks.",
+      "placeholder": "E.g., I found a small workflow that helps creators finish work faster. I want to share it with founders and marketers in a practical, non-salesy tone...",
+      "generate": "Generate Drafts",
       "generating": "Generating...",
-      "platforms": {
-        "twitter": "Twitter / X",
+      "inputTitle": "Describe the idea",
+      "resultTitle": "Platform-ready drafts",
+      "emptyTitle": "Your drafts will appear here",
+      "emptyDesc": "Enter one specific idea. NavoKit will turn it into several editable publishing options.",
+      "guidance": ["X post", "LinkedIn post", "Instagram caption", "Hook ideas"],
+      "outputLabels": {
+        "x": "X / Twitter",
+        "linkedin": "LinkedIn",
         "instagram": "Instagram",
-        "xiaohongshu": "Xiaohongshu"
+        "hooks": "Hook ideas"
       },
-      "copy": "Copy Text",
+      "copyAll": "Copy All",
+      "copySection": "Copy",
       "copied": "Copied!",
-      "adTitle": "Want to guarantee 1000 likes?",
-      "adDesc": "Great content needs an initial push. Buy our organic follower packages to trigger the algorithm.",
-      "adBtn": "View Marketing Services"
+      "processingNote": "Your idea is processed by an AI service to generate editable drafts. Do not enter sensitive or confidential information.",
+      "adTitle": "Make the draft yours",
+      "adDesc": "Review the result, add your experience, and check facts before publishing.",
+      "adBtn": "Explore More Tools"
     }
   }
 }

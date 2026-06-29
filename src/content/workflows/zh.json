@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ai-video",
+    "label": "AI 视频",
+    "description": "用清晰的文本提示词生成短视频概念，并在使用前检查结果。",
+    "href": "/tools/free-ai-video-generator",
+    "order": 1,
+    "toolIds": ["free-ai-video-generator"],
+    "showInHome": true,
+    "showInBlog": true
+  },
+  {
+    "id": "content-export",
+    "label": "内容导出",
+    "description": "把 Markdown、AI 回复和结构化笔记变成干净的分享图片资产。",
+    "href": "/tools/markdown-to-image",
+    "order": 2,
+    "toolIds": ["markdown-to-image"],
+    "showInHome": true,
+    "showInBlog": true
+  },
+  {
+    "id": "social-drafting",
+    "label": "社媒起草",
+    "description": "从一个真实想法开始，生成适合不同平台继续修改的社交文案。",
+    "href": "/tools/ai-social-booster",
+    "order": 3,
+    "toolIds": ["ai-social-booster"],
+    "showInHome": true,
+    "showInBlog": true
+  }
+]

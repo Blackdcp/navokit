@@ -1,115 +1,127 @@
-import { getBlogPosts } from '../../../lib/blog'
-import { getDictionary } from '../../../lib/dictionaries'
-import Link from 'next/link'
-import SiteHeader from '../../../components/SiteHeader'
-import SiteFooter from '../../../components/SiteFooter'
+import type { Metadata } from "next";
+import { formatBlogIntent, formatDifficulty, formatReadingTime, getBlogPosts } from "../../../lib/blog";
+import { getWorkflowRails } from "../../../lib/workflows";
+import Link from "next/link";
+import SiteHeader from "../../../components/SiteHeader";
+import SiteFooter from "../../../components/SiteFooter";
+import { localizedCanonical, SITE_URL } from "../../../lib/site";
+import { breadcrumbList, safeJsonLd } from "../../../lib/schema";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: "en" | "zh" }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+
+  return {
+    title: lang === "zh" ? "实用 AI 工具指南 | NavoKit" : "Practical AI Tool Guides | NavoKit",
+    description:
+      lang === "zh"
+        ? "阅读 NavoKit 的实用指南，学习如何使用 AI 视频生成、Markdown 图片导出和社媒文案工具完成真实工作流。"
+        : "Read practical NavoKit guides for AI video generation, Markdown image export, social copy drafting, and lightweight creator workflows.",
+    alternates: localizedCanonical(lang, "/blog"),
+    openGraph: {
+      title: lang === "zh" ? "实用 AI 工具指南 | NavoKit" : "Practical AI Tool Guides | NavoKit",
+      description:
+        lang === "zh"
+          ? "围绕 NavoKit 免费工具的提示词、检查清单和实用工作流。"
+          : "Prompts, checklists, and practical workflows around NavoKit free tools.",
+      type: "website",
+    },
+  };
+}
 
 export default async function BlogListPage({
-  params
+  params,
 }: {
-  params: Promise<{ lang: 'en' | 'zh' }>
+  params: Promise<{ lang: "en" | "zh" }>;
 }) {
-  const resolvedParams = await params
-  const lang = resolvedParams.lang
-  const dict = await getDictionary(lang)
-  const posts = getBlogPosts(lang)
+  const { lang } = await params;
+  const posts = getBlogPosts(lang);
+  const workflowRails = getWorkflowRails(lang).filter(rail => rail.showInBlog !== false);
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: lang === "zh" ? "NavoKit 实用 AI 工具指南" : "NavoKit Practical AI Tool Guides",
+        url: `${SITE_URL}/${lang}/blog`,
+        description:
+          lang === "zh"
+            ? "围绕 NavoKit 免费工具的提示词、检查清单和实用工作流。"
+            : "Prompts, checklists, and practical workflows around NavoKit free tools.",
+      },
+      {
+        "@type": "ItemList",
+        name: lang === "zh" ? "NavoKit 指南列表" : "NavoKit guide list",
+        itemListElement: posts.map((post, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: post.title,
+          url: `${SITE_URL}/${lang}/blog/${post.slug}`,
+          description: post.description,
+        })),
+      },
+      breadcrumbList([
+        { name: "NavoKit", url: `${SITE_URL}/${lang}` },
+        { name: lang === "zh" ? "指南" : "Guides", url: `${SITE_URL}/${lang}/blog` },
+      ]),
+    ],
+  };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F8FAFC", color: "#0B1220", display: "flex", flexDirection: "column" }}>
+    <div className="site-shell">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
       <SiteHeader lang={lang} />
 
-      <main style={{ maxWidth: 920, margin: "0 auto", padding: "64px 24px 96px", width: "100%", flex: 1 }}>
-        {/* Header section */}
-        <div style={{ textAlign: "center", marginBottom: 64 }}>
-          <h1 style={{
-            fontSize: "clamp(32px, 5vw, 48px)",
-            lineHeight: 1.15,
-            letterSpacing: "-0.03em",
-            fontWeight: 800,
-            color: "#0B1220",
-            margin: "0 0 16px"
-          }}>
-            {lang === 'zh' ? '技术教程与前沿资讯' : 'Blog & Guides'}
-          </h1>
-          <p style={{
-            fontSize: 17,
-            color: "#6B7280",
-            margin: "0 auto",
-            maxWidth: 480,
-            lineHeight: 1.6
-          }}>
-            {lang === 'zh' ? '这里沉淀了我们提高效率、玩转 AI 的前沿技巧和独家指南。' : 'Discover advanced guides, tutorials, and workflows to boost your digital productivity.'}
+      <main className="marketing-container blog-list-page">
+        <header className="blog-list-hero">
+          <span className="eyebrow">{lang === "zh" ? "实用指南" : "Practical guides"}</span>
+          <h1>{lang === "zh" ? "把工具变成稳定工作流。" : "Turn small tools into steady workflows."}</h1>
+          <p>
+            {lang === "zh"
+              ? "少一点概念，多一点可复用的提示词、检查清单和工具使用方法。"
+              : "Less hype, more reusable prompts, checklists, and practical ways to use the tools."}
           </p>
-        </div>
+        </header>
+
+        {workflowRails.length > 0 && (
+          <nav className="blog-topic-strip" aria-label={lang === "zh" ? "按工作流浏览指南" : "Browse guides by workflow"}>
+            {workflowRails.map(rail => (
+              <Link key={rail.id} href={`/${lang}${rail.href}`}>
+                <strong>{rail.label}</strong>
+                <span>{rail.description}</span>
+              </Link>
+            ))}
+          </nav>
+        )}
 
         {posts.length === 0 ? (
-          <div style={{
-            padding: 80,
-            background: "#fff",
-            borderRadius: 24,
-            border: "1px solid #E5E7EB",
-            textAlign: "center",
-            color: "#6B7280",
-            boxShadow: "0 1px 2px rgba(11,18,32,0.04)"
-          }}>
-            {lang === 'zh' ? '暂无文章，敬请期待' : 'No posts yet. Stay tuned.'}
-          </div>
+          <div className="empty-card">{lang === "zh" ? "暂无文章，敬请期待" : "No posts yet. Stay tuned."}</div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+          <div className="blog-list">
             {posts.map(post => (
-              <Link 
-                key={post.slug} 
-                href={`/${lang}/blog/${post.slug}`} 
-                style={{
-                  background: "#fff",
-                  border: "1px solid #E5E7EB",
-                  borderRadius: 24,
-                  padding: "32px 40px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  display: "block",
-                  boxShadow: "0 1px 2px rgba(11,18,32,0.04)",
-                  transition: "transform 0.2s, border-color 0.2s, box-shadow 0.2s",
-                }}
-                className="blog-card"
-              >
-                <div style={{ padding: "0 8px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                    <span style={{ fontSize: 13, color: "#6B7280", fontWeight: 500 }}>{post.date}</span>
-                    <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#D1D5DB" }} />
-                    <span style={{ fontSize: 12, color: "#2563EB", fontWeight: 600 }}>{lang === 'zh' ? '官方指南' : 'Guides'}</span>
+              <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="blog-card">
+                <div className="blog-card__inner">
+                  <div className="blog-card__meta">
+                    <span>{post.date}</span>
+                    <i />
+                    <span className="blog-card__intent">{formatBlogIntent(post.intent, lang)}</span>
+                    <i />
+                    <span>{formatReadingTime(post, lang)}</span>
+                    {post.difficulty && (
+                      <>
+                        <i />
+                        <span>{formatDifficulty(post.difficulty, lang)}</span>
+                      </>
+                    )}
                   </div>
-                  <h2 style={{
-                    fontSize: "clamp(20px, 4vw, 26px)",
-                    fontWeight: 760,
-                    color: "#0B1220",
-                    margin: "0 0 12px",
-                    letterSpacing: "-0.02em",
-                    lineHeight: 1.25
-                  }}>
-                    {post.title}
-                  </h2>
-                  <p style={{
-                    fontSize: 15,
-                    color: "#6B7280",
-                    margin: "0 0 24px",
-                    lineHeight: 1.65
-                  }}>
-                    {post.description}
-                  </p>
-                  <div style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 4,
-                    fontSize: 14,
-                    fontWeight: 650,
-                    color: "#0B1220",
-                    transition: "color 0.2s"
-                  }}
-                  className="read-more-link"
-                  >
-                    <span>{lang === 'zh' ? '阅读全文' : 'Read Article'}</span>
-                    <span style={{ transition: "transform 0.2s" }} className="arrow">→</span>
+                  <h2>{post.title}</h2>
+                  <p>{post.description}</p>
+                  <div className="read-more-link">
+                    <span>{lang === "zh" ? "阅读全文" : "Read article"}</span>
+                    <span className="arrow">→</span>
                   </div>
                 </div>
               </Link>
@@ -119,20 +131,6 @@ export default async function BlogListPage({
       </main>
 
       <SiteFooter lang={lang} />
-
-      <style>{`
-        .blog-card:hover {
-          transform: translateY(-2px);
-          border-color: #D1D5DB !important;
-          box-shadow: 0 12px 30px rgba(11,18,32,0.06) !important;
-        }
-        .blog-card:hover .read-more-link {
-          color: #2563EB !important;
-        }
-        .blog-card:hover .arrow {
-          transform: translateX(4px);
-        }
-      `}</style>
     </div>
-  )
+  );
 }

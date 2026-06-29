@@ -1,0 +1,24 @@
+{
+  "id": "ai-social-booster",
+  "categoryId": "creator_tools",
+  "categoryName": "创作者工具",
+  "title": "AI 社交媒体文案生成器",
+  "subtitle": "输入一句真实想法，生成 X 短帖、LinkedIn 帖子、Instagram 文案和开场句。",
+  "tags": ["社媒文案", "内容草稿", "可继续编辑"],
+  "features": [
+    "输入一句话快速生成初稿",
+    "适配 X、LinkedIn、Instagram 和开场句的初稿结构",
+    "生成结果适合继续审阅和个性化修改"
+  ],
+  "status": "limited",
+  "provider": "AI 写作服务",
+  "processingNote": "你的输入会由 AI 服务处理，用于生成文案初稿。",
+  "limitationNote": "工具只生成初稿，不承诺浏览、点赞或转化结果。",
+  "isFeatured": false,
+  "homePriority": 3,
+  "homeAccent": "yellow",
+  "homeIcon": "✎",
+  "homePreviewTitle": "从一句想法到多版文案",
+  "homePreviewText": "输入主题，生成 X 短帖、LinkedIn 帖子、Instagram 文案和开场句。",
+  "homePreviewMeta": "文案初稿 · 可编辑 · 多平台"
+}

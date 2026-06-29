@@ -1,328 +1,173 @@
-"use client";
-
-import type { Product } from "../../types/product";
-import { categories } from "../../lib/categories";
+import Image from "next/image";
 import Link from "next/link";
-import SiteHeader from "../../components/SiteHeader";
+import type { Tool } from "../../types/tool";
+import type { WorkflowRail } from "../../types/workflow";
+import type { BlogPost } from "../../lib/blog";
+import { getToolAccent, getToolIcon, stripHtml } from "../../lib/toolGroups";
 import SiteFooter from "../../components/SiteFooter";
+import SiteHeader from "../../components/SiteHeader";
 
-/* ─── SVG icon components for the hero grid ─── */
-const IconFile = ({ color = "#2563EB" }: { color?: string }) => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-    <polyline points="14 2 14 8 20 8" />
-    <line x1="16" y1="13" x2="8" y2="13" />
-    <line x1="16" y1="17" x2="8" y2="17" />
-  </svg>
-);
-const IconCode = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="16 18 22 12 16 6" />
-    <polyline points="8 6 2 12 8 18" />
-  </svg>
-);
-const IconImage = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <circle cx="8.5" cy="8.5" r="1.5" />
-    <polyline points="21 15 16 10 5 21" />
-  </svg>
-);
-const IconHeadset = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-  </svg>
-);
-const IconCamera = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-  </svg>
-);
-
-const heroIcons = [
-  <IconFile key="f1" />,
-  <IconCode key="c1" />,
-  <IconImage key="i1" />,
-  <IconFile key="f2" color="#2563EB" />,
-  <IconHeadset key="h1" />,
-  <IconCamera key="ca1" />,
-];
-
-/* ─── Small icon for tool cards (varies by product title) ─── */
-function CardIcon({ title }: { title: string }) {
-  if (title.includes("文案") || title.includes("Text") || title.includes("社媒"))
-    return (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B1220" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="4 7 4 4 20 4 20 7" />
-        <line x1="9" y1="20" x2="15" y2="20" />
-        <line x1="12" y1="4" x2="12" y2="20" />
-      </svg>
-    );
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-      <circle cx="8.5" cy="8.5" r="1.5" />
-      <polyline points="21 15 16 10 5 21" />
-    </svg>
-  );
+function toolHref(lang: string, tool: Tool) {
+  return `/${lang}/tools/${tool.id}`;
 }
 
-/* ─── Shared card style ─── */
-const cardStyle: React.CSSProperties = {
-  background: "#fff",
-  border: "1px solid #E5E7EB",
-  borderRadius: 20,
-  boxShadow: "0 1px 2px rgba(11,18,32,0.04)",
-  textDecoration: "none",
-  color: "inherit",
-  display: "flex",
-  flexDirection: "column",
-  overflow: "hidden",
-  transition: "border-color 0.2s, box-shadow 0.2s, transform 0.2s",
-  position: "relative",
-};
-
-/* ─── Main component ─── */
 export default function HomePage({
-  dict,
-  products,
+  tools,
+  posts,
+  workflowRails,
   lang,
 }: {
-  dict: any;
-  products: Product[];
+  dict: unknown;
+  tools: Tool[];
+  posts: BlogPost[];
+  workflowRails: WorkflowRail[];
   lang: string;
 }) {
-  const productsByCategory: Record<string, Product[]> = {};
-  products.forEach((p) => {
-    if (!productsByCategory[p.categoryId]) productsByCategory[p.categoryId] = [];
-    productsByCategory[p.categoryId].push(p);
-  });
+  const zh = lang === "zh";
+  const ordered = [...tools].sort((a, b) => (a.homePriority ?? 999) - (b.homePriority ?? 999));
+  const featured = ordered.find(tool => tool.isFeatured) ?? ordered[0];
+  const heroTools = ordered.slice(0, 4);
+  const featuredTools = [
+    ...ordered.filter(tool => tool.isFeatured),
+    ...ordered.filter(tool => !tool.isFeatured),
+  ].slice(0, 6);
+  const heroWorkflowRails = workflowRails.filter(rail => rail.showInHome !== false).slice(0, 4);
+  const workflowSteps = zh
+    ? [
+        ["输入", "写一句提示词、粘贴 Markdown，或描述你要发布的想法。"],
+        ["处理", "选择工具和格式，让 NavoKit 生成、转换或起草初稿。"],
+        ["带走结果", "下载图片、复制文案、预览视频，继续完成下一步工作。"],
+      ]
+    : [
+        ["Input", "Write a prompt, paste Markdown, or describe the idea you want to publish."],
+        ["Process", "Choose a tool and format, then generate, convert, or draft the first result."],
+        ["Take the result", "Download an image, copy a draft, preview a video, and keep moving."],
+      ];
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F8FAFC", color: "#0B1220" }}>
+    <div className="site-shell site-shell--home">
       <SiteHeader lang={lang} />
-
-      {/* ══════ HERO ══════ */}
-      <section
-        className="hero-section"
-        style={{
-          maxWidth: 800,
-          margin: "0 auto",
-          padding: "80px 24px 60px",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
-          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
-            {lang === "zh" ? "100% 免费" : "100% Free"}
-          </span>
-          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
-            {lang === "zh" ? "无需注册" : "No Signup"}
-          </span>
-          <span style={{ padding: "6px 14px", background: "#F8FAFC", border: "1px solid #E5E7EB", color: "#0B1220", borderRadius: 20, fontSize: 13, fontWeight: 600 }}>
-            {lang === "zh" ? "隐私优先" : "Privacy First"}
-          </span>
-        </div>
-
-        <h1
-          style={{
-            fontSize: "clamp(36px, 5vw, 56px)",
-            lineHeight: 1.15,
-            letterSpacing: "-0.04em",
-            fontWeight: 780,
-            color: "#0B1220",
-            margin: "0 0 16px",
-          }}
-        >
-          {lang === "zh" ? "免费 AI 小工具箱" : "Free AI Tools for Faster Everyday Work"}
-        </h1>
-        <p style={{ fontSize: "1.125rem", color: "#4B5563", maxWidth: "42rem", margin: "0 auto", lineHeight: "1.6" }}>
-          {lang === 'zh'
-            ? "图文生成与效率工具。NavoKit 提供一系列免注册、开箱即用的工具，如 ChatGPT 长图导出、社媒文案生成等。"
-            : "Export ChatGPT answers and generate social posts — no signup required."}
-        </p>
-      </section>
-
-      {/* ══════ TOOLS ══════ */}
-      <section id="tools" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 24px 64px" }}>
-        {categories.map((category) => {
-          const items = productsByCategory[category.id];
-          if (!items || items.length === 0) return null;
-          return (
-            <div key={category.id} style={{ marginBottom: 56 }}>
-              <h2 style={{ fontSize: 20, fontWeight: 700, color: "#0B1220", marginBottom: 24, letterSpacing: "-0.01em" }}>
-                {lang === "zh" ? category.nameZh : category.nameEn}
-              </h2>
-              <div
-                className="tools-grid"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                  gap: 24,
-                }}
-              >
-                {items.map((product) => {
-                  const toolUrl = product.linkUrl 
-                    ? product.linkUrl.replace(/^\/(zh|en)\//, `/${lang}/`) 
-                    : `/${lang}/tools/${product.id}`;
-
-                  return (
-                    <Link
-                      key={product.id}
-                      href={toolUrl}
-                      style={cardStyle}
-                      className="tool-card group"
-                    >
-                      {/* Card body */}
-                      <div style={{ padding: "32px 28px", flex: 1, display: "flex", flexDirection: "column" }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                          <div
-                            style={{
-                              width: 48,
-                              height: 48,
-                              borderRadius: 14,
-                              background: "#F8FAFC",
-                              border: "1px solid #E5E7EB",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <CardIcon title={product.title} />
-                          </div>
-                          {product.isHot && (
-                            <span style={{ fontSize: 11, fontWeight: 700, color: "#6B7280", border: "1px solid #E5E7EB", background: "#F8FAFC", padding: "2px 8px", borderRadius: 10, letterSpacing: "0.05em" }}>
-                              HOT
-                            </span>
-                          )}
-                        </div>
-
-                        <h3 style={{ fontSize: 18, fontWeight: 700, color: "#0B1220", margin: "0 0 8px", lineHeight: 1.3 }}>
-                          {product.title}
-                        </h3>
-                        <p style={{ fontSize: 14, color: "#6B7280", margin: 0, lineHeight: 1.6, flex: 1 }}>
-                          {product.subtitle.replace(/<[^>]*>?/gm, "")}
-                        </p>
-                      </div>
-
-                      {/* Footer hover indicator */}
-                      <div
-                        className="tool-card-footer"
-                        style={{
-                          padding: "16px 28px",
-                          borderTop: "1px solid #E5E7EB",
-                          background: "#F8FAFC",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          transition: "background 0.2s",
-                        }}
-                      >
-                        <img
-                          src="/logo.png"
-                          alt="NavoKit"
-                          style={{
-                            height: 36,
-                            width: "auto",
-                            display: "block",
-                            objectFit: "contain",
-                            opacity: 0.6,
-                            transition: "opacity 0.2s"
-                          }}
-                          className="card-logo"
-                        />
-                        <span className="try-now-text" style={{ fontSize: 14, fontWeight: 650, color: "#2563EB", display: "flex", alignItems: "center", gap: 4, opacity: 0, transform: "translateX(-10px)", transition: "all 0.2s" }}>
-                          {lang === "zh" ? "立即使用" : "Try Now"}
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </span>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
+      <main>
+        <section className="home-hero marketing-container">
+          <div className="hero-copy">
+            <span className="eyebrow">{zh ? "免费 AI 工具箱" : "Free online AI tools"}</span>
+            <h1>{zh ? <>小工具，<br />快一点完成工作。</> : <>Small tools.<br />Faster work.</>}</h1>
+            <p className="hero-lead">
+              {zh
+                ? "给创作者、开发者和运营人的免费 AI 工具箱。把内容、文档和想法快速变成可分享、可使用的结果。"
+                : "Free AI tools for creators, developers, and marketers. Turn text, files, and ideas into useful, shareable output."}
+            </p>
+            <div className="hero-actions">
+              <Link href={`/${lang}/tools`} className="button button--ink">{zh ? "浏览工具" : "Explore tools"}</Link>
+              {featured && <Link href={toolHref(lang, featured)} className="button button--secondary">{zh ? "打开精选工具" : "Open featured tool"}</Link>}
             </div>
-          );
-        })}
-      </section>
+            {heroWorkflowRails.length > 0 && (
+              <div className="hero-category-row" aria-label={zh ? "工作流主题" : "Workflow topics"}>
+                {heroWorkflowRails.map(rail => <span key={rail.id}>{rail.label}</span>)}
+              </div>
+            )}
+          </div>
 
-      {/* ══════ ABOUT / BRAND SECTION ══════ */}
-      <section id="about" style={{ background: "#0B1220", color: "#fff", padding: "80px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 36px)", fontWeight: 700, marginBottom: 20, letterSpacing: "-0.02em" }}>
-            {lang === "zh" ? "小工具，快一点完成工作。" : "Small tools. Faster work."}
-          </h2>
-          <p style={{ fontSize: 18, lineHeight: 1.6, color: "#9CA3AF", marginBottom: 32, maxWidth: 600, margin: "0 auto 32px" }}>
-            {lang === "zh" 
-              ? "NavoKit 小工具箱，是给创作者、开发者和运营人的免费 AI 工具箱。我们坚信好工具不该有门槛——无需注册、无需付费、隐私优先。"
-              : "NavoKit is a free AI tools hub for creators, developers, and marketers. We believe great tools should have no barriers — no signup, no payment, privacy-first."}
-          </p>
-          <a
-            href="mailto:admin@navokit.com"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "12px 24px",
-              background: "#1F2937",
-              color: "#fff",
-              borderRadius: 12,
-              fontWeight: 600,
-              fontSize: 15,
-              textDecoration: "none",
-              transition: "background 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#374151")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#1F2937")}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            {lang === "zh" ? "联系我们" : "Contact Us"}
-          </a>
-        </div>
-      </section>
+          <aside className="hero-directory" aria-label={zh ? "热门免费工具" : "Popular free tools"}>
+            <div className="hero-directory__header">
+              <div>
+                <span>{zh ? "热门工具" : "Popular free tools"}</span>
+                <h2>{zh ? "先选一个任务。" : "Choose a task first."}</h2>
+              </div>
+              <Link href={`/${lang}/tools`}>{zh ? "全部工具" : "All tools"} →</Link>
+            </div>
 
+            <div className="hero-tool-list">
+              {heroTools.map((tool, index) => {
+                return (
+                  <Link key={tool.id} href={toolHref(lang, tool)} className="hero-tool-row">
+                    <span className="hero-tool-row__number">{String(index + 1).padStart(2, "0")}</span>
+                    <div className={`tool-icon tool-icon--${getToolAccent(tool, index)}`}>{getToolIcon(tool, index)}</div>
+                    <div>
+                      <strong>{tool.title}</strong>
+                      <p>{stripHtml(tool.subtitle)}</p>
+                    </div>
+                    <b>→</b>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className="hero-directory__footer">
+              <span>{zh ? "你可以完成什么" : "What you can finish here"}</span>
+              <p>{zh ? "生成一段 AI 视频，把 Markdown 导出成图片，或为社交平台起草一版可继续修改的文案。" : "Generate a short AI video, export Markdown as an image, or draft a social post you can keep editing."}</p>
+            </div>
+          </aside>
+        </section>
+
+        <section className="home-workflows marketing-container" aria-label={zh ? "NavoKit 使用方式" : "How NavoKit works"}>
+          {workflowSteps.map(([title, text], index) => (
+            <div key={title}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{title}</strong>
+              <p>{text}</p>
+            </div>
+          ))}
+        </section>
+
+        <section id="tools" className="section marketing-container">
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">{zh ? "精选工具" : "Featured tools"}</span>
+              <h2>{zh ? "打开一个工具，完成一个小任务。" : "Open one tool. Finish one small task."}</h2>
+            </div>
+            <p>{zh ? "每个工具都服务一个明确结果：生成视频、导出图片、起草文案。" : "Each tool serves one clear outcome: generate a video, export an image, or draft copy."}</p>
+          </div>
+          <div className="tools-grid tools-grid--premium">
+            {featuredTools.map((tool, index) => {
+              return (
+                <Link key={tool.id} href={toolHref(lang, tool)} className="tool-card tool-card--premium">
+                  <div className="tool-card__top">
+                    <div className={`tool-icon tool-icon--${getToolAccent(tool, index)}`}>{getToolIcon(tool, index)}</div>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                  </div>
+                  <span className="tool-category">{tool.categoryName}</span>
+                  <h3>{tool.title}</h3>
+                  <p>{stripHtml(tool.subtitle)}</p>
+                  <div className="tool-card__meta">
+                    {(tool.tags ?? []).slice(0, 3).map(tag => <i key={tag}>{tag}</i>)}
+                  </div>
+                  <span className="tool-link">{zh ? "打开工具" : "Open tool"} <b>→</b></span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="section marketing-container guides-preview">
+          <div className="section-heading">
+            <div><span className="eyebrow">{zh ? "实用指南" : "Practical guides"}</span><h2>{zh ? "把工具变成工作流。" : "Turn tools into workflows."}</h2></div>
+            <Link href={`/${lang}/blog`} className="text-link">{zh ? "查看全部指南 →" : "View all guides →"}</Link>
+          </div>
+          {posts.length > 0 && (
+            <div className="guide-grid">
+              {posts.map(post => (
+                <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="guide-card">
+                  <span>{post.date} · {zh ? "指南" : "GUIDE"}</span>
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section id="about" className="about-strip">
+          <div className="marketing-container about-strip__inner">
+            <Image src="/logo.png" alt="" width={1672} height={941} />
+            <div>
+              <h2>{zh ? "实用的小工具，打开就能用。" : "Useful tools, ready when you are."}</h2>
+              <p>{zh ? "从 AI 视频生成到 Markdown 图片导出，NavoKit 帮你把零散输入整理成可以继续使用的内容资产。" : "From AI video generation to Markdown image export, NavoKit helps turn rough input into content assets you can keep using."}</p>
+            </div>
+          </div>
+        </section>
+      </main>
       <SiteFooter lang={lang} />
-
-      {/* ══════ RESPONSIVE ══════ */}
-      <style>{`
-        html {
-          scroll-behavior: smooth;
-        }
-
-        .tool-card:hover {
-          border-color: #CBD5E1 !important;
-          box-shadow: 0 12px 32px rgba(11,18,32,0.06), 0 4px 12px rgba(11,18,32,0.04) !important;
-          transform: translateY(-4px);
-        }
-
-        .tool-card:hover .tool-card-footer {
-          background: #EFF6FF !important;
-          border-top-color: #DBEAFE !important;
-        }
-        
-        .tool-card:hover .card-logo {
-          opacity: 1 !important;
-        }
-
-        .tool-card:hover .try-now-text {
-          opacity: 1 !important;
-          transform: translateX(0) !important;
-        }
-
-        @media (max-width: 860px) {
-          .hero-section { padding: 60px 20px 40px !important; }
-          .hero-section h1 { font-size: clamp(32px, 8vw, 42px) !important; }
-          .hero-section p { font-size: 16px !important; }
-        }
-
-        @media (max-width: 640px) {
-          .tools-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

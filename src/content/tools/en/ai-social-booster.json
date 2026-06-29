@@ -1,0 +1,24 @@
+{
+  "id": "ai-social-booster",
+  "categoryId": "creator_tools",
+  "categoryName": "Creator Tool",
+  "title": "AI Social Post Generator",
+  "subtitle": "Turn one real idea into editable drafts for X, LinkedIn, Instagram, and hooks.",
+  "tags": ["Social copy", "Drafting", "Editable"],
+  "features": [
+    "Start from one sentence",
+    "Drafts for X, LinkedIn, Instagram, and hook ideas",
+    "Results are designed for review and personalization"
+  ],
+  "status": "limited",
+  "provider": "AI writing service",
+  "processingNote": "Your input is processed by an AI service to generate the draft.",
+  "limitationNote": "The tool creates a draft and does not promise views, likes, or conversions.",
+  "isFeatured": false,
+  "homePriority": 3,
+  "homeAccent": "yellow",
+  "homeIcon": "✎",
+  "homePreviewTitle": "From one idea to several drafts",
+  "homePreviewText": "Enter a topic and get editable drafts for X, LinkedIn, Instagram, and hooks.",
+  "homePreviewMeta": "Draft · editable · multi-platform"
+}

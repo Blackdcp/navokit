@@ -1,31 +1,30 @@
-import fs from 'fs'
-import path from 'path'
-import { Product } from '../types/product'
+import fs from "fs";
+import path from "path";
+import type { Tool } from "../types/tool";
 
-export function getProducts(lang: 'zh' | 'en'): Product[] {
-  const dirPath = path.join(process.cwd(), 'src', 'content', 'products', lang)
-  
+export function getTools(lang: "zh" | "en"): Tool[] {
+  const dirPath = path.join(process.cwd(), "src", "content", "tools", lang);
+
   if (!fs.existsSync(dirPath)) {
-    // Fallback to zh if en doesn't exist yet
-    if (lang === 'en') {
-      return getProducts('zh')
+    if (lang === "en") {
+      return getTools("zh");
     }
-    return []
+    return [];
   }
 
-  const fileNames = fs.readdirSync(dirPath)
-  const products = fileNames
-    .filter(name => name.endsWith('.json'))
+  const tools = fs
+    .readdirSync(dirPath)
+    .filter(name => name.endsWith(".json"))
     .map(fileName => {
-      const filePath = path.join(dirPath, fileName)
-      const fileContents = fs.readFileSync(filePath, 'utf8')
-      return JSON.parse(fileContents) as Product
-    })
+      const filePath = path.join(dirPath, fileName);
+      const fileContents = fs.readFileSync(filePath, "utf8");
+      return JSON.parse(fileContents) as Tool;
+    });
 
-  return products
+  return tools.sort((a, b) => (a.homePriority ?? 999) - (b.homePriority ?? 999));
 }
 
-export function getProductBySlug(lang: 'zh' | 'en', slug: string): Product | null {
-  const products = getProducts(lang)
-  return products.find(p => p.id === slug) || null
+export function getToolBySlug(lang: "zh" | "en", slug: string): Tool | null {
+  const tools = getTools(lang);
+  return tools.find(tool => tool.id === slug) ?? null;
 }

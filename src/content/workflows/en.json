@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ai-video",
+    "label": "AI video",
+    "description": "Generate short video concepts from clear text prompts, then review the result before using it.",
+    "href": "/tools/free-ai-video-generator",
+    "order": 1,
+    "toolIds": ["free-ai-video-generator"],
+    "showInHome": true,
+    "showInBlog": true
+  },
+  {
+    "id": "content-export",
+    "label": "Content export",
+    "description": "Turn Markdown, AI answers, and structured notes into clean shareable image assets.",
+    "href": "/tools/markdown-to-image",
+    "order": 2,
+    "toolIds": ["markdown-to-image"],
+    "showInHome": true,
+    "showInBlog": true
+  },
+  {
+    "id": "social-drafting",
+    "label": "Social drafting",
+    "description": "Start with one real idea and create editable social copy for different platforms.",
+    "href": "/tools/ai-social-booster",
+    "order": 3,
+    "toolIds": ["ai-social-booster"],
+    "showInHome": true,
+    "showInBlog": true
+  }
+]
