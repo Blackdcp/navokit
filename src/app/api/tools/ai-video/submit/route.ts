@@ -30,7 +30,7 @@ function isDuration(value: unknown): value is keyof typeof durations {
 function nearestDurationPreset(seconds: number): keyof typeof durations {
   return durationPresets.reduce((best, preset) => (
     Math.abs(Number(preset) - seconds) < Math.abs(Number(best) - seconds) ? preset : best
-  ), "5" as keyof typeof durations);
+  ), "3" as keyof typeof durations);
 }
 
 function explicitDurationFromPrompt(prompt: string) {
@@ -56,7 +56,7 @@ function chooseDuration(prompt: string, requested: unknown): keyof typeof durati
 
   if (longIntent || prompt.length > 520) return "18";
   if (mediumIntent || prompt.length > 260) return "10";
-  if (prompt.length < 80 && /(logo|icon|loop|gif|very short|极短|循环|标志)/i.test(normalized)) return "3";
+  if (prompt.length < 180) return "3";
   return "5";
 }
 
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
     const timedOut = isTimeoutError(error);
     console.error("Agnes video submit exception", error);
     return NextResponse.json(
-      { error: timedOut ? "The video service timed out. Please try again." : "Unable to start video generation." },
+      { error: timedOut ? "Video generation is taking longer than usual. Try again with Auto or a shorter fixed length." : "Unable to start video generation." },
       { status: timedOut ? 504 : 500 },
     );
   }

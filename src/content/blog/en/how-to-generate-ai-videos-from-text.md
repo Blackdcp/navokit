@@ -24,7 +24,7 @@ For example:
 1. Open the [NavoKit Free AI Video Generator](/en/tools/free-ai-video-generator).
 2. Describe one clear scene. Avoid combining several unrelated shots.
 3. Choose landscape for websites and YouTube, portrait for Reels or Shorts, or square for social feeds.
-4. Keep duration on Auto, or use the advanced fixed-length controls when you need a specific short clip length.
+4. Keep duration on Auto for the most reliable default path, or use the advanced fixed-length controls when you need a specific short clip length.
 5. Start generation and keep the page open while the asynchronous task runs.
 6. Review the final motion, subject consistency, framing, and any unexpected details.
 
@@ -35,7 +35,7 @@ The generator may normalize the requested dimensions and duration, so the final 
 - If the subject changes between frames, simplify the scene and describe the subject more precisely.
 - If motion is chaotic, request one action and one camera movement.
 - If the shot feels flat, specify the light direction, time of day, and camera distance.
-- If generation fails, remove sensitive, ambiguous, or policy-restricted details and try again.
+- If generation fails, keep duration on Auto, simplify the scene, remove sensitive or policy-restricted details, and try again.
 
 ## Privacy and rights
 

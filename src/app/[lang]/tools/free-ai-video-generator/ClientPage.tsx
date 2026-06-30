@@ -124,7 +124,7 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                   <div className="duration-auto">
                     <button className={duration === "auto" ? "is-active" : ""} onClick={() => setDuration("auto")}>
                       <span>{zh ? "自动推荐" : "Auto"}</span>
-                      <small>{zh ? "根据提示词选择稳定时长" : "Fits the prompt automatically"}</small>
+                      <small>{zh ? "优先选择更稳定的短片长度" : "Prioritizes a stable short clip"}</small>
                     </button>
                   </div>
                   <details className="advanced-duration" open={duration !== "auto"}>
@@ -135,7 +135,7 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                       ))}
                     </div>
                   </details>
-                  <small className="duration-hint">{zh ? "自动模式会在约 3、5、10、18 秒中选择最合适的一档。" : "Auto chooses the closest stable preset: about 3, 5, 10, or 18 seconds."}</small>
+                  <small className="duration-hint">{zh ? "自动模式会先保证生成成功率；明确多镜头或更长叙事时才会升到更长档位。" : "Auto starts with the shortest reliable length, then uses longer presets only when the prompt clearly needs them."}</small>
                 </fieldset>
               </div>
               {error && <p className="inline-error">{error}</p>}
