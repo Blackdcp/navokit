@@ -8,6 +8,12 @@ const aiVideoContent: ToolContentFactory = lang => {
   return {
     eyebrow: zh ? "使用方式" : "How it works",
     howTitle: zh ? "从一个镜头描述到 AI 视频。" : "From one shot description to an AI video.",
+    facts: [
+      { label: zh ? "任务" : "Task", value: zh ? "将一个文本提示词生成可预览的 AI 短视频。" : "Turn one text prompt into a previewable short AI video." },
+      { label: zh ? "输入" : "Input", value: zh ? "视频描述、画面比例，以及可选的固定时长。" : "A video description, aspect ratio, and optional fixed duration." },
+      { label: zh ? "输出" : "Output", value: zh ? "生成成功后得到可打开和下载的 MP4 视频。" : "A generated MP4 video that can be opened and downloaded when the task completes." },
+      { label: zh ? "可用性" : "Availability", value: zh ? "免费生成使用共享视频容量；队列繁忙时会保留提示词，方便稍后重试。" : "Free generation uses shared video capacity; if the queue is busy, the prompt stays ready for retry." },
+    ],
     steps: [
       { title: zh ? "描述镜头" : "Describe one shot", text: zh ? "说明主体、动作、场景、镜头运动、光线和视觉风格。" : "Specify the subject, action, setting, camera movement, lighting, and visual style." },
       { title: zh ? "选择格式" : "Choose the format", text: zh ? "根据 YouTube、Reels 或社交信息流选择横版、竖版或方形。" : "Choose landscape, portrait, or square for YouTube, Reels, or social feeds." },
@@ -50,6 +56,12 @@ const markdownToImageContent: ToolContentFactory = lang => {
   return {
     eyebrow: zh ? "使用方式" : "How it works",
     howTitle: zh ? "从 Markdown 到分享图片。" : "From Markdown to a shareable image.",
+    facts: [
+      { label: zh ? "任务" : "Task", value: zh ? "将 Markdown、AI 回复或结构化文本转成干净图片。" : "Convert Markdown, AI responses, or structured text into a clean image." },
+      { label: zh ? "输入" : "Input", value: zh ? "Markdown 文本、标题、列表、引用、表格或代码块。" : "Markdown text with headings, lists, quotes, tables, or code blocks." },
+      { label: zh ? "输出" : "Output", value: zh ? "适合社交、文档或归档使用的 PNG 图片。" : "A PNG image for social sharing, documentation, or archiving." },
+      { label: zh ? "隐私" : "Privacy", value: zh ? "转换在浏览器中完成，NavoKit 不上传或保存你的 Markdown。" : "Rendering happens in the browser; NavoKit does not upload or store your Markdown." },
+    ],
     steps: [
       { title: zh ? "粘贴内容" : "Paste your content", text: zh ? "粘贴 Markdown、ChatGPT 回复或结构化文本。" : "Paste Markdown, a ChatGPT response, or any structured text." },
       { title: zh ? "检查预览" : "Review the preview", text: zh ? "边输入边查看标题、列表、引用和代码块效果。" : "See headings, lists, quotes, and code blocks update as you type." },
@@ -91,6 +103,12 @@ const socialBoosterContent: ToolContentFactory = lang => {
   return {
       eyebrow: zh ? "使用方式" : "How it works",
       howTitle: zh ? "从一个想法到多版可编辑初稿。" : "From one idea to several editable drafts.",
+      facts: [
+        { label: zh ? "任务" : "Task", value: zh ? "把一个想法生成多版社交媒体文案初稿。" : "Turn one idea into several editable social post drafts." },
+        { label: zh ? "输入" : "Input", value: zh ? "主题、背景、语气、目标平台和希望读者知道的重点。" : "Topic, context, tone, target platform, and the key point readers should understand." },
+        { label: zh ? "输出" : "Output", value: zh ? "X、LinkedIn、Instagram 文案和开场句，可继续编辑。" : "Editable drafts for X, LinkedIn, Instagram, and short hook ideas." },
+        { label: zh ? "限制" : "Limit", value: zh ? "输出是初稿，发布前仍需检查事实、平台规则和个人语气。" : "Outputs are drafts; check facts, platform rules, and personal voice before publishing." },
+      ],
       steps: [
         { title: zh ? "描述真实想法" : "Describe the real idea", text: zh ? "给出主题、背景、感受和希望读者知道的重点。" : "Provide the topic, context, feeling, and what readers should know." },
         { title: zh ? "一次生成多版" : "Generate several versions", text: zh ? "同时得到 X、LinkedIn、Instagram 和开场句的可编辑版本。" : "Get editable versions for X, LinkedIn, Instagram, and short hook ideas at once." },

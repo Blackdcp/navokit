@@ -2,6 +2,7 @@
 
 const baseUrl = normalizeBaseUrl(process.env.SEO_AUDIT_BASE_URL || process.argv[2] || "http://localhost:3001");
 const siteUrl = normalizeBaseUrl(process.env.SEO_AUDIT_SITE_URL || "https://www.navokit.com");
+const indexNowKey = "6b62f2c9d6f24ac7afde4a9e8f023e17";
 
 const results = [];
 
@@ -166,7 +167,7 @@ async function auditRobots() {
   record(text.includes("User-Agent: *"), "/robots.txt has user-agent");
   record(text.includes("Disallow: /api/"), "/robots.txt disallows API routes");
   record(text.includes(`Sitemap: ${expectedUrl("/sitemap.xml")}`), "/robots.txt points to sitemap");
-  record(!text.includes("Host:"), "/robots.txt omits non-essential Host directive");
+  record(text.includes(`Host: ${siteUrl}`), "/robots.txt declares canonical host");
 }
 
 async function auditSitemap() {
@@ -200,6 +201,22 @@ async function auditSitemap() {
     `<loc>${escapeRegExp(expectedUrl("/en/blog/how-to-convert-markdown-to-png"))}</loc>[\\s\\S]*hreflang="zh"[\\s\\S]*${escapeRegExp(expectedUrl("/zh/blog/how-to-convert-markdown-to-png"))}`,
   );
   record(blogAlternatePattern.test(text), "/sitemap.xml has blog hreflang alternates");
+}
+
+async function auditGeoDiscovery() {
+  const keyPath = `/${indexNowKey}.txt`;
+  const key = await fetchText(keyPath);
+  record(key.response.status === 200, `${keyPath} IndexNow key file returns 200`, `${key.response.status}`);
+  record(key.text.trim() === indexNowKey, `${keyPath} contains IndexNow key`);
+
+  const llms = await fetchText("/llms.txt");
+  record(llms.response.status === 200, "/llms.txt returns 200", `${llms.response.status}`);
+  record((llms.response.headers.get("content-type") || "").includes("text/plain"), "/llms.txt is text/plain");
+  record(llms.text.includes("# NavoKit"), "/llms.txt names NavoKit");
+  record(llms.text.includes("Free AI Video Generator"), "/llms.txt includes AI Video tool");
+  record(llms.text.includes("Markdown to Image"), "/llms.txt includes Markdown to Image tool");
+  record(llms.text.includes("AI Social"), "/llms.txt includes AI Social tool");
+  record(llms.text.includes(expectedUrl("/sitemap.xml")), "/llms.txt points to sitemap");
 }
 
 async function auditImages() {
@@ -333,6 +350,7 @@ async function main() {
     await auditRootRedirect();
     await auditRobots();
     await auditSitemap();
+    await auditGeoDiscovery();
     await auditImages();
     await auditPages();
   } catch (error) {

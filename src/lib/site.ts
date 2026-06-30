@@ -1,4 +1,5 @@
 export const SITE_URL = "https://www.navokit.com";
+export const INDEXNOW_KEY = "6b62f2c9d6f24ac7afde4a9e8f023e17";
 
 export const BRAND_ICONS = {
   icon: [

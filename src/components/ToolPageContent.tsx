@@ -1,10 +1,11 @@
 import Link from "next/link";
-import type { ToolContentItem, ToolContentLink } from "../types/toolPageContent";
+import type { ToolContentItem, ToolContentLink, ToolFact } from "../types/toolPageContent";
 
 export default function ToolPageContent({
   lang,
   eyebrow,
   howTitle,
+  facts,
   steps,
   useCases,
   examples,
@@ -17,6 +18,7 @@ export default function ToolPageContent({
   lang: string;
   eyebrow: string;
   howTitle: string;
+  facts?: ToolFact[];
   steps: ToolContentItem[];
   useCases: ToolContentItem[];
   examples?: ToolContentItem[];
@@ -30,6 +32,21 @@ export default function ToolPageContent({
 
   return (
     <div className="tool-content">
+      {facts && facts.length > 0 && (
+        <section className="tool-content__section tool-facts" aria-label={zh ? "工具摘要" : "Tool summary"}>
+          <span className="eyebrow">{zh ? "工具摘要" : "Tool summary"}</span>
+          <h2>{zh ? "这个工具能完成什么。" : "What this tool does."}</h2>
+          <dl>
+            {facts.map(item => (
+              <div key={item.label}>
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
       <section className="tool-content__section">
         <span className="eyebrow">{eyebrow}</span>
         <h2>{howTitle}</h2>

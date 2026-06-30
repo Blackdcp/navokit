@@ -13,7 +13,7 @@ function sitemapAlternates(path: string) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteLastModified = new Date('2026-06-29')
+  const siteLastModified = new Date('2026-06-30')
   const staticPaths = [
     { path: '', priority: 1, changeFrequency: 'weekly' as const },
     { path: '/tools', priority: 0.9, changeFrequency: 'weekly' as const },
