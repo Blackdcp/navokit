@@ -8,12 +8,14 @@ import { getToolPageContent } from "../../../../lib/toolPageContent";
 
 type Format = "landscape" | "portrait" | "square";
 type Status = "idle" | "submitting" | "polling" | "success" | "error";
+type DurationChoice = "auto" | "3" | "5" | "10" | "18";
+const durationOptions = ["3", "5", "10", "18"] as const;
 
 export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
   const zh = lang === "zh";
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState<Format>("landscape");
-  const [duration, setDuration] = useState("3");
+  const [duration, setDuration] = useState<DurationChoice>("auto");
   const [status, setStatus] = useState<Status>("idle");
   const [progress, setProgress] = useState(0);
   const [videoUrl, setVideoUrl] = useState("");
@@ -117,13 +119,23 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                     ))}
                   </div>
                 </fieldset>
-                <fieldset>
-                  <legend>{zh ? "视频时长" : "Duration"}</legend>
-                  <div>
-                    {["3", "5"].map(item => (
-                      <button key={item} className={duration === item ? "is-active" : ""} onClick={() => setDuration(item)}>≈ {item}s</button>
-                    ))}
+                <fieldset className="duration-fieldset">
+                  <legend>{zh ? "视频长度" : "Video length"}</legend>
+                  <div className="duration-auto">
+                    <button className={duration === "auto" ? "is-active" : ""} onClick={() => setDuration("auto")}>
+                      <span>{zh ? "自动推荐" : "Auto"}</span>
+                      <small>{zh ? "根据提示词选择稳定时长" : "Fits the prompt automatically"}</small>
+                    </button>
                   </div>
+                  <details className="advanced-duration" open={duration !== "auto"}>
+                    <summary>{zh ? "高级：固定时长" : "Advanced: fixed length"}</summary>
+                    <div>
+                      {durationOptions.map(item => (
+                        <button key={item} className={duration === item ? "is-active" : ""} onClick={() => setDuration(item)}>≈ {item}s</button>
+                      ))}
+                    </div>
+                  </details>
+                  <small className="duration-hint">{zh ? "自动模式会在约 3、5、10、18 秒中选择最合适的一档。" : "Auto chooses the closest stable preset: about 3, 5, 10, or 18 seconds."}</small>
                 </fieldset>
               </div>
               {error && <p className="inline-error">{error}</p>}
@@ -158,7 +170,7 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                 <div className="empty-state video-empty">
                   <span>▶</span>
                   <strong>{zh ? "你的视频会显示在这里" : "Your video will appear here"}</strong>
-                  <p>{zh ? "输入一个具体镜头，选择比例和时长，然后开始生成。" : "Describe one specific shot, choose a format and duration, then generate."}</p>
+                  <p>{zh ? "输入一个具体镜头，选择画面比例，然后开始生成。系统会自动推荐视频长度。" : "Describe one specific shot, choose a format, then generate. Auto length picks a stable clip duration for you."}</p>
                 </div>
               )}
             </div>

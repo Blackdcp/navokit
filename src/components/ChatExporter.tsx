@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
@@ -68,7 +69,10 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
             <div className="preview-canvas">
               <div ref={previewRef} className="markdown-export">
                 <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
-                <div className="export-watermark"><span className="watermark-symbol">N</span><span>Made with <b>NavoKit</b></span></div>
+                <div className="export-watermark">
+                  <span>Made with</span>
+                  <Image className="watermark-logo" src="/logo.png" alt="NavoKit" width={1672} height={941} unoptimized />
+                </div>
               </div>
             </div>
           </div>

@@ -14,7 +14,10 @@ const formats = {
 const durations = {
   "3": 81,
   "5": 121,
+  "10": 241,
+  "18": 441,
 } as const;
+const durationPresets = Object.keys(durations) as Array<keyof typeof durations>;
 
 function isFormat(value: unknown): value is keyof typeof formats {
   return typeof value === "string" && value in formats;
@@ -22,6 +25,39 @@ function isFormat(value: unknown): value is keyof typeof formats {
 
 function isDuration(value: unknown): value is keyof typeof durations {
   return typeof value === "string" && value in durations;
+}
+
+function nearestDurationPreset(seconds: number): keyof typeof durations {
+  return durationPresets.reduce((best, preset) => (
+    Math.abs(Number(preset) - seconds) < Math.abs(Number(best) - seconds) ? preset : best
+  ), "5" as keyof typeof durations);
+}
+
+function explicitDurationFromPrompt(prompt: string) {
+  const match = prompt.match(/(?:^|\D)(\d{1,2})\s*(?:s|sec|secs|second|seconds|秒)/i);
+  if (!match) return null;
+
+  const seconds = Number(match[1]);
+  if (!Number.isFinite(seconds)) return null;
+  return nearestDurationPreset(seconds);
+}
+
+function chooseDuration(prompt: string, requested: unknown): keyof typeof durations | null {
+  const value = String(requested ?? "auto");
+  if (isDuration(value)) return value;
+  if (value !== "auto") return null;
+
+  const explicit = explicitDurationFromPrompt(prompt);
+  if (explicit) return explicit;
+
+  const normalized = prompt.toLowerCase();
+  const longIntent = /(montage|multiple scenes|story sequence|before and after|walkthrough|tutorial|timelapse|time-lapse|several shots|multi[- ]scene|多镜头|多个场景|教程|过程|延时|故事)/i.test(normalized);
+  const mediumIntent = /(product demo|demo|travel|showcase|cinematic sequence|opening scene|展示|演示|旅拍|开场)/i.test(normalized);
+
+  if (longIntent || prompt.length > 520) return "18";
+  if (mediumIntent || prompt.length > 260) return "10";
+  if (prompt.length < 80 && /(logo|icon|loop|gif|very short|极短|循环|标志)/i.test(normalized)) return "3";
+  return "5";
 }
 
 function errorMessage(status: number) {
@@ -48,7 +84,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const prompt = typeof body.prompt === "string" ? body.prompt.trim() : "";
     const format = body.format;
-    const duration = String(body.duration ?? "");
+    const duration = chooseDuration(prompt, body.duration);
 
     if (prompt.length < 10 || prompt.length > 1200) {
       return NextResponse.json(
@@ -56,7 +92,7 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-    if (!isFormat(format) || !isDuration(duration)) {
+    if (!isFormat(format) || !duration) {
       return NextResponse.json({ error: "Invalid video settings." }, { status: 400 });
     }
 

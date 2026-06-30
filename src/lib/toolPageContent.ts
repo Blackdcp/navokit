@@ -31,6 +31,7 @@ const aiVideoContent: ToolContentFactory = lang => {
     ],
     privacy: zh ? "你的提示词和生成设置会由 AI 视频服务处理。NavoKit 不提供视频历史记录，但基础托管日志和服务数据保留政策仍可能适用。" : "Your prompt and generation settings are processed by an AI video service. NavoKit does not provide video history, though hosting logs and service retention policies may still apply.",
     faqs: [
+      { title: zh ? "为什么最长是约 18 秒？" : "Why is the maximum about 18 seconds?", text: zh ? "当前 AI 视频服务支持固定帧数档位。NavoKit 开放约 3、5、10 和 18 秒选项；更长视频暂不稳定，因此不作为当前选项。" : "The current AI video service supports fixed frame-count presets. NavoKit exposes approximately 3, 5, 10, and 18 second options; longer videos are not stable enough to offer yet." },
       { title: zh ? "最终视频一定是所选尺寸和时长吗？" : "Will the final video exactly match my settings?", text: zh ? "不一定。AI 视频服务可能会标准化尺寸和时长，结果区域显示的参数才是实际规格。" : "Not always. The AI video service may normalize dimensions and duration; the result details are the actual specifications." },
       { title: zh ? "是否保证无水印或可商用？" : "Is no-watermark or commercial use guaranteed?", text: zh ? "工具可免费使用，但输出条件和使用权仍需以实际结果与适用条款为准。" : "The tool is free to use, but output conditions and usage rights should still be reviewed before commercial use." },
       { title: zh ? "为什么生成会失败？" : "Why can generation fail?", text: zh ? "服务繁忙、内容策略、无效提示词或临时故障都可能导致失败。" : "High demand, content policies, invalid prompts, or temporary service issues can cause failure." },

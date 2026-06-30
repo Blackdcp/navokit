@@ -5,7 +5,7 @@
   "title": "免费 AI 视频生成器",
   "subtitle": "输入文本提示词，生成横版、竖版或方形 AI 短视频。",
   "tags": ["免费", "文生视频", "AI 视频"],
-  "features": ["文本生成视频", "横版、竖版和方形比例", "约 3 秒或 5 秒短片"],
+  "features": ["文本生成视频", "横版、竖版和方形比例", "自动选择视频长度，最长约 18 秒"],
   "status": "limited",
   "provider": "AI 视频服务",
   "processingNote": "视频采用异步生成，通常需要等待数分钟。",
@@ -16,5 +16,5 @@
   "homeIcon": "▶",
   "homePreviewTitle": "一张木质桌面上的安静产品镜头",
   "homePreviewText": "输入镜头、主体和氛围，选择横版、竖版或方形，生成可预览的短视频。",
-  "homePreviewMeta": "文生视频 · 3s / 5s · AI 视频"
+  "homePreviewMeta": "文生视频 · 自动长度 · AI 视频"
 }

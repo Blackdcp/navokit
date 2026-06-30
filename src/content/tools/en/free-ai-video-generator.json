@@ -5,7 +5,7 @@
   "title": "Free AI Video Generator",
   "subtitle": "Turn a text prompt into a short AI-generated video in landscape, portrait, or square format.",
   "tags": ["Text to video", "AI video", "No sign-up"],
-  "features": ["Text-to-video generation", "Landscape, portrait, and square formats", "3 or 5 second clips"],
+  "features": ["Text-to-video generation", "Landscape, portrait, and square formats", "Automatic video length up to about 18 seconds"],
   "status": "limited",
   "provider": "AI video service",
   "processingNote": "Video generation runs asynchronously and usually takes several minutes.",
@@ -16,5 +16,5 @@
   "homeIcon": "▶",
   "homePreviewTitle": "A calm product shot on a wooden desk",
   "homePreviewText": "Describe the shot, subject, and mood. Pick landscape, portrait, or square, then generate a short video.",
-  "homePreviewMeta": "Text to video · 3s / 5s · AI video"
+  "homePreviewMeta": "Text to video · Auto length · AI video"
 }
