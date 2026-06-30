@@ -163,8 +163,16 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
               ) : status === "submitting" || status === "polling" ? (
                 <div className="generation-state">
                   <div className="progress-ring"><span>{progress}%</span></div>
-                  <strong>{zh ? "正在生成视频" : "Generating your video"}</strong>
-                  <p>{zh ? "视频任务异步处理，可能需要等待数分钟。请保持页面打开。" : "Video tasks run asynchronously and may take several minutes. Keep this page open."}</p>
+                  <strong>
+                    {status === "submitting"
+                      ? (zh ? "正在创建视频任务" : "Starting your video task")
+                      : (zh ? "正在生成视频" : "Generating your video")}
+                  </strong>
+                  <p>
+                    {status === "submitting"
+                      ? (zh ? "服务繁忙时，创建任务可能需要一两分钟。请保持页面打开。" : "When the service is busy, starting the task can take a minute or two. Keep this page open.")
+                      : (zh ? "视频任务异步处理，可能需要等待数分钟。请保持页面打开。" : "Video tasks run asynchronously and may take several minutes. Keep this page open.")}
+                  </p>
                 </div>
               ) : (
                 <div className="empty-state video-empty">

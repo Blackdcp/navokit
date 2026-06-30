@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const AGNES_ENDPOINT = "https://apihub.agnes-ai.com/v1/videos";
 const MODEL = "agnes-video-v2.0";
@@ -109,7 +109,7 @@ export async function POST(request: Request) {
         num_frames: durations[duration],
         frame_rate: 24,
       }),
-      signal: AbortSignal.timeout(55_000),
+      signal: AbortSignal.timeout(285_000),
       cache: "no-store",
     });
 
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
     const timedOut = isTimeoutError(error);
     console.error("Agnes video submit exception", error);
     return NextResponse.json(
-      { error: timedOut ? "Video generation is taking longer than usual. Try again with Auto or a shorter fixed length." : "Unable to start video generation." },
+      { error: timedOut ? "The video service did not return a task ID in time. Please try again later." : "Unable to start video generation." },
       { status: timedOut ? 504 : 500 },
     );
   }
