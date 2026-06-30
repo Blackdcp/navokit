@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 
-export const maxDuration = 300;
+export const maxDuration = 150;
 
 const AGNES_ENDPOINT = "https://apihub.agnes-ai.com/v1/videos";
 const MODEL = "agnes-video-v2.0";
+const TASK_START_TIMEOUT_MS = 120_000;
 
 const formats = {
   landscape: { width: 1152, height: 768 },
@@ -62,7 +63,7 @@ function chooseDuration(prompt: string, requested: unknown): keyof typeof durati
 
 function errorMessage(status: number) {
   if (status === 401) return "Video generation is temporarily unavailable.";
-  if (status === 503) return "Video generation is busy. Please try again shortly.";
+  if (status === 503) return "The video queue is full right now. Your prompt is valid — please try again in a few minutes.";
   if (status === 400) return "The video request was rejected. Try revising your prompt.";
   return "The video service could not start this request.";
 }
@@ -109,7 +110,7 @@ export async function POST(request: Request) {
         num_frames: durations[duration],
         frame_rate: 24,
       }),
-      signal: AbortSignal.timeout(285_000),
+      signal: AbortSignal.timeout(TASK_START_TIMEOUT_MS),
       cache: "no-store",
     });
 
@@ -136,7 +137,7 @@ export async function POST(request: Request) {
     const timedOut = isTimeoutError(error);
     console.error("Agnes video submit exception", error);
     return NextResponse.json(
-      { error: timedOut ? "The video service did not return a task ID in time. Please try again later." : "Unable to start video generation." },
+      { error: timedOut ? "The video queue is taking too long to start. Your prompt is still here — please try again in a few minutes." : "Unable to start video generation." },
       { status: timedOut ? 504 : 500 },
     );
   }

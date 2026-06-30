@@ -26,7 +26,7 @@ const aiVideoContent: ToolContentFactory = lang => {
     ],
     limitations: [
       { title: zh ? "结果可能不完全可控" : "Results are not fully deterministic", text: zh ? "AI 视频可能改变细节、动作或构图。请把结果当作可继续筛选的视觉草稿。" : "AI video may change details, motion, or framing. Treat the result as a visual draft you can review and refine." },
-      { title: zh ? "生成速度会变化" : "Generation speed can vary", text: zh ? "AI 视频生成可能受排队和服务状态影响，繁忙时会更慢或失败。" : "AI video generation can be affected by queues and service availability. Busy periods may make tasks slower or fail." },
+      { title: zh ? "免费容量会排队" : "Free capacity is shared", text: zh ? "免费生成使用共享视频容量。繁忙时创建任务可能需要更久；如果队列满了，保留原提示词稍后重试即可。" : "Free generation uses shared video capacity. Starting a task can take longer during busy periods; if the queue is full, keep the same prompt and try again later." },
       { title: zh ? "不要输入敏感内容" : "Avoid sensitive input", text: zh ? "提示词会由 AI 视频服务处理，因此不要提交机密、个人身份或受保护内容。" : "Prompts are processed by an AI video service, so do not submit confidential, identifying, or protected content." },
     ],
     privacy: zh ? "你的提示词和生成设置会由 AI 视频服务处理。NavoKit 不提供视频历史记录，但基础托管日志和服务数据保留政策仍可能适用。" : "Your prompt and generation settings are processed by an AI video service. NavoKit does not provide video history, though hosting logs and service retention policies may still apply.",
@@ -34,7 +34,7 @@ const aiVideoContent: ToolContentFactory = lang => {
       { title: zh ? "为什么最长是约 18 秒？" : "Why is the maximum about 18 seconds?", text: zh ? "当前 AI 视频服务支持固定帧数档位。自动模式会优先选择更稳定的短片长度；需要更长叙事时，可在高级选项中使用约 5、10 或 18 秒。" : "The current AI video service supports fixed frame-count presets. Auto mode prioritizes a stable short clip first; use the advanced controls when you need about 5, 10, or 18 seconds." },
       { title: zh ? "最终视频一定是所选尺寸和时长吗？" : "Will the final video exactly match my settings?", text: zh ? "不一定。AI 视频服务可能会标准化尺寸和时长，结果区域显示的参数才是实际规格。" : "Not always. The AI video service may normalize dimensions and duration; the result details are the actual specifications." },
       { title: zh ? "是否保证无水印或可商用？" : "Is no-watermark or commercial use guaranteed?", text: zh ? "工具可免费使用，但输出条件和使用权仍需以实际结果与适用条款为准。" : "The tool is free to use, but output conditions and usage rights should still be reviewed before commercial use." },
-      { title: zh ? "为什么生成会失败？" : "Why can generation fail?", text: zh ? "服务繁忙、内容策略、无效提示词或临时故障都可能导致失败。自动模式会优先使用更稳定的短片长度，失败时也可以简化提示词后重试。" : "High demand, content policies, invalid prompts, or temporary service issues can cause failure. Auto mode uses a more reliable short length first; if a task fails, simplify the prompt and try again." },
+      { title: zh ? "为什么生成会失败？" : "Why can generation fail?", text: zh ? "高需求、队列满、内容策略、无效提示词或临时故障都可能导致失败。如果提示词有效但队列繁忙，页面会保留原内容，你可以稍后用同一提示词重试。" : "High demand, a full queue, content policies, invalid prompts, or temporary service issues can cause failure. If the prompt is valid but capacity is busy, the page keeps your input so you can retry with the same prompt later." },
       { title: zh ? "支持图生视频吗？" : "Does it support image-to-video?", text: zh ? "目前支持文生视频，暂不支持图生视频。" : "This tool supports text-to-video only." },
     ],
     related: [

@@ -27,6 +27,8 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
   const examples = zh
     ? ["一只红狐走过积雪森林，雪花轻落，低机位跟拍，写实电影风格。", "黑色岩石上的香水瓶，薄雾缓慢流动，产品慢镜头，戏剧化灯光。"]
     : ["A red fox walking through a snowy forest, soft snowfall, low tracking shot, realistic cinematic style.", "A perfume bottle on black stone, mist drifting around it, slow product shot, dramatic lighting."];
+  const isWorking = status === "submitting" || status === "polling";
+  const canGenerate = prompt.trim().length >= 10 && !isWorking;
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
@@ -138,11 +140,27 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                   <small className="duration-hint">{zh ? "自动模式会先保证生成成功率；明确多镜头或更长叙事时才会升到更长档位。" : "Auto starts with the shortest reliable length, then uses longer presets only when the prompt clearly needs them."}</small>
                 </fieldset>
               </div>
-              {error && <p className="inline-error">{error}</p>}
-              <button className="button button--blue" disabled={prompt.trim().length < 10 || status === "submitting" || status === "polling"} onClick={generate}>
-                {status === "submitting" || status === "polling" ? (zh ? "正在生成…" : "Generating…") : (zh ? "生成视频" : "Generate video")}
+              {error && (
+                <div className="inline-error video-error" role="alert">
+                  <strong>{zh ? "视频队列暂时繁忙" : "The video queue is busy"}</strong>
+                  <p>{error}</p>
+                  <button className="button button--secondary button--small" disabled={!canGenerate} onClick={generate}>
+                    {zh ? "用同一提示词重试" : "Try again with same prompt"}
+                  </button>
+                </div>
+              )}
+              <button className="button button--blue" disabled={!canGenerate} onClick={generate}>
+                {isWorking
+                  ? (zh ? "正在生成…" : "Generating…")
+                  : status === "error"
+                    ? (zh ? "用同一提示词重试" : "Try again with same prompt")
+                    : (zh ? "生成视频" : "Generate video")}
               </button>
-              <small className="processing-note">{zh ? "提示词会由 AI 视频服务处理。请勿输入敏感或机密信息。" : "Your prompt is processed by an AI video service. Do not enter sensitive or confidential information."}</small>
+              <small className="processing-note">
+                {zh
+                  ? "免费生成使用共享容量，繁忙时创建任务可能需要一两分钟。如果队列满了，你的提示词会保留在这里，可直接重试。请勿输入敏感或机密信息。"
+                  : "Free video generation uses limited shared capacity. If the queue is busy, your prompt stays here so you can try again. Do not enter sensitive or confidential information."}
+              </small>
             </div>
           </div>
 
@@ -170,7 +188,7 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
                   </strong>
                   <p>
                     {status === "submitting"
-                      ? (zh ? "服务繁忙时，创建任务可能需要一两分钟。请保持页面打开。" : "When the service is busy, starting the task can take a minute or two. Keep this page open.")
+                      ? (zh ? "正在等待可用视频容量。队列繁忙时可能需要一两分钟；如果未开始，提示词会保留供你重试。" : "Waiting for available video capacity. If the queue cannot start soon, your prompt will stay here so you can retry.")
                       : (zh ? "视频任务异步处理，可能需要等待数分钟。请保持页面打开。" : "Video tasks run asynchronously and may take several minutes. Keep this page open.")}
                   </p>
                 </div>
