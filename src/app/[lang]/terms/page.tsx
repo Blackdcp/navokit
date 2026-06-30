@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
-import { localizedCanonical } from "../../../lib/site";
+import { localizedCanonical, SUPPORT_EMAIL } from "../../../lib/site";
 
 export async function generateMetadata({
   params,
@@ -58,7 +58,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
                 <h3>6. 联系我们</h3>
                 <p>如对本条款有疑问，请联系：</p>
-                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
+                <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>
             ) : (
               <>
@@ -86,7 +86,7 @@ export default async function TermsOfServicePage({ params }: { params: Promise<{
 
                 <h3>6. Contact Us</h3>
                 <p>If you have any questions regarding these terms, please contact:</p>
-                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
+                <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>
             )}
           </div>

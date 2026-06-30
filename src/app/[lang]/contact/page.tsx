@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "../../../components/SiteFooter";
 import SiteHeader from "../../../components/SiteHeader";
-import { localizedCanonical } from "../../../lib/site";
+import { localizedCanonical, SUPPORT_EMAIL } from "../../../lib/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: "en" | "zh" }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -23,7 +23,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         <span className="eyebrow">{zh ? "联系我们" : "Contact"}</span>
         <h1>{zh ? "告诉我们哪里可以做得更好。" : "Tell us what could work better."}</h1>
         <p>{zh ? "如果你发现了问题、有产品建议，或希望讨论合作，可以直接发送邮件。请勿在邮件中包含密码、API Key 或其他敏感信息。" : "For bug reports, product feedback, or partnerships, send us an email. Do not include passwords, API keys, or other sensitive information."}</p>
-        <Link className="button button--ink" href="mailto:admin@navokit.com">admin@navokit.com</Link>
+        <Link className="button button--ink" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>
         <div className="contact-grid">
           <div><strong>{zh ? "问题反馈" : "Bug reports"}</strong><p>{zh ? "请附上页面地址、浏览器和复现步骤。" : "Include the page URL, browser, and steps to reproduce."}</p></div>
           <div><strong>{zh ? "工具建议" : "Tool feedback"}</strong><p>{zh ? "告诉我们你想完成什么任务，以及目前哪里不顺。" : "Tell us the task you want to finish and where the current flow gets in the way."}</p></div>

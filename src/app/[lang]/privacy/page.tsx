@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
-import { localizedCanonical } from "../../../lib/site";
+import { localizedCanonical, SUPPORT_EMAIL } from "../../../lib/site";
 
 export async function generateMetadata({
   params,
@@ -60,7 +60,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h3>5. 联系我们</h3>
                 <p>如果您对本隐私政策有任何疑问，请通过以下邮箱联系我们：</p>
-                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
+                <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>
             ) : (
               <>
@@ -90,7 +90,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
 
                 <h3>5. Contact Us</h3>
                 <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-                <p><a href="mailto:admin@navokit.com">admin@navokit.com</a></p>
+                <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>
             )}
           </div>
