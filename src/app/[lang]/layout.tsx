@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
-import { localizedCanonical, SITE_URL } from "../../lib/site";
+import { BRAND_ICONS, localizedCanonical, SITE_URL } from "../../lib/site";
 export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh' | 'en' }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const dict = await getDictionary(resolvedParams.lang);
@@ -13,6 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh
     description: dict.meta.description,
     keywords: dict.meta.keywords,
     alternates: localizedCanonical(resolvedParams.lang),
+    icons: BRAND_ICONS,
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.description,
