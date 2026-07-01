@@ -193,6 +193,12 @@ async function auditSitemap() {
     "/zh/about",
     "/en/blog/free-ai-tools-for-creators",
     "/zh/blog/free-ai-tools-for-creators",
+    "/en/blog/ai-video-prompt-formula",
+    "/zh/blog/ai-video-prompt-formula",
+    "/en/blog/markdown-image-card-guide",
+    "/zh/blog/markdown-image-card-guide",
+    "/en/blog/social-media-content-workflow",
+    "/zh/blog/social-media-content-workflow",
     "/en/blog/how-to-convert-markdown-to-png",
     "/zh/blog/how-to-convert-markdown-to-png",
   ];
@@ -375,6 +381,14 @@ async function auditPages() {
       visibleText: ["A simple prompt formula", "Product shot prompts", "Prompt patterns to avoid"],
     },
     {
+      path: "/en/blog/ai-video-prompt-formula",
+      titleIncludes: "AI Video Prompt Formula",
+      descriptionIncludes: "subject, action, setting",
+      canonical: expectedUrl("/en/blog/ai-video-prompt-formula"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["The six-part formula", "Prompt examples by use case", "Review the result"],
+    },
+    {
       path: "/en/blog/free-ai-tools-for-creators",
       titleIncludes: "Free AI Tools for Creators",
       descriptionIncludes: "short videos",
@@ -397,6 +411,22 @@ async function auditPages() {
       canonical: expectedUrl("/en/blog/how-to-draft-social-posts-with-ai"),
       schemas: ["BlogPosting", "BreadcrumbList"],
       visibleText: ["What AI is good at in social writing", "Platform-specific editing notes", "Final checklist"],
+    },
+    {
+      path: "/en/blog/markdown-image-card-guide",
+      titleIncludes: "Markdown Image Card Guide",
+      descriptionIncludes: "Markdown image card",
+      canonical: expectedUrl("/en/blog/markdown-image-card-guide"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["What makes a good image card", "A reusable Markdown card template", "Export and reuse"],
+    },
+    {
+      path: "/en/blog/social-media-content-workflow",
+      titleIncludes: "Social Media Content Workflow",
+      descriptionIncludes: "repeatable social media content workflow",
+      canonical: expectedUrl("/en/blog/social-media-content-workflow"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["A repeatable weekly workflow", "Turn one idea into multiple assets", "Review before publishing"],
     },
     {
       path: "/zh/blog/how-to-convert-markdown-to-png",
@@ -423,6 +453,14 @@ async function auditPages() {
       visibleText: ["提示词公式", "产品镜头提示词", "不建议的提示词写法"],
     },
     {
+      path: "/zh/blog/ai-video-prompt-formula",
+      titleIncludes: "AI 视频提示词公式",
+      descriptionIncludes: "主体、动作、场景",
+      canonical: expectedUrl("/zh/blog/ai-video-prompt-formula"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["六段式提示词公式", "不同场景的提示词示例", "检查生成结果"],
+    },
+    {
       path: "/zh/blog/free-ai-tools-for-creators",
       titleIncludes: "面向创作者的免费 AI 工具",
       descriptionIncludes: "短视频生成",
@@ -445,6 +483,22 @@ async function auditPages() {
       canonical: expectedUrl("/zh/blog/how-to-draft-social-posts-with-ai"),
       schemas: ["BlogPosting", "BreadcrumbList"],
       visibleText: ["AI 适合解决什么问题", "一个可复用流程", "发布前最后检查"],
+    },
+    {
+      path: "/zh/blog/markdown-image-card-guide",
+      titleIncludes: "Markdown 图片卡片指南",
+      descriptionIncludes: "Markdown 图片卡片",
+      canonical: expectedUrl("/zh/blog/markdown-image-card-guide"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["好的图片卡片应该是什么样", "一个可复用 Markdown 卡片模板", "导出并复用"],
+    },
+    {
+      path: "/zh/blog/social-media-content-workflow",
+      titleIncludes: "适合个人创作者的社交媒体内容工作流",
+      descriptionIncludes: "可重复的社交媒体内容工作流",
+      canonical: expectedUrl("/zh/blog/social-media-content-workflow"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["一套可重复的每周工作流", "把一个想法变成多种资产", "发布前检查"],
     },
   ];
 
