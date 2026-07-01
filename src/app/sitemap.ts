@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next'
 import { getBlogPosts } from '../lib/blog'
 import { SITE_URL, SUPPORTED_LANGUAGES } from '../lib/site'
 
+export const dynamic = 'force-dynamic'
+
 function sitemapAlternates(path: string) {
   return {
     languages: {
