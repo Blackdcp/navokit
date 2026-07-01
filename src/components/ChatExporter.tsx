@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -17,6 +17,50 @@ type Dictionary = {
     };
   };
 };
+
+const WATERMARK_LOGO_SRC = "/logo.png";
+const WATERMARK_CANVAS_WIDTH = 164;
+const WATERMARK_CANVAS_HEIGHT = 42;
+
+let watermarkImagePromise: Promise<HTMLImageElement> | null = null;
+
+function loadWatermarkImage() {
+  if (watermarkImagePromise) return watermarkImagePromise;
+
+  watermarkImagePromise = new Promise((resolve, reject) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error("Unable to load NavoKit watermark logo."));
+    image.src = WATERMARK_LOGO_SRC;
+  });
+
+  return watermarkImagePromise;
+}
+
+function drawImageCover(context: CanvasRenderingContext2D, image: HTMLImageElement, width: number, height: number) {
+  const sourceWidth = image.naturalWidth || image.width;
+  const sourceHeight = image.naturalHeight || image.height;
+  const sourceRatio = sourceWidth / sourceHeight;
+  const targetRatio = width / height;
+  let sx = 0;
+  let sy = 0;
+  let sw = sourceWidth;
+  let sh = sourceHeight;
+
+  if (sourceRatio > targetRatio) {
+    sw = sourceHeight * targetRatio;
+    sx = (sourceWidth - sw) / 2;
+  } else {
+    sh = sourceWidth / targetRatio;
+    sy = (sourceHeight - sh) / 2;
+  }
+
+  context.clearRect(0, 0, width, height);
+  context.imageSmoothingEnabled = true;
+  context.imageSmoothingQuality = "high";
+  context.drawImage(image, sx, sy, sw, sh, 0, 0, width, height);
+}
 
 async function waitForImages(root: HTMLElement) {
   const images = Array.from(root.querySelectorAll("img"));
@@ -63,13 +107,30 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
   const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const watermarkCanvasRef = useRef<HTMLCanvasElement>(null);
   const zh = lang === "zh";
   const content = getToolPageContent(lang, "markdown-to-image");
+
+  async function renderWatermarkLogo() {
+    const canvas = watermarkCanvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    const image = await loadWatermarkImage();
+    drawImageCover(context, image, canvas.width, canvas.height);
+  }
+
+  useEffect(() => {
+    renderWatermarkLogo().catch(() => undefined);
+  }, []);
 
   async function download() {
     if (!previewRef.current) return;
     setExporting(true);
     try {
+      await renderWatermarkLogo();
       await waitForImages(previewRef.current);
 
       const blob = await htmlToImage.toBlob(previewRef.current, {
@@ -116,14 +177,14 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
                 <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
                 <div className="export-watermark">
                   <span>Made with</span>
-                  <span className="watermark-brand" aria-label="NavoKit">
-                    <span className="watermark-brand__mark" aria-hidden="true">
-                      <span className="watermark-brand__stem watermark-brand__stem--left" />
-                      <span className="watermark-brand__slash" />
-                      <span className="watermark-brand__stem watermark-brand__stem--right" />
-                    </span>
-                    <span className="watermark-brand__word">NavoKit</span>
-                  </span>
+                  <canvas
+                    ref={watermarkCanvasRef}
+                    className="watermark-logo"
+                    width={WATERMARK_CANVAS_WIDTH}
+                    height={WATERMARK_CANVAS_HEIGHT}
+                    role="img"
+                    aria-label="NavoKit"
+                  />
                 </div>
               </div>
             </div>
