@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "smoke:test": "node scripts/smoke-test.mjs",
+    "smoke:test:prod": "node scripts/smoke-test.mjs https://www.navokit.com",
     "seo:audit": "node scripts/seo-audit.mjs",
     "indexnow:dry-run": "node scripts/indexnow-submit.mjs --dry-run",
     "indexnow:submit": "node scripts/indexnow-submit.mjs"

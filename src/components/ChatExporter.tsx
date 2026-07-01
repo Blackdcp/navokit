@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import ToolPageContent from "./ToolPageContent";
+import { trackToolError, trackToolEvent } from "../lib/clientAnalytics";
 import { getToolPageContent } from "../lib/toolPageContent";
 
 type Dictionary = {
@@ -169,6 +170,12 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
     const exportNode = previewRef.current;
     const watermarkLogo = watermarkLogoRef.current;
     try {
+      trackToolEvent("tool_markdown_export_started", {
+        tool: "markdown_to_image",
+        lang,
+        characters: markdown.length,
+      });
+
       const watermarkImage = await loadWatermarkImage();
       await waitForImages(exportNode);
 
@@ -210,6 +217,18 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
 
       const blob = await canvasToPngBlob(canvas);
       saveBlob(blob, "navokit-markdown.png");
+      trackToolEvent("tool_markdown_export_succeeded", {
+        tool: "markdown_to_image",
+        lang,
+        characters: markdown.length,
+      });
+    } catch (caught) {
+      trackToolError("tool_markdown_export_failed", caught, {
+        tool: "markdown_to_image",
+        lang,
+        characters: markdown.length,
+      });
+      console.error("Markdown export failed", caught);
     } finally {
       setExporting(false);
     }

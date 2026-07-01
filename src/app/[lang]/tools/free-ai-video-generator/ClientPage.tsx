@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import SiteFooter from "../../../../components/SiteFooter";
 import SiteHeader from "../../../../components/SiteHeader";
 import ToolPageContent from "../../../../components/ToolPageContent";
+import { trackToolError, trackToolEvent } from "../../../../lib/clientAnalytics";
 import { getToolPageContent } from "../../../../lib/toolPageContent";
 
 type Format = "landscape" | "portrait" | "square";
@@ -37,6 +38,13 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
     if (polls.current > 90) {
       setStatus("error");
       setError(zh ? "等待时间过长，请稍后重试。" : "This task is taking too long. Please try again later.");
+      trackToolEvent("tool_ai_video_generation_failed", {
+        tool: "ai_video",
+        lang,
+        format,
+        duration,
+        reason: "poll_timeout",
+      });
       return;
     }
     try {
@@ -48,12 +56,27 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
       if (data.status === "completed" && data.videoUrl) {
         setVideoUrl(data.videoUrl);
         setStatus("success");
+        trackToolEvent("tool_ai_video_generation_succeeded", {
+          tool: "ai_video",
+          lang,
+          format,
+          duration,
+          polls: polls.current,
+          progress: Number(data.progress) || 100,
+        });
         return;
       }
       timer.current = setTimeout(() => poll(videoId), 8000);
     } catch (caught) {
       setStatus("error");
       setError(caught instanceof Error ? caught.message : "Unable to check video status.");
+      trackToolError("tool_ai_video_generation_failed", caught, {
+        tool: "ai_video",
+        lang,
+        format,
+        duration,
+        reason: "status_check",
+      });
     }
   }
 
@@ -64,6 +87,13 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
     setError("");
     setVideoUrl("");
     polls.current = 0;
+    trackToolEvent("tool_ai_video_submit_started", {
+      tool: "ai_video",
+      lang,
+      format,
+      duration,
+      characters: prompt.trim().length,
+    });
     try {
       const response = await fetch("/api/tools/ai-video/submit", {
         method: "POST",
@@ -74,10 +104,23 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
       if (!response.ok) throw new Error(data.error || "Unable to start video generation.");
       setDetails({ seconds: data.seconds, size: data.size });
       setStatus("polling");
+      trackToolEvent("tool_ai_video_submit_succeeded", {
+        tool: "ai_video",
+        lang,
+        format,
+        duration,
+        progress: Number(data.progress) || 0,
+      });
       await poll(data.videoId);
     } catch (caught) {
       setStatus("error");
       setError(caught instanceof Error ? caught.message : "Unable to start video generation.");
+      trackToolError("tool_ai_video_submit_failed", caught, {
+        tool: "ai_video",
+        lang,
+        format,
+        duration,
+      });
     }
   }
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SiteFooter from "./SiteFooter";
 import ToolPageContent from "./ToolPageContent";
+import { trackToolError, trackToolEvent } from "../lib/clientAnalytics";
 import { getToolPageContent } from "../lib/toolPageContent";
 
 const outputIds = ["x", "linkedin", "instagram", "hooks"] as const;
@@ -71,6 +72,11 @@ export default function SocialBoosterClient({ dict, lang }: { dict: { tools: { s
     setLoading(true);
     setDrafts([]);
     setError("");
+    trackToolEvent("tool_social_generate_started", {
+      tool: "ai_social_booster",
+      lang,
+      characters: topic.trim().length,
+    });
     try {
       const response = await fetch("/api/tools/social-booster", {
         method: "POST",
@@ -82,12 +88,27 @@ export default function SocialBoosterClient({ dict, lang }: { dict: { tools: { s
       const nextDrafts = normalizeDrafts(data.drafts);
       if (nextDrafts.length) {
         setDrafts(nextDrafts);
+        trackToolEvent("tool_social_generate_succeeded", {
+          tool: "ai_social_booster",
+          lang,
+          draftCount: nextDrafts.length,
+        });
       } else if (typeof data.content === "string" && data.content.trim()) {
         setDrafts([{ id: "x", text: data.content.trim() }]);
+        trackToolEvent("tool_social_generate_succeeded", {
+          tool: "ai_social_booster",
+          lang,
+          draftCount: 1,
+          fallback: true,
+        });
       } else {
         throw new Error("Empty result");
       }
-    } catch {
+    } catch (caught) {
+      trackToolError("tool_social_generate_failed", caught, {
+        tool: "ai_social_booster",
+        lang,
+      });
       setError(zh ? "暂时无法生成，请稍后再试。" : "Generation is temporarily unavailable. Please try again.");
     } finally {
       setLoading(false);
