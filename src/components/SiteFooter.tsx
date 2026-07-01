@@ -5,12 +5,12 @@ export default function SiteFooter({ lang }: { lang: string }) {
   const groups = lang === "zh"
     ? [
         { title: "工具", links: [["AI 视频生成器", `/${lang}/tools/free-ai-video-generator`], ["Markdown 转图片", `/${lang}/tools/markdown-to-image`], ["AI 社交媒体文案", `/${lang}/tools/ai-social-booster`]] },
-        { title: "资源", links: [["实用指南", `/${lang}/blog`], ["关于 NavoKit", `/${lang}#about`], ["联系我们", `/${lang}/contact`]] },
+        { title: "资源", links: [["实用指南", `/${lang}/blog`], ["关于 NavoKit", `/${lang}/about`], ["联系我们", `/${lang}/contact`]] },
         { title: "法律", links: [["隐私政策", `/${lang}/privacy`], ["服务条款", `/${lang}/terms`]] },
       ]
     : [
         { title: "Tools", links: [["AI Video Generator", `/${lang}/tools/free-ai-video-generator`], ["Markdown to Image", `/${lang}/tools/markdown-to-image`], ["Social Post Generator", `/${lang}/tools/ai-social-booster`]] },
-        { title: "Resources", links: [["Practical guides", `/${lang}/blog`], ["About NavoKit", `/${lang}#about`], ["Contact", `/${lang}/contact`]] },
+        { title: "Resources", links: [["Practical guides", `/${lang}/blog`], ["About NavoKit", `/${lang}/about`], ["Contact", `/${lang}/contact`]] },
         { title: "Legal", links: [["Privacy Policy", `/${lang}/privacy`], ["Terms of Service", `/${lang}/terms`]] },
       ];
 

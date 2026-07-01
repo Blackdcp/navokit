@@ -189,6 +189,8 @@ async function auditSitemap() {
     "/en/tools/markdown-to-image",
     "/en/tools/ai-social-booster",
     "/zh/tools/ai-social-booster",
+    "/en/about",
+    "/zh/about",
     "/en/blog/how-to-convert-markdown-to-png",
     "/zh/blog/how-to-convert-markdown-to-png",
   ];
@@ -284,11 +286,27 @@ async function auditPages() {
       visibleText: ["Turn small tools into steady workflows", "How to Convert Markdown to PNG"],
     },
     {
+      path: "/en/about",
+      titleIncludes: "About NavoKit",
+      descriptionIncludes: "free online AI tools",
+      canonical: expectedUrl("/en/about"),
+      schemas: ["AboutPage", "Organization"],
+      visibleText: ["Small tools for practical creative work", "The current tools are free to use", "Clear limits"],
+    },
+    {
+      path: "/zh/about",
+      titleIncludes: "关于 NavoKit",
+      descriptionIncludes: "免费的在线 AI 工具",
+      canonical: expectedUrl("/zh/about"),
+      schemas: ["AboutPage", "Organization"],
+      visibleText: ["为具体创作任务而生", "当前工具免费使用", "透明边界"],
+    },
+    {
       path: "/en/privacy",
       titleIncludes: "Privacy Policy",
       descriptionIncludes: "Learn how NavoKit handles data",
       canonical: expectedUrl("/en/privacy"),
-      visibleText: ["Privacy Policy", "AI Video Generation"],
+      visibleText: ["Privacy Policy", "AI Video Generation", "Advertising and Cookies"],
     },
     {
       path: "/en/terms",

@@ -34,8 +34,8 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
           <div className="prose prose-slate max-w-none">
             {lang === "zh" ? (
               <>
-                <p>最后更新时间：2026年6月</p>
-                <p>欢迎使用 NavoKit。我们非常重视您的隐私，并致力于保护您的个人数据。本隐私政策解释了我们如何收集、使用和共享您的信息。</p>
+                <p>最后更新时间：2026年7月</p>
+                <p>欢迎使用 NavoKit。我们非常重视您的隐私，并尽量减少不必要的数据收集。本隐私政策解释了我们如何处理免费在线工具、AI 生成服务、日志、分析和广告相关的数据。</p>
 
                 <h3>1. 信息收集</h3>
                 <p>我们提供免费的在线工具，且<strong>不要求注册账号</strong>。我们尽可能少地收集信息：</p>
@@ -50,22 +50,29 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <ul>
                   <li>提供和维护我们的工具服务。</li>
                   <li>防止滥用和保障系统安全。</li>
+                  <li>理解页面和工具的聚合使用情况，以改进产品体验。</li>
+                  <li>在未来展示清晰标记的广告，以支持免费工具的持续运营。</li>
                 </ul>
 
                 <h3>3. 数据共享</h3>
-                <p>我们不会出售或出租您的个人信息。AI 视频任务会通过 NavoKit 发送给外部 AI 视频服务处理。NavoKit 不提供提示词或视频历史记录，但托管日志、缓存以及相关服务的数据保留政策仍可能适用。</p>
+                <p>我们不会出售或出租您的个人信息。AI 视频任务会通过 NavoKit 发送给外部 AI 视频服务处理。NavoKit 不提供用户账号、提示词历史或视频历史记录，但托管日志、缓存以及相关服务的数据保留政策仍可能适用。</p>
 
-                <h3>4. Cookie 的使用</h3>
-                <p>网站可能使用必要的存储机制保存界面首选项，并使用 Vercel Analytics 进行聚合统计。我们目前不使用广告定向 Cookie。</p>
+                <h3>4. 广告与 Cookie</h3>
+                <p>NavoKit 可能会使用 Google AdSense 或其他第三方广告服务。第三方供应商（包括 Google）可能会使用 Cookie，根据用户过去访问 NavoKit 或其他网站的情况投放广告。</p>
+                <p>Google 使用广告 Cookie，使 Google 及其合作伙伴能够根据用户访问本站和/或互联网上其他网站的情况投放广告。用户可以访问 <a href="https://adssettings.google.com/" target="_blank" rel="noreferrer">Google Ads Settings</a> 退出个性化广告，也可以通过 <a href="https://www.aboutads.info/choices/" target="_blank" rel="noreferrer">AboutAds choices</a> 了解部分第三方供应商的退出选项。</p>
+                <p>你还可以阅读 Google 关于合作网站数据使用方式的说明：<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noreferrer">How Google uses information from sites or apps that use our services</a>。</p>
 
-                <h3>5. 联系我们</h3>
+                <h3>5. Cookie 与浏览器控制</h3>
+                <p>网站可能使用必要的存储机制保存界面首选项，并使用 Vercel Analytics 进行聚合统计。你可以通过浏览器设置阻止或删除 Cookie；但部分设置可能影响网站功能、统计或广告展示。</p>
+
+                <h3>6. 联系我们</h3>
                 <p>如果您对本隐私政策有任何疑问，请通过以下邮箱联系我们：</p>
                 <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>
             ) : (
               <>
-                <p>Last Updated: June 2026</p>
-                <p>Welcome to NavoKit. We take your privacy seriously and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and share your information.</p>
+                <p>Last Updated: July 2026</p>
+                <p>Welcome to NavoKit. We take your privacy seriously and try to avoid collecting data that is not needed. This Privacy Policy explains how we handle data related to free online tools, AI generation services, logs, analytics, and advertising.</p>
 
                 <h3>1. Information Collection</h3>
                 <p>We provide free online tools and <strong>do not require account registration</strong>. We collect as little information as possible:</p>
@@ -80,15 +87,22 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <ul>
                   <li>Providing and maintaining our tool services.</li>
                   <li>Preventing abuse and ensuring system security.</li>
+                  <li>Understanding aggregate page and tool usage so we can improve the product experience.</li>
+                  <li>Showing clearly labeled advertising in the future to support the continued operation of free tools.</li>
                 </ul>
 
                 <h3>3. Data Sharing</h3>
-                <p>We do not sell or rent your personal information. AI video tasks pass through NavoKit to an external AI video service for processing. NavoKit does not provide prompt or video history, but hosting logs, caches, and related service retention policies may still apply.</p>
+                <p>We do not sell or rent your personal information. AI video tasks pass through NavoKit to an external AI video service for processing. NavoKit does not provide user accounts, prompt history, or video history, but hosting logs, caches, and related service retention policies may still apply.</p>
 
-                <h3>4. Use of Cookies</h3>
-                <p>The site may use necessary storage for interface preferences and Vercel Analytics for aggregate statistics. We do not currently use advertising-targeting cookies.</p>
+                <h3>4. Advertising and Cookies</h3>
+                <p>NavoKit may use Google AdSense or other third-party advertising services. Third-party vendors, including Google, may use cookies to serve ads based on a user&apos;s prior visits to NavoKit or other websites.</p>
+                <p>Google&apos;s use of advertising cookies enables Google and its partners to serve ads based on visits to this site and/or other sites on the Internet. Users may opt out of personalized advertising by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noreferrer">Google Ads Settings</a>. You may also visit <a href="https://www.aboutads.info/choices/" target="_blank" rel="noreferrer">AboutAds choices</a> to learn about opt-out options for some third-party vendors.</p>
+                <p>You can also read Google&apos;s explanation of data use on partner sites: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noreferrer">How Google uses information from sites or apps that use our services</a>.</p>
 
-                <h3>5. Contact Us</h3>
+                <h3>5. Cookies and Browser Controls</h3>
+                <p>The site may use necessary storage for interface preferences and Vercel Analytics for aggregate statistics. You can block or delete cookies through your browser settings, though some choices may affect site functionality, measurement, or advertising.</p>
+
+                <h3>6. Contact Us</h3>
                 <p>If you have any questions about this Privacy Policy, please contact us at:</p>
                 <p><a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a></p>
               </>

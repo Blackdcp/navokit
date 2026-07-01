@@ -13,11 +13,13 @@ export default function SiteHeader({ lang }: { lang: string }) {
     ? [
         ["工具", `/${lang}/tools`],
         ["指南", `/${lang}/blog`],
+        ["关于", `/${lang}/about`],
         ["联系", `/${lang}/contact`],
       ]
     : [
         ["Tools", `/${lang}/tools`],
         ["Guides", `/${lang}/blog`],
+        ["About", `/${lang}/about`],
         ["Contact", `/${lang}/contact`],
       ];
 
