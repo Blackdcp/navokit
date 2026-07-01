@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
-import { BRAND_ICONS, localizedCanonical, SITE_URL } from "../../lib/site";
-export async function generateMetadata({ params }: { params: Promise<{ lang: 'zh' | 'en' }> }): Promise<Metadata> {
+import { BRAND_ICONS, isSupportedLanguage, localizedCanonical, SITE_URL, SUPPORTED_LANGUAGES } from "../../lib/site";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return SUPPORTED_LANGUAGES.map(lang => ({ lang }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
+  if (!isSupportedLanguage(resolvedParams.lang)) {
+    notFound();
+  }
+
   const dict = await getDictionary(resolvedParams.lang);
   
   return {
@@ -44,6 +56,10 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params;
+  if (!isSupportedLanguage(lang)) {
+    notFound();
+  }
+
   return (
     <html lang={lang} data-scroll-behavior="smooth">
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>

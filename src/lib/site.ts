@@ -14,6 +14,10 @@ export const BRAND_ICONS = {
 export const SUPPORTED_LANGUAGES = ["en", "zh"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
+export function isSupportedLanguage(value: string): value is SupportedLanguage {
+  return SUPPORTED_LANGUAGES.includes(value as SupportedLanguage);
+}
+
 export function localizedAlternates(pathname = "") {
   const path = pathname ? (pathname.startsWith("/") ? pathname : `/${pathname}`) : "";
   return {

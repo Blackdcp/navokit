@@ -219,6 +219,19 @@ async function auditGeoDiscovery() {
   record(llms.text.includes(expectedUrl("/sitemap.xml")), "/llms.txt points to sitemap");
 }
 
+async function auditRoutingHygiene() {
+  const randomPage = await fetchText("/random-test-path");
+  record(randomPage.response.status === 404, "/random-test-path returns 404", `${randomPage.response.status}`);
+
+  const missingAsset = await fetchText("/favicon-does-not-exist.ico");
+  record(missingAsset.response.status === 404, "/missing top-level asset returns 404", `${missingAsset.response.status}`);
+
+  const ads = await fetchText("/ads.txt");
+  const adsContentType = ads.response.headers.get("content-type") || "";
+  const adsIsValidState = ads.response.status === 404 || adsContentType.includes("text/plain");
+  record(adsIsValidState, "/ads.txt is not rewritten to an HTML page", `${ads.response.status} ${adsContentType}`);
+}
+
 async function auditImages() {
   const assets = [
     "/opengraph-image.png",
@@ -351,6 +364,7 @@ async function main() {
     await auditRobots();
     await auditSitemap();
     await auditGeoDiscovery();
+    await auditRoutingHygiene();
     await auditImages();
     await auditPages();
   } catch (error) {
