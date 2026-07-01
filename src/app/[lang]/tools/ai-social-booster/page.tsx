@@ -5,6 +5,7 @@ import { Metadata } from 'next'
 import { localizedCanonical } from '../../../../lib/site'
 import { SITE_URL } from '../../../../lib/site'
 import { getToolPageContent } from '../../../../lib/toolPageContent'
+import { withToolGuideLinks } from '../../../../lib/toolGuideLinks'
 import { breadcrumbList, safeJsonLd } from '../../../../lib/schema'
 
 export async function generateMetadata({
@@ -56,7 +57,7 @@ export default async function SocialBoosterPage({
   const resolvedParams = await params
   const lang = resolvedParams.lang
   const dict = await getDictionary(lang)
-  const content = getToolPageContent(lang, "ai-social-booster")
+  const content = withToolGuideLinks(lang, "ai-social-booster", getToolPageContent(lang, "ai-social-booster"))
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -90,7 +91,7 @@ export default async function SocialBoosterPage({
       <SiteHeader lang={lang} />
 
       <main>
-        <SocialBoosterClient dict={dict} lang={lang} />
+        <SocialBoosterClient dict={dict} lang={lang} content={content} />
       </main>
     </div>
   )

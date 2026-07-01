@@ -64,6 +64,7 @@ export default async function BlogPostPage({
   const relatedPosts = getRelatedBlogPosts(lang, post);
   const relatedToolIds = new Set(post.relatedTools);
   const relatedTools = getTools(lang).filter(tool => relatedToolIds.has(tool.id)).slice(0, 3);
+  const primaryTool = relatedTools[0];
   const difficulty = formatDifficulty(post.difficulty, lang);
   const schema = {
     "@context": "https://schema.org",
@@ -131,6 +132,23 @@ export default async function BlogPostPage({
             </div>
           </header>
 
+          {primaryTool && (
+            <aside className="article-action-card" aria-label={lang === "zh" ? "可执行下一步" : "Practical next step"}>
+              <div>
+                <span className="eyebrow">{lang === "zh" ? "可执行下一步" : "Practical next step"}</span>
+                <h2>{lang === "zh" ? `用 ${primaryTool.title} 直接跑一遍` : `Try this with ${primaryTool.title}`}</h2>
+                <p>
+                  {lang === "zh"
+                    ? "这篇指南里的方法可以在工具页完成。先用文章里的结构整理输入，再打开工具生成、导出或起草结果。"
+                    : "This guide is meant to be executable. Use the workflow above, then open the tool to generate, export, or draft the result."}
+                </p>
+              </div>
+              <Link href={`/${lang}/tools/${primaryTool.id}`} className="button button--blue">
+                {lang === "zh" ? "打开相关工具" : "Open related tool"}
+              </Link>
+            </aside>
+          )}
+
           <div className="article-card">
             <div className="prose prose-slate max-w-none article-prose">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
@@ -175,11 +193,15 @@ export default async function BlogPostPage({
             <h3>{lang === "zh" ? "想把方法直接跑一遍吗？" : "Want to run the workflow now?"}</h3>
             <p>
               {lang === "zh"
-                ? "NavoKit 提供轻量的 AI 生成、内容转换和文案辅助工具，并清晰说明当前限制。"
-                : "NavoKit provides lightweight AI generation, content conversion, and writing tools with clear limitations."}
+                ? primaryTool
+                  ? `打开 ${primaryTool.title}，把上面的流程变成一个可用结果。`
+                  : "NavoKit 提供轻量的 AI 生成、内容转换和文案辅助工具，并清晰说明当前限制。"
+                : primaryTool
+                  ? `Open ${primaryTool.title} and turn the workflow above into a usable result.`
+                  : "NavoKit provides lightweight AI generation, content conversion, and writing tools with clear limitations."}
             </p>
-            <Link href={`/${lang}/tools`} className="button button--ink">
-              {lang === "zh" ? "浏览工具箱" : "Explore tools"}
+            <Link href={primaryTool ? `/${lang}/tools/${primaryTool.id}` : `/${lang}/tools`} className="button button--ink">
+              {lang === "zh" ? (primaryTool ? "打开工具" : "浏览工具箱") : (primaryTool ? "Open tool" : "Explore tools")}
             </Link>
           </div>
         </article>

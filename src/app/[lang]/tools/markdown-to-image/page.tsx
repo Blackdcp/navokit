@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { localizedCanonical } from '../../../../lib/site';
 import { SITE_URL } from '../../../../lib/site';
 import { getToolPageContent } from '../../../../lib/toolPageContent';
+import { withToolGuideLinks } from '../../../../lib/toolGuideLinks';
 import { breadcrumbList, safeJsonLd } from '../../../../lib/schema';
 
 export async function generateMetadata({
@@ -47,7 +48,11 @@ export default async function ChatExporterPage({
 }) {
   const resolvedParams = await params;
   const dict = await getDictionary(resolvedParams.lang);
-  const content = getToolPageContent(resolvedParams.lang, "markdown-to-image");
+  const content = withToolGuideLinks(
+    resolvedParams.lang,
+    "markdown-to-image",
+    getToolPageContent(resolvedParams.lang, "markdown-to-image"),
+  );
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -77,7 +82,7 @@ export default async function ChatExporterPage({
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
-      <ChatExporter dict={dict} lang={resolvedParams.lang} />
+      <ChatExporter dict={dict} lang={resolvedParams.lang} content={content} />
     </>
   );
 }

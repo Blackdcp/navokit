@@ -4,7 +4,7 @@ import { useState } from "react";
 import SiteFooter from "./SiteFooter";
 import ToolPageContent from "./ToolPageContent";
 import { trackToolError, trackToolEvent } from "../lib/clientAnalytics";
-import { getToolPageContent } from "../lib/toolPageContent";
+import type { ToolPageContentData } from "../types/toolPageContent";
 
 const outputIds = ["x", "linkedin", "instagram", "hooks"] as const;
 type DraftId = typeof outputIds[number];
@@ -54,7 +54,15 @@ function formatDrafts(drafts: Draft[], labels: Record<DraftId, string>) {
   return drafts.map(draft => `${labels[draft.id]}\n${draft.text}`).join("\n\n");
 }
 
-export default function SocialBoosterClient({ dict, lang }: { dict: { tools: { socialBooster: SocialCopy } }; lang: "en" | "zh" }) {
+export default function SocialBoosterClient({
+  dict,
+  lang,
+  content,
+}: {
+  dict: { tools: { socialBooster: SocialCopy } };
+  lang: "en" | "zh";
+  content: ToolPageContentData;
+}) {
   const t = dict.tools.socialBooster;
   const zh = lang === "zh";
   const [topic, setTopic] = useState("");
@@ -62,7 +70,6 @@ export default function SocialBoosterClient({ dict, lang }: { dict: { tools: { s
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
   const [error, setError] = useState("");
-  const content = getToolPageContent(lang, "ai-social-booster");
   const orderedDrafts = outputIds
     .map(id => drafts.find(draft => draft.id === id))
     .filter((draft): draft is Draft => Boolean(draft));

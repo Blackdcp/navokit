@@ -5,14 +5,14 @@ import SiteFooter from "../../../../components/SiteFooter";
 import SiteHeader from "../../../../components/SiteHeader";
 import ToolPageContent from "../../../../components/ToolPageContent";
 import { trackToolError, trackToolEvent } from "../../../../lib/clientAnalytics";
-import { getToolPageContent } from "../../../../lib/toolPageContent";
+import type { ToolPageContentData } from "../../../../types/toolPageContent";
 
 type Format = "landscape" | "portrait" | "square";
 type Status = "idle" | "submitting" | "polling" | "success" | "error";
 type DurationChoice = "auto" | "3" | "5" | "10" | "18";
 const durationOptions = ["3", "5", "10", "18"] as const;
 
-export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
+export default function AiVideoClient({ lang, content }: { lang: "en" | "zh"; content: ToolPageContentData }) {
   const zh = lang === "zh";
   const [prompt, setPrompt] = useState("");
   const [format, setFormat] = useState<Format>("landscape");
@@ -24,7 +24,6 @@ export default function AiVideoClient({ lang }: { lang: "en" | "zh" }) {
   const [error, setError] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const polls = useRef(0);
-  const content = getToolPageContent(lang, "free-ai-video-generator");
   const examples = zh
     ? ["一只红狐走过积雪森林，雪花轻落，低机位跟拍，写实电影风格。", "黑色岩石上的香水瓶，薄雾缓慢流动，产品慢镜头，戏剧化灯光。"]
     : ["A red fox walking through a snowy forest, soft snowfall, low tracking shot, realistic cinematic style.", "A perfume bottle on black stone, mist drifting around it, slow product shot, dramatic lighting."];

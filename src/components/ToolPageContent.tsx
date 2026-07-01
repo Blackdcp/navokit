@@ -14,6 +14,7 @@ export default function ToolPageContent({
   faqs,
   related,
   guide,
+  guides,
 }: {
   lang: string;
   eyebrow: string;
@@ -27,8 +28,10 @@ export default function ToolPageContent({
   faqs: ToolContentItem[];
   related: ToolContentLink[];
   guide?: ToolContentLink;
+  guides?: ToolContentLink[];
 }) {
   const zh = lang === "zh";
+  const guideLinks = guides && guides.length > 0 ? guides : guide ? [guide] : [];
 
   return (
     <div className="tool-content">
@@ -107,7 +110,7 @@ export default function ToolPageContent({
         <h2>{zh ? "相关工具与指南。" : "Related tools and guides."}</h2>
         <div className="related-grid">
           {related.map(item => <Link key={item.href} href={item.href}><span>{zh ? "工具" : "Tool"}</span><h3>{item.title}</h3><p>{item.description}</p><b>{zh ? "打开工具 →" : "Try tool →"}</b></Link>)}
-          {guide && <Link href={guide.href}><span>{zh ? "指南" : "Guide"}</span><h3>{guide.title}</h3><p>{guide.description}</p><b>{zh ? "阅读指南 →" : "Read guide →"}</b></Link>}
+          {guideLinks.map(item => <Link key={item.href} href={item.href}><span>{zh ? "指南" : "Guide"}</span><h3>{item.title}</h3><p>{item.description}</p><b>{zh ? "阅读指南 →" : "Read guide →"}</b></Link>)}
         </div>
       </section>
     </div>

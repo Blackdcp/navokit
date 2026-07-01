@@ -136,6 +136,24 @@ export function getRelatedBlogPosts(lang: "en" | "zh", post: BlogPost, limit = 3
     .map(item => item.candidate);
 }
 
+export function getBlogPostsForTool(lang: "en" | "zh", toolId: string, limit = 4): BlogPost[] {
+  return getBlogPosts(lang)
+    .filter(post => post.toolIds.includes(toolId) || post.relatedTools.includes(toolId))
+    .map(post => {
+      const primaryMatch = post.toolIds.includes(toolId) ? 2 : 0;
+      const relatedMatch = post.relatedTools.includes(toolId) ? 1 : 0;
+      const intentWeight = post.intent === "how_to" ? 1 : 0;
+
+      return {
+        post,
+        score: primaryMatch + relatedMatch + intentWeight,
+      };
+    })
+    .sort((a, b) => b.score - a.score || (a.post.date < b.post.date ? 1 : -1))
+    .slice(0, limit)
+    .map(item => item.post);
+}
+
 export function formatReadingTime(post: Pick<BlogPost, "readingTime">, lang: "en" | "zh") {
   return lang === "zh" ? `阅读约 ${post.readingTime} 分钟` : `${post.readingTime} min read`;
 }

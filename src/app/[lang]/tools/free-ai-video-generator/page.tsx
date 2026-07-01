@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { localizedCanonical, SITE_URL } from "../../../../lib/site";
 import { getToolPageContent } from "../../../../lib/toolPageContent";
+import { withToolGuideLinks } from "../../../../lib/toolGuideLinks";
 import { breadcrumbList, safeJsonLd } from "../../../../lib/schema";
 import AiVideoClient from "./ClientPage";
 
@@ -45,7 +46,7 @@ export default async function AiVideoPage({
   params: Promise<{ lang: "zh" | "en" }>;
 }) {
   const { lang } = await params;
-  const content = getToolPageContent(lang, "free-ai-video-generator");
+  const content = withToolGuideLinks(lang, "free-ai-video-generator", getToolPageContent(lang, "free-ai-video-generator"));
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -83,7 +84,7 @@ export default async function AiVideoPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }}
       />
-      <AiVideoClient lang={lang} />
+      <AiVideoClient lang={lang} content={content} />
     </>
   );
 }

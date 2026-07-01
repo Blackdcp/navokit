@@ -14,4 +14,5 @@ export interface ToolPageContentData {
   faqs: ToolContentItem[];
   related: ToolContentLink[];
   guide?: ToolContentLink;
+  guides?: ToolContentLink[];
 }

@@ -260,9 +260,13 @@ button, textarea, input, select { font: inherit; }
 .blog-article__header div { display: flex; align-items: center; gap: 16px; color: var(--color-navo-muted); font-size: 14px; font-weight: 550; }
 .article-card { padding: 40px 32px; border: 1px solid var(--color-navo-border); border-radius: 28px; background: #fff; box-shadow: 0 1px 2px rgba(11,18,32,.04); }
 .article-prose { color: #374151; font-size: 16px; line-height: 1.8; }
+.article-action-card { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; margin-bottom: 18px; padding: 24px; border: 1px solid #D7E2F0; border-radius: 24px; background: linear-gradient(135deg, #F8FBFF 0%, #FFFFFF 58%, #EFF6FF 100%); box-shadow: 0 1px 2px rgba(11,18,32,.04); }
+.article-action-card .eyebrow { margin-bottom: 10px; }
+.article-action-card h2 { margin: 0 0 8px; color: var(--color-navo-ink); font-size: clamp(22px, 3vw, 30px); line-height: 1.12; letter-spacing: -.035em; }
+.article-action-card p { max-width: 640px; margin: 0; color: var(--color-navo-muted); font-size: 14px; line-height: 1.7; }
 .article-related { display: grid; gap: 36px; margin-top: 46px; }
 .article-related .eyebrow { margin-bottom: 14px; }
-.article-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.article-related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 .article-related-grid a { min-height: 190px; display: flex; flex-direction: column; padding: 22px; border: 1px solid var(--color-navo-border); border-radius: 20px; background: #fff; color: inherit; text-decoration: none; box-shadow: 0 1px 2px rgba(11,18,32,.04); transition: .18s ease; }
 .article-related-grid a:hover { transform: translateY(-1px); border-color: #CBD5E1; box-shadow: 0 10px 30px rgba(11,18,32,.07); }
 .article-related-grid strong { color: var(--color-navo-ink); font-size: 16px; line-height: 1.25; letter-spacing: -.02em; }
@@ -331,7 +335,7 @@ button, textarea, input, select { font: inherit; }
 .faq-list summary::-webkit-details-marker { display: none; }
 .faq-list summary span { color: var(--color-navo-blue); }
 .faq-list details p { max-width: 780px; margin: -6px 0 22px; color: var(--color-navo-muted); }
-.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
 .related-grid a { min-height: 220px; display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--color-navo-border); border-radius: 20px; background: #fff; text-decoration: none; transition: .2s ease; }
 .related-grid a:hover { box-shadow: 0 10px 30px rgba(11,18,32,.08); transform: translateY(-1px); }
 .related-grid span { color: var(--color-navo-blue); font-size: 11px; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
@@ -410,6 +414,8 @@ button, textarea, input, select { font: inherit; }
   .blog-topic-strip { grid-template-columns: 1fr; margin-top: -18px; }
   .blog-card { padding: 26px; border-radius: 22px; }
   .article-card, .article-cta-card, .doc-card { padding: 28px 22px; border-radius: 22px; }
+  .article-action-card { grid-template-columns: 1fr; align-items: stretch; padding: 22px; border-radius: 22px; }
+  .article-action-card .button { width: 100%; }
   .article-related-grid { grid-template-columns: 1fr; }
   .tool-workspace { grid-template-columns: 1fr; }
   .instruction-grid, .related-grid, .example-grid, .tool-facts dl { grid-template-columns: 1fr; }

@@ -8,7 +8,7 @@ import SiteFooter from "./SiteFooter";
 import SiteHeader from "./SiteHeader";
 import ToolPageContent from "./ToolPageContent";
 import { trackToolError, trackToolEvent } from "../lib/clientAnalytics";
-import { getToolPageContent } from "../lib/toolPageContent";
+import type { ToolPageContentData } from "../types/toolPageContent";
 
 type Dictionary = {
   tools: {
@@ -152,13 +152,12 @@ function saveBlob(blob: Blob, filename: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
 }
 
-export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "en" | "zh" }) {
+export default function ChatExporter({ dict, lang, content }: { dict: Dictionary; lang: "en" | "zh"; content: ToolPageContentData }) {
   const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const watermarkLogoRef = useRef<HTMLImageElement>(null);
   const zh = lang === "zh";
-  const content = getToolPageContent(lang, "markdown-to-image");
 
   useEffect(() => {
     loadWatermarkImage().catch(() => undefined);
