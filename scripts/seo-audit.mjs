@@ -235,12 +235,13 @@ async function auditRoutingHygiene() {
 }
 
 async function auditImages() {
-  const assets = [
-    "/opengraph-image.png",
-    "/twitter-image.png",
-    "/logo.png",
-    "/logo-inverse.png",
-    "/images/tools/free-ai-video-generator.png",
+    const assets = [
+      "/opengraph-image.png",
+      "/twitter-image.png",
+      "/logo.png",
+      "/logo-watermark.png",
+      "/logo-inverse.png",
+      "/images/tools/free-ai-video-generator.png",
     "/images/tools/markdown-to-image.png",
     "/images/tools/ai-social-booster.png",
   ];

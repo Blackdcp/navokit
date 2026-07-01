@@ -18,48 +18,47 @@ type Dictionary = {
   };
 };
 
-const WATERMARK_LOGO_SRC = "/logo.png";
-const WATERMARK_CANVAS_WIDTH = 164;
-const WATERMARK_CANVAS_HEIGHT = 42;
+const WATERMARK_LOGO_SRC = "/logo-watermark.png";
 
 let watermarkImagePromise: Promise<HTMLImageElement> | null = null;
 
-function loadWatermarkImage() {
-  if (watermarkImagePromise) return watermarkImagePromise;
-
-  watermarkImagePromise = new Promise((resolve, reject) => {
-    const image = new Image();
-    image.decoding = "async";
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error("Unable to load NavoKit watermark logo."));
-    image.src = WATERMARK_LOGO_SRC;
+function blobToDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
   });
-
-  return watermarkImagePromise;
 }
 
-function drawImageCover(context: CanvasRenderingContext2D, image: HTMLImageElement, width: number, height: number) {
-  const sourceWidth = image.naturalWidth || image.width;
-  const sourceHeight = image.naturalHeight || image.height;
-  const sourceRatio = sourceWidth / sourceHeight;
-  const targetRatio = width / height;
-  let sx = 0;
-  let sy = 0;
-  let sw = sourceWidth;
-  let sh = sourceHeight;
+function loadImage(src: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = async () => {
+      if (typeof image.decode === "function") {
+        await image.decode().catch(() => undefined);
+      }
+      resolve(image);
+    };
+    image.onerror = () => reject(new Error("Unable to load NavoKit watermark logo."));
+    image.src = src;
+  });
+}
 
-  if (sourceRatio > targetRatio) {
-    sw = sourceHeight * targetRatio;
-    sx = (sourceWidth - sw) / 2;
-  } else {
-    sh = sourceWidth / targetRatio;
-    sy = (sourceHeight - sh) / 2;
-  }
+async function loadWatermarkImage() {
+  if (watermarkImagePromise) return watermarkImagePromise;
 
-  context.clearRect(0, 0, width, height);
-  context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = "high";
-  context.drawImage(image, sx, sy, sw, sh, 0, 0, width, height);
+  watermarkImagePromise = fetch(WATERMARK_LOGO_SRC, { cache: "force-cache" })
+    .then(response => {
+      if (!response.ok) throw new Error(`Unable to fetch NavoKit watermark logo: ${response.status}`);
+      return response.blob();
+    })
+    .then(blobToDataUrl)
+    .then(loadImage)
+    .catch(() => loadImage(WATERMARK_LOGO_SRC));
+
+  return watermarkImagePromise;
 }
 
 function drawImageCoverAt(context: CanvasRenderingContext2D, image: HTMLImageElement, x: number, y: number, width: number, height: number) {
@@ -156,39 +155,25 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
   const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
-  const watermarkCanvasRef = useRef<HTMLCanvasElement>(null);
+  const watermarkLogoRef = useRef<HTMLImageElement>(null);
   const zh = lang === "zh";
   const content = getToolPageContent(lang, "markdown-to-image");
 
-  async function renderWatermarkLogo() {
-    const canvas = watermarkCanvasRef.current;
-    const image = await loadWatermarkImage();
-    if (!canvas) return image;
-
-    const context = canvas.getContext("2d");
-    if (!context) return image;
-
-    drawImageCover(context, image, canvas.width, canvas.height);
-    return image;
-  }
-
   useEffect(() => {
-    renderWatermarkLogo().catch(() => undefined);
+    loadWatermarkImage().catch(() => undefined);
   }, []);
 
   async function download() {
     if (!previewRef.current) return;
     setExporting(true);
     const exportNode = previewRef.current;
-    const watermarkCanvas = watermarkCanvasRef.current;
-    const previousWatermarkOpacity = watermarkCanvas?.style.opacity || "";
+    const watermarkLogo = watermarkLogoRef.current;
     try {
-      const watermarkImage = await renderWatermarkLogo();
+      const watermarkImage = await loadWatermarkImage();
       await waitForImages(exportNode);
 
       const rootRect = exportNode.getBoundingClientRect();
-      const watermarkRect = watermarkCanvas?.getBoundingClientRect();
-      if (watermarkCanvas) watermarkCanvas.style.opacity = "0";
+      const watermarkRect = watermarkLogo?.getBoundingClientRect();
 
       const canvas = await htmlToImage.toCanvas(exportNode, {
         pixelRatio: 2,
@@ -196,26 +181,36 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
         cacheBust: true,
       });
 
-      if (watermarkRect) {
-        const context = canvas.getContext("2d");
-        if (context) {
-          const scaleX = canvas.width / rootRect.width;
-          const scaleY = canvas.height / rootRect.height;
-          drawImageCoverAt(
-            context,
-            watermarkImage,
-            (watermarkRect.left - rootRect.left) * scaleX,
-            (watermarkRect.top - rootRect.top) * scaleY,
-            watermarkRect.width * scaleX,
-            watermarkRect.height * scaleY
-          );
-        }
+      const context = canvas.getContext("2d");
+      if (context) {
+        const scaleX = canvas.width / rootRect.width;
+        const scaleY = canvas.height / rootRect.height;
+        const nodeStyle = window.getComputedStyle(exportNode);
+        const fallbackWidth = 82;
+        const fallbackHeight = 21;
+        const fallbackRight = Number.parseFloat(nodeStyle.paddingRight) || 24;
+        const fallbackBottom = Number.parseFloat(nodeStyle.paddingBottom) || 24;
+        const box =
+          watermarkRect && watermarkRect.width > 0 && watermarkRect.height > 0
+            ? {
+                x: watermarkRect.left - rootRect.left,
+                y: watermarkRect.top - rootRect.top,
+                width: watermarkRect.width,
+                height: watermarkRect.height,
+              }
+            : {
+                x: rootRect.width - fallbackRight - fallbackWidth,
+                y: rootRect.height - fallbackBottom - fallbackHeight,
+                width: fallbackWidth,
+                height: fallbackHeight,
+              };
+
+        drawImageCoverAt(context, watermarkImage, box.x * scaleX, box.y * scaleY, box.width * scaleX, box.height * scaleY);
       }
 
       const blob = await canvasToPngBlob(canvas);
       saveBlob(blob, "navokit-markdown.png");
     } finally {
-      if (watermarkCanvas) watermarkCanvas.style.opacity = previousWatermarkOpacity;
       setExporting(false);
     }
   }
@@ -251,13 +246,15 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
                 <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
                 <div className="export-watermark">
                   <span>Made with</span>
-                  <canvas
-                    ref={watermarkCanvasRef}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    ref={watermarkLogoRef}
                     className="watermark-logo"
-                    width={WATERMARK_CANVAS_WIDTH}
-                    height={WATERMARK_CANVAS_HEIGHT}
-                    role="img"
-                    aria-label="NavoKit"
+                    src={WATERMARK_LOGO_SRC}
+                    alt="NavoKit"
+                    width={328}
+                    height={84}
+                    decoding="async"
                   />
                 </div>
               </div>
