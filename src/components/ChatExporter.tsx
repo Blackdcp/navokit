@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -19,18 +18,100 @@ type Dictionary = {
   };
 };
 
+const WATERMARK_LOGO_SRC = "/logo.png";
+
+function blobToDataUrl(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function loadLogoDataUrl() {
+  const response = await fetch(WATERMARK_LOGO_SRC, { cache: "force-cache" });
+
+  if (!response.ok) {
+    throw new Error(`Unable to load watermark logo: ${response.status}`);
+  }
+
+  return blobToDataUrl(await response.blob());
+}
+
+async function waitForImage(image: HTMLImageElement) {
+  if (image.complete && image.naturalWidth > 0) {
+    return;
+  }
+
+  if (typeof image.decode === "function") {
+    await image.decode().catch(() => undefined);
+    return;
+  }
+
+  await new Promise<void>(resolve => {
+    image.onload = () => resolve();
+    image.onerror = () => resolve();
+  });
+}
+
+async function waitForImages(root: HTMLElement) {
+  const images = Array.from(root.querySelectorAll("img"));
+  await Promise.all(images.map(waitForImage));
+}
+
 export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "en" | "zh" }) {
   const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
+  const [watermarkLogoSrc, setWatermarkLogoSrc] = useState(WATERMARK_LOGO_SRC);
   const previewRef = useRef<HTMLDivElement>(null);
+  const watermarkLogoRef = useRef<HTMLImageElement>(null);
   const zh = lang === "zh";
   const content = getToolPageContent(lang, "markdown-to-image");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    loadLogoDataUrl()
+      .then(dataUrl => {
+        if (!cancelled) setWatermarkLogoSrc(dataUrl);
+      })
+      .catch(() => {
+        if (!cancelled) setWatermarkLogoSrc(WATERMARK_LOGO_SRC);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function ensureWatermarkLogoReady() {
+    const image = watermarkLogoRef.current;
+    let logoSrc = watermarkLogoSrc;
+
+    if (!logoSrc.startsWith("data:")) {
+      logoSrc = await loadLogoDataUrl();
+      setWatermarkLogoSrc(logoSrc);
+    }
+
+    if (image) {
+      image.src = logoSrc;
+      await waitForImage(image);
+    }
+  }
 
   async function download() {
     if (!previewRef.current) return;
     setExporting(true);
     try {
-      const dataUrl = await htmlToImage.toPng(previewRef.current, { pixelRatio: 2, backgroundColor: "#FFFFFF" });
+      await ensureWatermarkLogoReady();
+      await waitForImages(previewRef.current);
+
+      const dataUrl = await htmlToImage.toPng(previewRef.current, {
+        pixelRatio: 2,
+        backgroundColor: "#FFFFFF",
+        cacheBust: true,
+      });
       const link = document.createElement("a");
       link.download = "navokit-markdown.png";
       link.href = dataUrl;
@@ -71,7 +152,8 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
                 <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
                 <div className="export-watermark">
                   <span>Made with</span>
-                  <Image className="watermark-logo" src="/logo.png" alt="NavoKit" width={1672} height={941} unoptimized />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img ref={watermarkLogoRef} className="watermark-logo" src={watermarkLogoSrc} alt="NavoKit" width={1672} height={941} decoding="async" />
                 </div>
               </div>
             </div>
