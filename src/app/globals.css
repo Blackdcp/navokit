@@ -318,9 +318,39 @@ button, textarea, input, select { font: inherit; }
 .use-case-grid > div { min-height: 160px; padding: 26px; background: #fff; }
 .use-case-grid h3 { margin: 0 0 10px; font-size: 18px; }
 .example-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.example-grid > div { min-height: 220px; padding: 22px; border: 1px solid var(--color-navo-border); border-radius: 20px; background: #fff; }
-.example-grid strong { display: block; margin-bottom: 18px; color: var(--color-navo-ink); font-size: 16px; letter-spacing: -.02em; }
-.example-grid p { margin: 0; color: #475569; font: 13px/1.75 "JetBrains Mono","Fira Code",Consolas,monospace; white-space: pre-wrap; }
+.example-grid > article,
+.example-grid > div { position: relative; min-height: 260px; padding: 24px; border: 1px solid var(--color-navo-border); border-radius: 22px; background: linear-gradient(180deg, #FFFFFF, #F8FAFC); box-shadow: 0 1px 2px rgba(11,18,32,.04); overflow: hidden; }
+.example-grid > article::before,
+.example-grid > div::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: linear-gradient(90deg, var(--color-navo-blue), rgba(37,99,235,0)); opacity: .9; }
+.example-grid__index { display: inline-flex; align-items: center; height: 24px; margin-bottom: 32px; padding: 0 9px; border: 1px solid #DBEAFE; border-radius: 999px; background: #EFF6FF; color: var(--color-navo-blue); font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+.example-grid strong { display: block; margin-bottom: 16px; color: var(--color-navo-ink); font-size: 18px; line-height: 1.2; letter-spacing: -.025em; }
+.example-grid p { margin: 0; color: #475569; font-size: 14px; line-height: 1.75; white-space: pre-line; }
+.example-proof-grid { display: grid; gap: 22px; }
+.example-proof-card { position: relative; padding: 26px; border: 1px solid var(--color-navo-border); border-radius: 24px; background: #fff; box-shadow: 0 1px 2px rgba(11,18,32,.04); overflow: hidden; }
+.example-proof-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: linear-gradient(90deg, var(--color-navo-blue), rgba(37,99,235,0)); }
+.example-proof-card > strong { display: block; margin: 0 0 22px; color: var(--color-navo-ink); font-size: 24px; line-height: 1.12; letter-spacing: -.035em; }
+.example-proof-card__split { display: grid; grid-template-columns: minmax(0,.92fr) minmax(0,1.08fr); gap: 18px; align-items: stretch; }
+.example-proof-card__input,
+.example-proof-card__output { min-width: 0; padding: 18px; border: 1px solid var(--color-navo-border); border-radius: 18px; background: var(--color-navo-surface); }
+.example-proof-card__output { background: linear-gradient(180deg, #F8FAFC, #FFFFFF); }
+.example-proof-card small { display: block; margin-bottom: 12px; color: var(--color-navo-blue); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.example-proof-card pre { margin: 0; white-space: pre-wrap; color: #334155; font: 13px/1.7 "JetBrains Mono","Fira Code",Consolas,monospace; }
+.example-proof-card__note { margin: 16px 0 0; color: var(--color-navo-muted); font-size: 13px; line-height: 1.7; }
+.proof-image { margin: 0; overflow: hidden; border: 1px solid #E2E8F0; border-radius: 18px; background: #F8FAFC; box-shadow: 0 12px 30px rgba(11,18,32,.08); }
+.proof-image img { display: block; width: 100%; height: auto; }
+.proof-video-asset { margin: 0; overflow: hidden; border: 1px solid #111827; border-radius: 18px; background: #020617; box-shadow: 0 18px 38px rgba(11,18,32,.18); }
+.proof-video-asset video { display: block; width: 100%; height: auto; background: #020617; }
+.proof-markdown-card { display: flex; flex-direction: column; min-height: 280px; padding: 26px; border: 1px solid #E2E8F0; border-radius: 16px; background: #fff; box-shadow: 0 12px 30px rgba(11,18,32,.08); }
+.proof-markdown-card pre { color: #172033; font: 14px/1.75 var(--font-inter); }
+.proof-watermark { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--color-navo-border); color: var(--color-navo-muted); font-size: 11px; font-weight: 650; }
+.proof-watermark img { width: 82px; height: 21px; object-fit: contain; }
+.proof-social-draft { min-height: 280px; padding: 22px; border: 1px solid var(--color-navo-border); border-radius: 16px; background: #fff; box-shadow: 0 10px 24px rgba(11,18,32,.055); }
+.proof-social-draft pre { color: #1F2937; font: 14px/1.75 var(--font-inter); }
+.proof-video-frame { min-height: 280px; display: flex; flex-direction: column; justify-content: space-between; padding: 22px; border-radius: 18px; background: radial-gradient(circle at 24% 18%, rgba(37,99,235,.42), transparent 30%), linear-gradient(145deg, #070B14, #111827 52%, #1E293B); color: #E5E7EB; box-shadow: 0 18px 38px rgba(11,18,32,.18); }
+.proof-video-frame > div { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.proof-video-frame span { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(255,255,255,.08); }
+.proof-video-frame strong { color: #fff; font-size: 13px; letter-spacing: .02em; text-transform: uppercase; }
+.proof-video-frame pre { margin-top: 38px; color: #CBD5E1; font: 13px/1.75 var(--font-inter); }
 .limit-list { display: grid; grid-template-columns: 1fr; border: 1px solid var(--color-navo-border); border-radius: 20px; overflow: hidden; background: var(--color-navo-border); }
 .limit-list > div { display: grid; grid-template-columns: 240px 1fr; gap: 28px; padding: 24px 26px; background: #fff; }
 .limit-list > div + div { margin-top: 1px; }
@@ -419,6 +449,7 @@ button, textarea, input, select { font: inherit; }
   .article-related-grid { grid-template-columns: 1fr; }
   .tool-workspace { grid-template-columns: 1fr; }
   .instruction-grid, .related-grid, .example-grid, .tool-facts dl { grid-template-columns: 1fr; }
+  .example-proof-card__split { grid-template-columns: 1fr; }
   .limit-list > div { grid-template-columns: 1fr; gap: 10px; }
 }
 

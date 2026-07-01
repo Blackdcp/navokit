@@ -1,5 +1,82 @@
 import Link from "next/link";
-import type { ToolContentItem, ToolContentLink, ToolFact } from "../types/toolPageContent";
+import Image from "next/image";
+import type { ToolContentItem, ToolContentLink, ToolExample, ToolExampleType, ToolFact } from "../types/toolPageContent";
+
+function ExampleOutput({
+  example,
+  exampleType,
+}: {
+  example: ToolExample;
+  exampleType?: ToolExampleType;
+}) {
+  if (example.image) {
+    return (
+      <figure className="proof-image">
+        <Image
+          src={example.image.src}
+          alt={example.image.alt}
+          width={example.image.width}
+          height={example.image.height}
+          sizes="(max-width: 768px) 100vw, 520px"
+        />
+      </figure>
+    );
+  }
+
+  if (example.video) {
+    return (
+      <figure className="proof-video-asset">
+        <video
+          controls
+          muted
+          playsInline
+          preload="metadata"
+          width={example.video.width}
+          height={example.video.height}
+          src={example.video.src}
+        >
+          <a href={example.video.src}>{example.video.title}</a>
+        </video>
+      </figure>
+    );
+  }
+
+  const output = example.output ?? "";
+
+  if (exampleType === "markdown") {
+    return (
+      <div className="proof-markdown-card">
+        <pre>{output}</pre>
+        <div className="proof-watermark">
+          <span>Made with</span>
+          <Image src="/logo-watermark.png" alt="NavoKit" width={82} height={21} />
+        </div>
+      </div>
+    );
+  }
+
+  if (exampleType === "social") {
+    return (
+      <div className="proof-social-draft">
+        <pre>{output}</pre>
+      </div>
+    );
+  }
+
+  if (exampleType === "video") {
+    return (
+      <div className="proof-video-frame">
+        <div>
+          <span>▶</span>
+          <strong>Result checklist</strong>
+        </div>
+        <pre>{output}</pre>
+      </div>
+    );
+  }
+
+  return <pre>{output}</pre>;
+}
 
 export default function ToolPageContent({
   lang,
@@ -8,6 +85,7 @@ export default function ToolPageContent({
   facts,
   steps,
   useCases,
+  exampleType,
   examples,
   limitations,
   privacy,
@@ -22,7 +100,8 @@ export default function ToolPageContent({
   facts?: ToolFact[];
   steps: ToolContentItem[];
   useCases: ToolContentItem[];
-  examples?: ToolContentItem[];
+  exampleType?: ToolExampleType;
+  examples?: ToolExample[];
   limitations?: ToolContentItem[];
   privacy: string;
   faqs: ToolContentItem[];
@@ -32,6 +111,9 @@ export default function ToolPageContent({
 }) {
   const zh = lang === "zh";
   const guideLinks = guides && guides.length > 0 ? guides : guide ? [guide] : [];
+  const exampleHeading = exampleType === "markdown"
+    ? (zh ? "查看输入内容，以及按导出样式生成的 PNG 示例。" : "See the input and actual PNG-style output examples.")
+    : (zh ? "查看输入内容、输出示例和使用前需要知道的限制。" : "See the input, output examples, and what to check before using the tool.");
 
   return (
     <div className="tool-content">
@@ -74,10 +156,26 @@ export default function ToolPageContent({
 
       {examples && examples.length > 0 && (
         <section className="tool-content__section">
-          <span className="eyebrow">{zh ? "示例" : "Examples"}</span>
-          <h2>{zh ? "可以直接借鉴的输入。" : "Inputs you can learn from."}</h2>
-          <div className="example-grid">
-            {examples.map(item => <div key={item.title}><strong>{item.title}</strong><p>{item.text}</p></div>)}
+          <span className="eyebrow">{zh ? "真实示例" : "Product examples"}</span>
+          <h2>{exampleHeading}</h2>
+          <div className="example-proof-grid" aria-label={zh ? "产品示例" : "Product examples"}>
+            {examples.map((item, index) => (
+              <article key={item.title} className={`example-proof-card example-proof-card--${exampleType ?? "default"}`}>
+                <span className="example-grid__index">{String(index + 1).padStart(2, "0")}</span>
+                <strong>{item.title}</strong>
+                <div className="example-proof-card__split">
+                  <div className="example-proof-card__input">
+                    <small>{item.inputLabel ?? (zh ? "输入" : "Input")}</small>
+                    <pre>{item.input}</pre>
+                  </div>
+                  <div className="example-proof-card__output">
+                    <small>{item.outputLabel ?? (zh ? "输出" : "Output")}</small>
+                    <ExampleOutput example={item} exampleType={exampleType} />
+                  </div>
+                </div>
+                {item.note && <p className="example-proof-card__note">{item.note}</p>}
+              </article>
+            ))}
           </div>
         </section>
       )}
