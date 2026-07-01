@@ -356,6 +356,22 @@ async function auditPages() {
       visibleText: ["Why convert Markdown to an image", "Related tools", "Keep reading"],
     },
     {
+      path: "/en/blog/how-to-generate-ai-videos-from-text",
+      titleIncludes: "How to Generate an AI Video from a Text Prompt",
+      descriptionIncludes: "writing a video prompt",
+      canonical: expectedUrl("/en/blog/how-to-generate-ai-videos-from-text"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["When text-to-video is useful", "Step 1: Write one clear shot", "Privacy and rights"],
+    },
+    {
+      path: "/en/blog/best-ai-video-prompt-examples",
+      titleIncludes: "Best AI Video Prompt Examples",
+      descriptionIncludes: "prompt patterns",
+      canonical: expectedUrl("/en/blog/best-ai-video-prompt-examples"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["A simple prompt formula", "Product shot prompts", "Prompt patterns to avoid"],
+    },
+    {
       path: "/zh/blog/how-to-convert-markdown-to-png",
       titleIncludes: "如何把 Markdown 转成 PNG 图片",
       descriptionIncludes: "Markdown",
