@@ -62,6 +62,29 @@ function drawImageCover(context: CanvasRenderingContext2D, image: HTMLImageEleme
   context.drawImage(image, sx, sy, sw, sh, 0, 0, width, height);
 }
 
+function drawImageCoverAt(context: CanvasRenderingContext2D, image: HTMLImageElement, x: number, y: number, width: number, height: number) {
+  const sourceWidth = image.naturalWidth || image.width;
+  const sourceHeight = image.naturalHeight || image.height;
+  const sourceRatio = sourceWidth / sourceHeight;
+  const targetRatio = width / height;
+  let sx = 0;
+  let sy = 0;
+  let sw = sourceWidth;
+  let sh = sourceHeight;
+
+  if (sourceRatio > targetRatio) {
+    sw = sourceHeight * targetRatio;
+    sx = (sourceWidth - sw) / 2;
+  } else {
+    sh = sourceWidth / targetRatio;
+    sy = (sourceHeight - sh) / 2;
+  }
+
+  context.imageSmoothingEnabled = true;
+  context.imageSmoothingQuality = "high";
+  context.drawImage(image, sx, sy, sw, sh, x, y, width, height);
+}
+
 async function waitForImages(root: HTMLElement) {
   const images = Array.from(root.querySelectorAll("img"));
   await Promise.all(
@@ -82,6 +105,32 @@ function isMobileSafari() {
   const isSafari = /Safari/.test(userAgent) && !/CriOS|FxiOS|EdgiOS/.test(userAgent);
 
   return isAppleMobile && isSafari;
+}
+
+function dataUrlToBlob(dataUrl: string) {
+  const [metadata, data] = dataUrl.split(",");
+  const mime = metadata.match(/data:(.*?);/)?.[1] || "image/png";
+  const binary = window.atob(data);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return new Blob([bytes], { type: mime });
+}
+
+function canvasToPngBlob(canvas: HTMLCanvasElement) {
+  if (!canvas.toBlob) {
+    return Promise.resolve(dataUrlToBlob(canvas.toDataURL("image/png")));
+  }
+
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (blob) resolve(blob);
+      else reject(new Error("Unable to export image."));
+    }, "image/png");
+  });
 }
 
 function saveBlob(blob: Blob, filename: string) {
@@ -113,13 +162,14 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
 
   async function renderWatermarkLogo() {
     const canvas = watermarkCanvasRef.current;
-    if (!canvas) return;
+    const image = await loadWatermarkImage();
+    if (!canvas) return image;
 
     const context = canvas.getContext("2d");
-    if (!context) return;
+    if (!context) return image;
 
-    const image = await loadWatermarkImage();
     drawImageCover(context, image, canvas.width, canvas.height);
+    return image;
   }
 
   useEffect(() => {
@@ -129,19 +179,43 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
   async function download() {
     if (!previewRef.current) return;
     setExporting(true);
+    const exportNode = previewRef.current;
+    const watermarkCanvas = watermarkCanvasRef.current;
+    const previousWatermarkOpacity = watermarkCanvas?.style.opacity || "";
     try {
-      await renderWatermarkLogo();
-      await waitForImages(previewRef.current);
+      const watermarkImage = await renderWatermarkLogo();
+      await waitForImages(exportNode);
 
-      const blob = await htmlToImage.toBlob(previewRef.current, {
+      const rootRect = exportNode.getBoundingClientRect();
+      const watermarkRect = watermarkCanvas?.getBoundingClientRect();
+      if (watermarkCanvas) watermarkCanvas.style.opacity = "0";
+
+      const canvas = await htmlToImage.toCanvas(exportNode, {
         pixelRatio: 2,
         backgroundColor: "#FFFFFF",
         cacheBust: true,
       });
 
-      if (!blob) throw new Error("Unable to export image.");
+      if (watermarkRect) {
+        const context = canvas.getContext("2d");
+        if (context) {
+          const scaleX = canvas.width / rootRect.width;
+          const scaleY = canvas.height / rootRect.height;
+          drawImageCoverAt(
+            context,
+            watermarkImage,
+            (watermarkRect.left - rootRect.left) * scaleX,
+            (watermarkRect.top - rootRect.top) * scaleY,
+            watermarkRect.width * scaleX,
+            watermarkRect.height * scaleY
+          );
+        }
+      }
+
+      const blob = await canvasToPngBlob(canvas);
       saveBlob(blob, "navokit-markdown.png");
     } finally {
+      if (watermarkCanvas) watermarkCanvas.style.opacity = previousWatermarkOpacity;
       setExporting(false);
     }
   }
