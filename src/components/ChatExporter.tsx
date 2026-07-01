@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -18,104 +18,68 @@ type Dictionary = {
   };
 };
 
-const WATERMARK_LOGO_SRC = "/logo.png";
-
-function blobToDataUrl(blob: Blob) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(blob);
-  });
-}
-
-async function loadLogoDataUrl() {
-  const response = await fetch(WATERMARK_LOGO_SRC, { cache: "force-cache" });
-
-  if (!response.ok) {
-    throw new Error(`Unable to load watermark logo: ${response.status}`);
-  }
-
-  return blobToDataUrl(await response.blob());
-}
-
-async function waitForImage(image: HTMLImageElement) {
-  if (image.complete && image.naturalWidth > 0) {
-    return;
-  }
-
-  if (typeof image.decode === "function") {
-    await image.decode().catch(() => undefined);
-    return;
-  }
-
-  await new Promise<void>(resolve => {
-    image.onload = () => resolve();
-    image.onerror = () => resolve();
-  });
-}
-
 async function waitForImages(root: HTMLElement) {
   const images = Array.from(root.querySelectorAll("img"));
-  await Promise.all(images.map(waitForImage));
+  await Promise.all(
+    images.map(async image => {
+      if (image.complete && image.naturalWidth > 0) return;
+      if (typeof image.decode === "function") {
+        await image.decode().catch(() => undefined);
+      }
+    })
+  );
+}
+
+function isMobileSafari() {
+  if (typeof navigator === "undefined") return false;
+
+  const userAgent = navigator.userAgent;
+  const isAppleMobile = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const isSafari = /Safari/.test(userAgent) && !/CriOS|FxiOS|EdgiOS/.test(userAgent);
+
+  return isAppleMobile && isSafari;
+}
+
+function saveBlob(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+
+  if (isMobileSafari()) {
+    const opened = window.open(url, "_blank", "noopener,noreferrer");
+    if (!opened) window.location.href = url;
+    window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.download = filename;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
 }
 
 export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "en" | "zh" }) {
   const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
-  const [watermarkLogoSrc, setWatermarkLogoSrc] = useState(WATERMARK_LOGO_SRC);
   const previewRef = useRef<HTMLDivElement>(null);
-  const watermarkLogoRef = useRef<HTMLImageElement>(null);
   const zh = lang === "zh";
   const content = getToolPageContent(lang, "markdown-to-image");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    loadLogoDataUrl()
-      .then(dataUrl => {
-        if (!cancelled) setWatermarkLogoSrc(dataUrl);
-      })
-      .catch(() => {
-        if (!cancelled) setWatermarkLogoSrc(WATERMARK_LOGO_SRC);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  async function ensureWatermarkLogoReady() {
-    const image = watermarkLogoRef.current;
-    let logoSrc = watermarkLogoSrc;
-
-    if (!logoSrc.startsWith("data:")) {
-      logoSrc = await loadLogoDataUrl();
-      setWatermarkLogoSrc(logoSrc);
-    }
-
-    if (image) {
-      image.src = logoSrc;
-      await waitForImage(image);
-    }
-  }
 
   async function download() {
     if (!previewRef.current) return;
     setExporting(true);
     try {
-      await ensureWatermarkLogoReady();
       await waitForImages(previewRef.current);
 
-      const dataUrl = await htmlToImage.toPng(previewRef.current, {
+      const blob = await htmlToImage.toBlob(previewRef.current, {
         pixelRatio: 2,
         backgroundColor: "#FFFFFF",
         cacheBust: true,
       });
-      const link = document.createElement("a");
-      link.download = "navokit-markdown.png";
-      link.href = dataUrl;
-      link.click();
+
+      if (!blob) throw new Error("Unable to export image.");
+      saveBlob(blob, "navokit-markdown.png");
     } finally {
       setExporting(false);
     }
@@ -152,8 +116,14 @@ export default function ChatExporter({ dict, lang }: { dict: Dictionary; lang: "
                 <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
                 <div className="export-watermark">
                   <span>Made with</span>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img ref={watermarkLogoRef} className="watermark-logo" src={watermarkLogoSrc} alt="NavoKit" width={1672} height={941} decoding="async" />
+                  <span className="watermark-brand" aria-label="NavoKit">
+                    <span className="watermark-brand__mark" aria-hidden="true">
+                      <span className="watermark-brand__stem watermark-brand__stem--left" />
+                      <span className="watermark-brand__slash" />
+                      <span className="watermark-brand__stem watermark-brand__stem--right" />
+                    </span>
+                    <span className="watermark-brand__word">NavoKit</span>
+                  </span>
                 </div>
               </div>
             </div>

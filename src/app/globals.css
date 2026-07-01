@@ -295,7 +295,14 @@ button, textarea, input, select { font: inherit; }
 .markdown-export { min-height: 516px; display: flex; flex-direction: column; padding: 38px; background: #fff; border-radius: 12px; box-shadow: 0 6px 24px rgba(11,18,32,.08); }
 .export-markdown { flex: 1; }
 .export-watermark { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--color-navo-border); color: var(--color-navo-muted); font-size: 11px; font-weight: 650; }
-.watermark-logo { width: 82px; height: 21px; display: block; object-fit: cover; object-position: center; }
+.watermark-brand { display: inline-flex; align-items: center; gap: 5px; color: var(--color-navo-ink); line-height: 1; }
+.watermark-brand__mark { position: relative; width: 18px; height: 18px; flex: 0 0 18px; display: inline-block; overflow: visible; }
+.watermark-brand__mark span { position: absolute; display: block; background: #020817; box-shadow: 0 1px 2px rgba(2,8,23,.18); }
+.watermark-brand__stem { width: 5px; height: 13px; border-radius: 999px; }
+.watermark-brand__stem--left { left: 1px; bottom: 1px; }
+.watermark-brand__stem--right { right: 1px; top: 1px; }
+.watermark-brand__slash { left: 6px; top: -1px; width: 7px; height: 21px; border-radius: 999px; transform: rotate(-45deg); transform-origin: center; }
+.watermark-brand__word { font-size: 14px; font-weight: 800; letter-spacing: -.045em; }
 .tool-content { width: min(100% - 48px, 960px); margin: 0 auto; padding-bottom: 100px; }
 .tool-content__section { padding: 86px 0; border-top: 1px solid var(--color-navo-border); }
 .tool-content__section > h2 { max-width: 700px; margin: 0 0 40px; font-size: clamp(30px,4vw,44px); line-height: 1.05; letter-spacing: -.04em; }
