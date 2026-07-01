@@ -377,7 +377,23 @@ async function auditPages() {
       descriptionIncludes: "Markdown",
       canonical: expectedUrl("/zh/blog/how-to-convert-markdown-to-png"),
       schemas: ["BlogPosting", "BreadcrumbList"],
-      visibleText: ["为什么要把 Markdown 转成图片", "相关工具"],
+      visibleText: ["为什么要把 Markdown 转成图片", "像读者一样检查", "相关工作流"],
+    },
+    {
+      path: "/zh/blog/how-to-generate-ai-videos-from-text",
+      titleIncludes: "如何用文本提示词生成 AI 视频",
+      descriptionIncludes: "视频提示词",
+      canonical: expectedUrl("/zh/blog/how-to-generate-ai-videos-from-text"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["什么时候适合用文本生成视频", "第一步：只写一个清晰镜头", "隐私与使用权"],
+    },
+    {
+      path: "/zh/blog/best-ai-video-prompt-examples",
+      titleIncludes: "AI 视频提示词示例",
+      descriptionIncludes: "AI 视频提示词结构",
+      canonical: expectedUrl("/zh/blog/best-ai-video-prompt-examples"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      visibleText: ["提示词公式", "产品镜头提示词", "不建议的提示词写法"],
     },
   ];
 
