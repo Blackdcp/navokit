@@ -10,11 +10,31 @@ function normalizeError(error: unknown) {
   return "unknown";
 }
 
+function normalizeProperties(properties: ToolEventProperties) {
+  return Object.fromEntries(
+    Object.entries(properties).filter((entry): entry is [string, string | number | boolean] => {
+      const value = entry[1];
+      return typeof value === "string" || typeof value === "number" || typeof value === "boolean";
+    })
+  );
+}
+
 export function trackToolEvent(name: string, properties: ToolEventProperties = {}) {
   try {
     track(name, properties);
   } catch {
     // Analytics must never block the tool experience.
+  }
+
+  try {
+    if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+
+    window.gtag("event", name, normalizeProperties({
+      event_category: "tool",
+      ...properties,
+    }));
+  } catch {
+    // Google Analytics must never block the tool experience.
   }
 }
 

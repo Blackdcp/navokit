@@ -42,7 +42,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <ul>
                   <li><strong>本地处理：</strong>部分工具（如 Markdown 转图片）完全在您的浏览器前端运行，您输入的内容<strong>不会</strong>被上传到我们的服务器。</li>
                   <li><strong>AI 视频生成：</strong>当您使用 AI 视频生成器时，提示词、画面比例和时长设置会由外部 AI 视频服务处理以完成生成。请勿输入敏感或机密信息。</li>
-                  <li><strong>日志与分析：</strong>托管服务和 Vercel Analytics 可能处理 IP 地址、浏览器类型、页面访问和基础使用数据，用于安全、故障排查和汇总统计。</li>
+                  <li><strong>日志与分析：</strong>托管服务、Vercel Analytics 和 Google Analytics 可能处理 IP 地址、浏览器类型、页面访问和基础使用数据，用于安全、故障排查和汇总统计。</li>
                 </ul>
 
                 <h3>2. 我们如何使用信息</h3>
@@ -63,7 +63,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <p>你还可以阅读 Google 关于合作网站数据使用方式的说明：<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noreferrer">How Google uses information from sites or apps that use our services</a>。</p>
 
                 <h3>5. Cookie 与浏览器控制</h3>
-                <p>网站可能使用必要的存储机制保存界面首选项，并使用 Vercel Analytics 进行聚合统计。你可以通过浏览器设置阻止或删除 Cookie；但部分设置可能影响网站功能、统计或广告展示。</p>
+                <p>网站可能使用必要的存储机制保存界面首选项，并使用 Vercel Analytics 和 Google Analytics 进行聚合统计。你可以通过浏览器设置阻止或删除 Cookie；但部分设置可能影响网站功能、统计或广告展示。</p>
 
                 <h3>6. 联系我们</h3>
                 <p>如果您对本隐私政策有任何疑问，请通过以下邮箱联系我们：</p>
@@ -79,7 +79,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <ul>
                   <li><strong>Local Processing:</strong> Some tools, such as Markdown to Image, run entirely in your browser. Your input is <strong>never</strong> uploaded to our servers.</li>
                   <li><strong>AI Video Generation:</strong> When you use the AI video generator, your prompt, format, and duration settings are processed by an external AI video service to create the video. Do not enter sensitive or confidential information.</li>
-                  <li><strong>Logs and Analytics:</strong> Our hosting services and Vercel Analytics may process IP address, browser type, page visits, and basic usage data for security, troubleshooting, and aggregate analytics.</li>
+                  <li><strong>Logs and Analytics:</strong> Our hosting services, Vercel Analytics, and Google Analytics may process IP address, browser type, page visits, and basic usage data for security, troubleshooting, and aggregate analytics.</li>
                 </ul>
 
                 <h3>2. How We Use Information</h3>
@@ -100,7 +100,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
                 <p>You can also read Google&apos;s explanation of data use on partner sites: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noreferrer">How Google uses information from sites or apps that use our services</a>.</p>
 
                 <h3>5. Cookies and Browser Controls</h3>
-                <p>The site may use necessary storage for interface preferences and Vercel Analytics for aggregate statistics. You can block or delete cookies through your browser settings, though some choices may affect site functionality, measurement, or advertising.</p>
+                <p>The site may use necessary storage for interface preferences, Vercel Analytics, and Google Analytics for aggregate statistics. You can block or delete cookies through your browser settings, though some choices may affect site functionality, measurement, or advertising.</p>
 
                 <h3>6. Contact Us</h3>
                 <p>If you have any questions about this Privacy Policy, please contact us at:</p>

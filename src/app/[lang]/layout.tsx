@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 import { BRAND_ICONS, isSupportedLanguage, localizedCanonical, SITE_URL, SUPPORTED_LANGUAGES } from "../../lib/site";
 
 export const dynamicParams = false;
@@ -56,6 +57,8 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>
 }) {
   const { lang } = await params;
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+
   if (!isSupportedLanguage(lang)) {
     notFound();
   }
@@ -65,6 +68,7 @@ export default async function RootLayout({
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>
         {children}
         <Analytics />
+        <GoogleAnalytics measurementId={gaMeasurementId} />
       </body>
     </html>
   );
