@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -20,6 +21,9 @@ type Dictionary = {
 };
 
 const WATERMARK_LOGO_SRC = "/logo-watermark.png";
+const markdownComponents = {
+  h1: ({ children }: ComponentPropsWithoutRef<"h1">) => <h2 className="markdown-rendered-h1">{children}</h2>,
+};
 
 let watermarkImagePromise: Promise<HTMLImageElement> | null = null;
 
@@ -261,7 +265,11 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
             </div>
             <div className="preview-canvas">
               <div ref={previewRef} className="markdown-export">
-                <div className="export-markdown prose"><ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown></div>
+                <div className="export-markdown prose">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                    {markdown}
+                  </ReactMarkdown>
+                </div>
                 <div className="export-watermark">
                   <span>Made with</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -632,6 +632,7 @@ button, textarea, input, select { font: inherit; }
     margin-bottom: 0.8em !important;
   }
   .prose h2 { font-size: 1.5em !important; }
+  .prose .markdown-rendered-h1 { font-size: 2em !important; }
   .prose h3 { font-size: 1.25em !important; }
   .prose p {
     color: var(--color-navo-muted) !important;

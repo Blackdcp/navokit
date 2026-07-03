@@ -159,7 +159,7 @@ export default function HomePage({
 
         <section id="about" className="about-strip">
           <div className="marketing-container about-strip__inner">
-            <Image src="/logo.png" alt="" width={1672} height={941} />
+            <Image src="/logo.png" alt="NavoKit" width={1672} height={941} />
             <div>
               <h2>{zh ? "实用的小工具，打开就能用。" : "Useful tools, ready when you are."}</h2>
               <p>{zh ? "从 AI 视频生成到 Markdown 图片导出，NavoKit 帮你把零散输入整理成可以继续使用的内容资产。" : "From AI video generation to Markdown image export, NavoKit helps turn rough input into content assets you can keep using."}</p>
