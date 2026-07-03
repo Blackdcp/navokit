@@ -65,11 +65,10 @@ button, textarea, input, select { font: inherit; }
 .site-header__nav a { color: var(--color-navo-muted); text-decoration: none; font-size: 14px; font-weight: 550; }
 .site-header__nav a:hover { color: var(--color-navo-ink); }
 .site-header__actions { display: flex; align-items: center; gap: 10px; }
-.language-button { border: 0; background: transparent; color: var(--color-navo-muted); cursor: pointer; padding: 8px; font-size: 13px; font-weight: 650; }
 .menu-button { display: none; border: 0; background: transparent; width: 36px; height: 36px; padding: 8px; cursor: pointer; }
 .menu-button span { display: block; height: 2px; margin: 5px 0; background: var(--color-navo-ink); }
 .mobile-menu { position: absolute; inset: 64px 0 auto; padding: 20px 24px 24px; background: #fff; border-bottom: 1px solid var(--color-navo-border); box-shadow: 0 12px 30px rgba(11,18,32,.08); }
-.mobile-menu a:not(.button), .mobile-menu button { display: block; width: 100%; text-align: left; padding: 12px 0; border: 0; border-bottom: 1px solid var(--color-navo-border); background: none; text-decoration: none; }
+.mobile-menu a:not(.button) { display: block; width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--color-navo-border); text-decoration: none; }
 
 .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 17px; border-radius: 12px; font-weight: 650; font-size: 14px; text-decoration: none; border: 1px solid transparent; transition: .18s ease; cursor: pointer; }
 .button--small { min-height: 38px; padding: 8px 14px; font-size: 13px; }
