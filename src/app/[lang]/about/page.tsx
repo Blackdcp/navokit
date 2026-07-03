@@ -11,14 +11,24 @@ export async function generateMetadata({
   params: Promise<{ lang: "en" | "zh" }>;
 }): Promise<Metadata> {
   const { lang } = await params;
+  const title =
+    lang === "zh"
+      ? "关于 NavoKit - 免费在线 AI 工具"
+      : "About NavoKit - Free Online AI Tools for Creators";
+  const description =
+    lang === "zh"
+      ? "了解 NavoKit 如何提供免费的在线 AI 工具、处理工具限制，并保持清晰、可用、透明的产品体验。"
+      : "Learn how NavoKit provides free online AI tools with clear workflows, practical limits, and transparent product design.";
 
   return {
-    title: lang === "zh" ? "关于 NavoKit" : "About NavoKit",
-    description:
-      lang === "zh"
-        ? "了解 NavoKit 如何提供免费的在线 AI 工具、处理工具限制，并保持清晰、可用、透明的产品体验。"
-        : "Learn how NavoKit provides free online AI tools with clear workflows, practical limits, and transparent product design.",
+    title,
+    description,
     alternates: localizedCanonical(lang, "/about"),
+    openGraph: {
+      title,
+      description,
+      type: "website",
+    },
   };
 }
 
@@ -33,7 +43,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: "e
         "@type": "AboutPage",
         "@id": `${SITE_URL}/${lang}/about#about`,
         url: `${SITE_URL}/${lang}/about`,
-        name: zh ? "关于 NavoKit" : "About NavoKit",
+        name: zh ? "关于 NavoKit - 免费在线 AI 工具" : "About NavoKit - Free Online AI Tools for Creators",
         description: zh
           ? "NavoKit 是一个免费的在线 AI 工具站，帮助用户完成短视频生成、Markdown 图片导出和社交媒体文案起草等具体任务。"
           : "NavoKit is a free online AI tool site for short video generation, Markdown image export, and social post drafting.",
