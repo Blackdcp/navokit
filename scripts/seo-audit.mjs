@@ -372,11 +372,11 @@ async function auditPages() {
     },
     {
       path: "/en/blog/how-to-generate-ai-videos-from-text",
-      titleIncludes: "How to Generate an AI Video from a Text Prompt",
-      descriptionIncludes: "writing a video prompt",
+      titleIncludes: "How to Generate AI Videos from Text",
+      descriptionIncludes: "real prompt examples",
       canonical: expectedUrl("/en/blog/how-to-generate-ai-videos-from-text"),
       schemas: ["BlogPosting", "BreadcrumbList"],
-      visibleText: ["When text-to-video is useful", "Step 1: Write one clear shot", "Privacy and rights"],
+      visibleText: ["Three real NavoKit prompt tests", "Auto duration vs fixed duration", "Privacy and rights"],
     },
     {
       path: "/en/blog/best-ai-video-prompt-examples",
@@ -413,10 +413,10 @@ async function auditPages() {
     {
       path: "/en/blog/how-to-draft-social-posts-with-ai",
       titleIncludes: "How to Draft Social Posts with AI",
-      descriptionIncludes: "platform fit",
+      descriptionIncludes: "platform-ready X",
       canonical: expectedUrl("/en/blog/how-to-draft-social-posts-with-ai"),
       schemas: ["BlogPosting", "BreadcrumbList"],
-      visibleText: ["What AI is good at in social writing", "Platform-specific editing notes", "Final checklist"],
+      visibleText: ["What the tool actually generates", "Case 1: turning a product launch into social drafts", "Final checklist"],
     },
     {
       path: "/en/blog/markdown-image-card-guide",
