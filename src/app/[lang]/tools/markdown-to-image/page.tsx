@@ -25,7 +25,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/images/tools/markdown-to-image.png",
+          url: "/og/tool/markdown-to-image?v=20260708",
           width: 1200,
           height: 630,
           alt: dict.tools.chatExporter.meta.title,
@@ -36,7 +36,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: dict.tools.chatExporter.meta.title,
       description: dict.tools.chatExporter.meta.description,
-      images: ["/images/tools/markdown-to-image.png"],
+      images: ["/og/tool/markdown-to-image?v=20260708"],
     }
   }
 }

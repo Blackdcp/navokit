@@ -33,7 +33,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/images/tools/ai-social-booster.png",
+          url: "/og/tool/ai-social-booster?v=20260708",
           width: 1200,
           height: 630,
           alt: title,
@@ -44,7 +44,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/tools/ai-social-booster.png"],
+      images: ["/og/tool/ai-social-booster?v=20260708"],
     }
   }
 }

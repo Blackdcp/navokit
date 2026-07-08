@@ -29,13 +29,13 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `${SITE_URL}/${lang}/tools/free-ai-video-generator`,
-      images: [{ url: "/images/tools/free-ai-video-generator.png", width: 1200, height: 630, alt: title }],
+      images: [{ url: "/og/tool/free-ai-video-generator?v=20260708", width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/images/tools/free-ai-video-generator.png"],
+      images: ["/og/tool/free-ai-video-generator?v=20260708"],
     },
   };
 }

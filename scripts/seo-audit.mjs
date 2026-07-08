@@ -258,6 +258,9 @@ async function auditImages() {
       "/images/tools/free-ai-video-generator.png",
     "/images/tools/markdown-to-image.png",
     "/images/tools/ai-social-booster.png",
+      "/og/tool/free-ai-video-generator?v=20260708",
+      "/og/tool/markdown-to-image?v=20260708",
+      "/og/tool/ai-social-booster?v=20260708",
   ];
 
   for (const asset of assets) {
