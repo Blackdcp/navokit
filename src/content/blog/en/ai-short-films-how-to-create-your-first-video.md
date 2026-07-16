@@ -1,6 +1,6 @@
 ---
-title: "AI Short Films Are Making Millions — Here's How to Create Your First AI Video in 60 Seconds"
-description: "AI-generated short films just crossed a million dollars in 7 days. You don't need a studio. Try generating your first AI video from a single text prompt."
+title: "The AI Video Prompt Formula: Subject + Motion + Style + Camera"
+description: "Most AI video prompts fail because they are too vague. This 4-part framework breaks down how to write prompts that produce cinematic results, with copy-paste templates for every format."
 date: "2026-07-16"
 updatedAt: "2026-07-16"
 workflowId: "video-creation"
@@ -8,53 +8,119 @@ toolIds: ["free-ai-video-generator"]
 relatedTools: ["free-ai-video-generator", "ai-social-booster"]
 intent: "how_to"
 difficulty: "beginner"
-readingTime: 4
+readingTime: 6
 ---
 
-This week, a Chinese AI video platform called DramaWave reported that three AI-generated short films hit **over a million dollars in revenue within 7 days** of launch. The films were created almost entirely by AI — from storyboards to final renders.
+AI video generators have gotten shockingly good. But most people type something like *"a beautiful sunset"* and wonder why the output looks generic.
 
-Meanwhile, Tiangong just released a new "Agent-powered storyboarding + infinite canvas" mode that lets directors control shot composition, camera angles, and character consistency through natural language.
+The problem is almost never the model. It is the prompt.
 
-The AI short film industry is no longer experimental. It is making real money.
+After testing hundreds of prompts across multiple AI video tools, we have found that the difference between a forgettable clip and a cinematic one comes down to four elements. We call it the **SMSC framework**: Subject, Motion, Style, Camera.
 
-## But most people never get started
+## The SMSC Framework
 
-If you have been watching these headlines from the sidelines, you are not alone. Terms like "storyboards," "shot composition," and "node workflows" make AI video feel like it requires a film degree.
+Every strong AI video prompt contains four layers. Miss one, and the model fills the gap with its own default — which is usually boring.
 
-Here is the truth: **it doesn't.**
+| Layer | What it controls | Weak example | Strong example |
+|-------|-----------------|--------------|----------------|
+| **Subject** | Who or what is in the scene | "a person" | "a gray-haired scientist in a cluttered lab" |
+| **Motion** | What is happening, what moves | (nothing specified) | "slowly pouring a glowing blue liquid into a beaker" |
+| **Style** | Visual aesthetic and mood | "cinematic" | "Wes Anderson color palette, soft pastel lighting, symmetrical framing" |
+| **Camera** | Shot type and camera movement | (nothing specified) | "slow push-in on a 35mm lens, shallow depth of field" |
 
-The fastest way to understand what AI video can do is to simply try it. No storyboard. No timeline. Just one sentence.
+The difference is dramatic. The first column produces an AI stock photo that happens to move. The second column produces something that looks intentional.
 
-## Your first AI video in 60 seconds
+## Copy-paste templates
 
-Open the [Free AI Video Generator](/en/tools/free-ai-video-generator) and type a single prompt. Here are a few that work well:
+Below are seven ready-to-use prompt templates. Each one is tuned for a different use case. Copy any of them into a text-to-video tool like our [Free AI Video Generator](/en/tools/free-ai-video-generator) and adjust the bracketed variables.
 
-- *"An astronaut walking through a Mars sunset, cinematic lighting"*
-- *"A cat wearing a tiny chef hat, cooking pasta in a miniature kitchen"*
-- *"Aerial drone shot of a neon-lit Tokyo street at night in the rain"*
+### Template 1: Product hero shot
+```
+A [product] sitting on a [surface material] table.
+Soft overhead light creates a clean shadow.
+Camera slowly orbits 180 degrees around the product.
+Studio lighting, white background, commercial photography style.
+```
 
-Pick landscape, portrait, or square — depending on whether you want a YouTube thumbnail feel, a TikTok vertical, or an Instagram square.
+### Template 2: Explainer intro (SaaS / tech)
+```
+Abstract 3D visualization of [concept, e.g. "data flowing through a neural network"].
+Glowing particles travel along translucent pathways.
+Camera pulls back to reveal the full structure.
+Dark background, electric blue and violet accents, futuristic UI aesthetic.
+```
 
-Hit generate. In about a minute, you will have a real AI-generated video clip.
+### Template 3: Social media hook (vertical)
+```
+Close-up of a [person/character] looking directly into the camera with a [emotion] expression.
+They slowly raise one eyebrow.
+Shallow depth of field, warm golden hour lighting.
+Vertical 9:16 format, TikTok native feel.
+```
 
-No account required. No credit card. No film school.
+### Template 4: Cinematic landscape (YouTube thumbnail / B-roll)
+```
+Aerial drone shot of [location].
+The camera glides forward over [terrain feature] at sunrise.
+Volumetric fog, god rays, ultra-wide 2.39:1 aspect ratio.
+Shot on ARRI Alexa, natural color grading.
+```
 
-## What to do with your video
+### Template 5: Mood piece (storytelling)
+```
+A lone [character] walks down a [environment] at [time of day].
+Rain falls gently. Neon signs reflect in puddles.
+Camera follows from behind at a distance, handheld slight sway.
+Blade Runner 2049 color palette, anamorphic lens flare.
+```
 
-Once you see the result, you will immediately understand why this technology is blowing up. A single well-crafted prompt can produce footage that would have taken a real production crew hours to set up.
+### Template 6: Education / diagram animation
+```
+A clean 2D animation showing [process, e.g. "how a transformer model processes tokens"].
+Elements appear one by one with smooth easing.
+White background, flat design, accent color [hex or name].
+Top-down orthographic view, no camera movement.
+```
 
-Here are three practical things you can do next:
+### Template 7: Meme / viral format
+```
+A [animal] wearing [unexpected outfit] sits at a desk in a corporate office.
+It turns to face the camera with a deadpan stare.
+Fluorescent office lighting, shot on security camera, slight grain.
+Static wide shot, no camera movement.
+```
 
-1. **Post it on social media.** AI videos get insane engagement right now because people are genuinely curious. Need a caption? Use our [AI Social Post Generator](/en/tools/ai-social-booster) to draft posts for X, LinkedIn, or Instagram in seconds.
+## Why this matters for quality
 
-2. **Use it for work.** Product demos, explainer intros, presentation openers — a 5-second AI clip can make any deck feel 10x more professional.
+We tested each template in our [Free AI Video Generator](/en/tools/free-ai-video-generator) and compared the outputs against one-line prompts describing the same scene. The structured prompts consistently produced:
 
-3. **Experiment with style.** Try the same subject with different moods: "cyberpunk," "watercolor painting," "vintage 1970s film grain." You will be surprised how much the output changes.
+- **More coherent motion** — specifying what moves prevents the "everything warps randomly" problem.
+- **Better lighting** — naming a lighting style ("golden hour," "studio overhead") gives the model a strong anchor.
+- **Intentional composition** — camera instructions like "slow push-in" or "static wide shot" eliminate the default "slow zoom on nothing" that plagues most AI videos.
 
-## The real takeaway
+## A cheat sheet for camera language
 
-You do not need a DramaWave-sized budget or a Tiangong-level workflow to start creating with AI video. The barrier to entry is now literally one sentence.
+If you are not from a film background, here is a quick reference for the camera terms that AI video models respond to best:
 
-The people who will benefit most from this wave are not filmmakers — they are marketers, educators, content creators, and founders who realize that **video is the highest-converting content format on every platform**, and AI just made it free.
+| Term | What it does | Best for |
+|------|-------------|----------|
+| Push-in | Camera moves toward the subject | Building tension, reveals |
+| Pull-back | Camera moves away from the subject | Establishing context |
+| Orbit | Camera circles the subject | Product shots, hero moments |
+| Tracking shot | Camera moves alongside the subject | Characters walking, motion |
+| Static wide | Camera does not move, wide angle | Comedy, documentary, memes |
+| Handheld | Slight camera sway, intimate feel | Storytelling, realism |
+| Drone / aerial | High overhead, moving forward | Landscapes, transitions |
+| Close-up | Tight frame on face or detail | Emotion, texture |
 
-[Try it now →](/en/tools/free-ai-video-generator)
+## Build the habit: prompt → video → post
+
+The fastest workflow we have found for turning one idea into a publishable piece of content:
+
+1. **Write the prompt** using the SMSC framework above.
+2. **Generate the video** in our [Free AI Video Generator](/en/tools/free-ai-video-generator). Try 2-3 variations.
+3. **Draft a caption** with the [AI Social Post Generator](/en/tools/ai-social-booster). Feed it your prompt + the context of what you are sharing and it will draft posts for X, LinkedIn, and Instagram.
+
+The entire flow takes under 5 minutes. The output is a short video with matching social copy, ready to publish.
+
+No storyboard. No editing software. No film degree.
