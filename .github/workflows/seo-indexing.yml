@@ -1,0 +1,38 @@
+name: SEO URL Indexing
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/content/blog/**/*.md'
+
+jobs:
+  submit-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required by tj-actions/changed-files
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Get Changed Markdown Files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: src/content/blog/**/*.md
+
+      - name: Submit URLs to Google Indexing API
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          node scripts/submit-urls.mjs "${{ steps.changed-files.outputs.all_changed_files }}"
