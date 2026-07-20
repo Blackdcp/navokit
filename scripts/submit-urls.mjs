@@ -46,18 +46,16 @@ try {
   process.exit(1);
 }
 
-const jwtClient = new google.auth.JWT(
-  credentials.client_email,
-  null,
-  credentials.private_key,
-  ['https://www.googleapis.com/auth/indexing'],
-  null
-);
+const auth = new google.auth.GoogleAuth({
+  credentials: JSON.parse(process.env.GCP_SA_KEY),
+  scopes: ['https://www.googleapis.com/auth/indexing'],
+});
 
-const indexing = google.indexing({ version: 'v3', auth: jwtClient });
+const indexing = google.indexing({ version: 'v3', auth });
 
 async function submitUrls() {
   let successCount = 0;
+  let hasError = false;
   
   for (const url of urls) {
     try {
@@ -71,10 +69,15 @@ async function submitUrls() {
       successCount++;
     } catch (error) {
       console.error(`❌ Failed to submit ${url}:`, error.message);
+      hasError = true;
     }
   }
   
   console.log(`🎉 Finished. Successfully submitted ${successCount}/${urls.length} URLs to Google.`);
+  
+  if (hasError) {
+    process.exit(1);
+  }
 }
 
 submitUrls();
