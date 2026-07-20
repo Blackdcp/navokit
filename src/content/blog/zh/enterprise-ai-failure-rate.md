@@ -2,7 +2,7 @@
 title: "0% 成功率：为什么企业级 AI 项目正在集体走向失败？"
 description: "一位拥有 300 多次行业交流经验的资深从业者最近在 Hacker News 上抛出一枚重磅炸弹：过去一年半里，他们观察到的企业 AI 项目成功率是 0%。这场席卷全球的 AI 狂热，到底出了什么问题？"
 date: "2026-07-20"
-updatedAt: "2026-07-20T16:00:00"
+updatedAt: "2026-07-20T16:05:00"
 intent: "industry_analysis"
 difficulty: "advanced"
 readingTime: 7
