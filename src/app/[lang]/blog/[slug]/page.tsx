@@ -16,6 +16,8 @@ import SiteFooter from "../../../../components/SiteFooter";
 import type { Metadata } from "next";
 import { localizedCanonical, SITE_URL } from "../../../../lib/site";
 import { breadcrumbList, safeJsonLd } from "../../../../lib/schema";
+import NativeBanner from "../../../../components/NativeBanner";
+import AdBanner from "../../../../components/AdBanner";
 
 export async function generateStaticParams() {
   const zhPosts = getBlogPosts("zh");
@@ -132,6 +134,8 @@ export default async function BlogPostPage({
             </div>
           </header>
 
+          <AdBanner adKey="344331274ea8dd6662b8d4324302c3af" width={468} height={60} />
+
           {primaryTool && (
             <aside className="article-action-card" aria-label={lang === "zh" ? "可执行下一步" : "Practical next step"}>
               <div>
@@ -154,6 +158,8 @@ export default async function BlogPostPage({
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
             </div>
           </div>
+
+          <NativeBanner />
 
           {(relatedTools.length > 0 || relatedPosts.length > 0) && (
             <section className="article-related">

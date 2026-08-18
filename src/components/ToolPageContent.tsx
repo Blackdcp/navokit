@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { ToolContentItem, ToolContentLink, ToolExample, ToolExampleType, ToolFact } from "../types/toolPageContent";
+import AdBanner from "./AdBanner";
 
 function ExampleOutput({
   example,
@@ -145,6 +146,8 @@ export default function ToolPageContent({
           ))}
         </div>
       </section>
+
+      <AdBanner adKey="75ed6ff7c2c7cc3e05f85b89fed039f2" width={300} height={250} />
 
       <section className="tool-content__section">
         <span className="eyebrow">{zh ? "适用场景" : "Use cases"}</span>

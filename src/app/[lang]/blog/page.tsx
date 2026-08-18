@@ -6,6 +6,7 @@ import SiteHeader from "../../../components/SiteHeader";
 import SiteFooter from "../../../components/SiteFooter";
 import { localizedCanonical, SITE_URL } from "../../../lib/site";
 import { breadcrumbList, safeJsonLd } from "../../../lib/schema";
+import AdBanner from "../../../components/AdBanner";
 
 export async function generateMetadata({
   params,
@@ -85,6 +86,9 @@ export default async function BlogListPage({
               : "Less hype, more reusable prompts, checklists, and practical ways to use the tools."}
           </p>
         </header>
+
+        <AdBanner adKey="5681eab12afa08484fbf5519ae7b0dfd" width={728} height={90} className="hidden md:flex" />
+        <AdBanner adKey="c8f2c965c00540fcd54ab30efc5a218b" width={320} height={50} className="md:hidden" />
 
         {workflowRails.length > 0 && (
           <nav className="blog-topic-strip" aria-label={lang === "zh" ? "按工作流浏览指南" : "Browse guides by workflow"}>
