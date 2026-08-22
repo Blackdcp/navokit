@@ -32,9 +32,9 @@ export default function SiteHeader({ lang }: { lang: string }) {
         </nav>
 
         <div className="site-header__actions">
-          {/* <a className="button button--blue button--small" style={{ marginRight: '8px' }} href="https://arkgleamfox.com/kp62u9uf2?key=bc0367222850228bce9c7a2311b9cfca" target="_blank" rel="noopener noreferrer">
+          <a className="button button--blue button--small" style={{ marginRight: '8px' }} href="https://arkgleamfox.com/kp62u9uf2?key=bc0367222850228bce9c7a2311b9cfca" target="_blank" rel="noopener noreferrer">
             {lang === "zh" ? "免费资源" : "Free Resources"}
-          </a> */}
+          </a>
           <Link className="button button--ink button--small" href={`/${lang}/tools`}>
             {lang === "zh" ? "浏览工具" : "Explore tools"}
           </Link>
@@ -49,9 +49,9 @@ export default function SiteHeader({ lang }: { lang: string }) {
       {open && (
         <nav className="mobile-menu" aria-label="Mobile navigation">
           {items.map(([label, href]) => <Link key={label} href={href} onClick={() => setOpen(false)}>{label}</Link>)}
-          {/* <a className="button button--blue" href="https://arkgleamfox.com/kp62u9uf2?key=bc0367222850228bce9c7a2311b9cfca" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+          <a className="button button--blue" href="https://arkgleamfox.com/kp62u9uf2?key=bc0367222850228bce9c7a2311b9cfca" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
             {lang === "zh" ? "免费资源" : "Free Resources"}
-          </a> */}
+          </a>
           <Link className="button button--ink" href={`/${lang}/tools`} onClick={() => setOpen(false)}>
             {lang === "zh" ? "浏览工具" : "Explore tools"}
           </Link>

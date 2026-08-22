@@ -67,8 +67,8 @@ export default async function RootLayout({
   return (
     <html lang={lang} data-scroll-behavior="smooth">
       <head>
-        {/* <Script src="https://arkgleamfox.com/f1/8b/fe/f18bfe1e606301d421cff8b09d0810f6.js" strategy="lazyOnload" /> */}
-        {/* <Script src="https://arkgleamfox.com/0f/d6/9f/0fd69ffd67d75569f9b2c18492129e08.js" strategy="lazyOnload" /> */}
+        <Script src="https://arkgleamfox.com/f1/8b/fe/f18bfe1e606301d421cff8b09d0810f6.js" strategy="lazyOnload" />
+        <Script src="https://arkgleamfox.com/0f/d6/9f/0fd69ffd67d75569f9b2c18492129e08.js" strategy="lazyOnload" />
       </head>
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>
         {children}

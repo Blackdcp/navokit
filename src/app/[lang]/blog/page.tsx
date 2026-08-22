@@ -87,8 +87,8 @@ export default async function BlogListPage({
           </p>
         </header>
 
-        {/* <AdBanner adKey="5681eab12afa08484fbf5519ae7b0dfd" width={728} height={90} className="hidden md:flex" /> */}
-        {/* <AdBanner adKey="c8f2c965c00540fcd54ab30efc5a218b" width={320} height={50} className="md:hidden" /> */}
+        <AdBanner adKey="5681eab12afa08484fbf5519ae7b0dfd" width={728} height={90} className="hidden md:flex" />
+        <AdBanner adKey="c8f2c965c00540fcd54ab30efc5a218b" width={320} height={50} className="md:hidden" />
 
         {workflowRails.length > 0 && (
           <nav className="blog-topic-strip" aria-label={lang === "zh" ? "按工作流浏览指南" : "Browse guides by workflow"}>
