@@ -147,7 +147,7 @@ export default function ToolPageContent({
         </div>
       </section>
 
-      <AdBanner adKey="75ed6ff7c2c7cc3e05f85b89fed039f2" width={300} height={250} />
+      {/* <AdBanner adKey="75ed6ff7c2c7cc3e05f85b89fed039f2" width={300} height={250} /> */}
 
       <section className="tool-content__section">
         <span className="eyebrow">{zh ? "适用场景" : "Use cases"}</span>
