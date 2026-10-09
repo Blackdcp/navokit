@@ -86,13 +86,31 @@ async function run() {
 
   await checkGet("/en", { textIncludes: ["NavoKit"] });
   await checkGet("/zh", { textIncludes: ["NavoKit"] });
-  await checkGet("/en/tools", { textIncludes: ["Free AI Tools", "Markdown to Image", "Free AI Video Generator"] });
+  await checkGet("/en/tools", { textIncludes: ["Markdown to Image", "Free AI Video Generator"] });
+  await checkGet("/zh/tools", { textIncludes: ["产品库", "Markdown"] });
+  await checkGet("/en/topics", { textIncludes: ["NavoKit"] });
+  await checkGet("/zh/topics/video-workflows", { textIncludes: ["视频创作新方式", "Pexo"] });
+  await checkGet("/en/tools/rill", { textIncludes: ["Rill Browser", "macOS"] });
+  await checkGet("/zh/tools/pexo", { textIncludes: ["Pexo", "信息来源"] });
+  await checkGet("/en/updates", { textIncludes: ["NavoKit"] });
+  await checkGet("/zh/updates", { textIncludes: ["更新动态"] });
+  await checkGet("/en/blog", { textIncludes: ["NavoKit"] });
+  await checkGet("/zh/submit", { textIncludes: ["产品名称", "联系邮箱"] });
+  await checkGet("/en/submit", { textIncludes: ["Product name", "Contact email"] });
+  for (const path of ["/en/tools/no-such-product", "/zh/topics/no-such-topic", "/en/tools/dify"]) {
+    const response = await fetchWithTimeout(absoluteUrl(path));
+    record(response.status === 404 ? "pass" : "fail", `GET ${path}`, `expected 404, received ${response.status}`);
+  }
   await checkGet("/en/tools/markdown-to-image", { textIncludes: ["Markdown to Image", "logo-watermark.png", "Made with"] });
   await checkGet("/en/tools/ai-social-booster", { textIncludes: ["AI Social Post Generator", "X post", "LinkedIn post"] });
   await checkGet("/en/tools/free-ai-video-generator", { textIncludes: ["Free AI Video Generator"] });
   await checkGet("/logo-watermark.png", { contentTypeIncludes: "image/png" });
   await checkGet("/sitemap.xml", { contentTypeIncludes: "xml" });
   await checkGet("/robots.txt", { textIncludes: ["Sitemap:"] });
+  await checkGet("/llms.txt", { textIncludes: ["Navigation + tools", "Markdown to Image"] });
+  await checkJson("/api/submissions", {
+    method: "POST", headers: { origin: baseUrl }, body: JSON.stringify({ name: "Invalid test", url: "javascript:alert(1)" }),
+  }, response => record(response.status === 400 ? "pass" : "fail", "Product submission rejects invalid input", `status ${response.status}`));
 
   await checkJson(
     "/api/tools/ai-video/submit",

@@ -1,0 +1,53 @@
+import type { ProductEntry } from "@/types/catalog";
+
+/** Public product information verified on 2026-10-09. See docs/catalog-expansion-creative.md. */
+export const creativeProducts: ProductEntry[] = [
+  {
+    slug: "flora", website: "https://flora.ai/", kind: "app", pricing: "varies", categoryIds: ["image-design", "video"], topicIds: ["video-workflows", "creator-essentials"], icon: "F", accent: "#0B1220", platforms: ["Web"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://flora.ai/", "https://www.producthunt.com/products/flora-3"],
+    en: { name: "FLORA", tagline: "Connect image and video ideas on a shared creative canvas.", description: "FLORA puts generative models and reusable workflows on a visual canvas. Connect references, explore variations, and develop image or video directions with collaborators.", features: ["Visual workflows for images and video", "Connected references and variations", "Reusable creative techniques"], bestFor: "Designers and creative teams exploring visual concepts and campaign directions.", requirements: "A browser account is required. Model access, generation credits, and team features depend on the current plan." },
+    zh: { name: "FLORA", tagline: "在共享画布上串联图像、视频与创意分支。", description: "FLORA 将生成模型与可复用流程放入可视化画布。连接参考素材、探索不同版本，与协作者一起发展图像或视频方向。", features: ["图像与视频的可视化工作流", "关联参考素材与生成分支", "可复用的创意流程"], bestFor: "探索视觉概念、广告方向与分镜的设计师和创意团队。", requirements: "需要浏览器账号；模型访问、生成额度与团队功能以当前方案为准。" },
+  },
+  {
+    slug: "krev", website: "https://www.krev.ai/", kind: "app", pricing: "varies", categoryIds: ["image-design", "video"], topicIds: ["video-workflows", "creator-essentials"], icon: "K", accent: "#0B1220", platforms: ["Web"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://www.krev.ai/", "https://www.producthunt.com/products/krev"],
+    en: { name: "KREV", tagline: "Build product imagery and campaign creative around your brand.", description: "KREV combines product photos, video creative, and ecommerce workflows. Its creative tools use product and brand context to draft campaign assets for review.", features: ["Product photo generation", "Video and advertising creative", "Brand context for asset creation"], bestFor: "Small ecommerce teams developing product visuals and campaign variations.", requirements: "Requires an online account. Connected store and advertising features need separate authorization; plans and generation allowances vary." },
+    zh: { name: "KREV", tagline: "围绕产品与品牌，制作商品图和广告创意。", description: "KREV 结合商品图片、视频创意与电商工作流。创意工具使用产品和品牌上下文生成活动素材，供团队检查与调整。", features: ["生成商品展示图片", "制作视频与广告创意", "结合品牌上下文生成素材"], bestFor: "需要商品视觉与活动素材变体的小型电商团队。", requirements: "需要在线账号；店铺和广告平台集成需单独授权，方案与生成额度以官网为准。" },
+  },
+  {
+    slug: "aqua-voice", website: "https://aquavoice.com/", kind: "app", pricing: "varies", categoryIds: ["audio", "writing"], topicIds: ["desktop-browser", "creator-essentials"], icon: "A", accent: "#0B1220", platforms: ["macOS", "Windows"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://aquavoice.com/", "https://aquavoice.com/download", "https://www.producthunt.com/products/aqua"],
+    en: { name: "Aqua Voice", tagline: "Dictate into the text field where you are already working.", description: "Aqua Voice turns speech into text inside desktop apps. It offers context-aware dictation, a custom dictionary, and instructions for shaping the result.", features: ["Dictation across desktop apps", "Custom vocabulary", "Instructions for formatting text"], bestFor: "People who want to speak drafts, messages, or technical text instead of typing them.", requirements: "Desktop downloads are available for Mac and Windows. Requires microphone and app permissions; check current plan limits and platform requirements." },
+    zh: { name: "Aqua Voice", tagline: "在正在使用的输入框里，直接说出想写的内容。", description: "Aqua Voice 将语音转换为桌面应用中的文字，提供结合上下文的听写、自定义词典，以及调整输出方式的指令。", features: ["跨桌面应用语音输入", "自定义专业词汇", "用指令调整文字格式"], bestFor: "希望用口述完成草稿、消息或技术文字的人。", requirements: "官网提供 Mac 与 Windows 桌面下载；需要麦克风及应用权限，额度和系统要求以当前方案为准。" },
+  },
+  {
+    slug: "willow-voice", website: "https://willowvoice.com/", kind: "app", pricing: "varies", categoryIds: ["audio", "writing"], topicIds: ["desktop-browser", "creator-essentials"], icon: "W", accent: "#0B1220", platforms: ["macOS", "Windows", "iOS"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://willowvoice.com/", "https://www.producthunt.com/products/willow-voice"],
+    en: { name: "Willow Voice", tagline: "Turn spoken thoughts into formatted text across your apps.", description: "Willow supports voice dictation on desktop and iPhone. It formats spoken text, removes filler words, and offers Scribe to turn a rough instruction into a draft in the app you are using.", features: ["Dictation in existing apps", "Automatic punctuation and formatting", "Scribe drafts from spoken instructions"], bestFor: "Writers and knowledge workers who prefer to think aloud before editing a draft.", requirements: "Available on Mac, Windows, and iPhone. Permissions, model availability, and usage limits depend on the platform and plan." },
+    zh: { name: "Willow Voice", tagline: "把口述想法变成排版好的文字，直接写入应用。", description: "Willow 支持桌面与 iPhone 语音听写，可整理格式、去掉口头语。Scribe 则将简略指令扩展为当前应用中的文字草稿。", features: ["在现有应用中听写", "自动标点与格式整理", "按口述要求起草文字"], bestFor: "习惯先说出思路，再编辑成文的写作者与知识工作者。", requirements: "支持 Mac、Windows 与 iPhone；权限、可用模型及使用额度随平台与方案不同。" },
+  },
+  {
+    slug: "sloyd", website: "https://www.sloyd.ai/", kind: "app", pricing: "varies", categoryIds: ["3d-generation"], topicIds: ["creator-essentials"], icon: "S", accent: "#0B1220", platforms: ["Web"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://www.sloyd.ai/", "https://sloyd.gitbook.io/documentation"],
+    en: { name: "Sloyd", tagline: "Start a 3D asset from a prompt, an image, or a template.", description: "Sloyd is a browser-based 3D creation workspace with text and image generation, editable templates, and tools for refining and exporting models.", features: ["Text and image to 3D", "Customizable model templates", "Topology, texture, and export tools"], bestFor: "Indie game makers and designers exploring props, characters, and 3D concepts.", requirements: "Requires an online account. Check export rights and plan features; generated geometry still needs review for the intended engine or print workflow." },
+    zh: { name: "Sloyd", tagline: "从一句描述、一张图片或模板，开始制作 3D 资产。", description: "Sloyd 是浏览器中的 3D 创作工作区，提供文字与图片生成、可调整模板，以及模型完善和导出工具。", features: ["文字与图片转 3D", "可调整的模型模板", "拓扑、纹理与导出工具"], bestFor: "探索道具、角色和 3D 概念的独立游戏开发者与设计师。", requirements: "需要在线账号；导出权限和功能取决于方案，生成模型仍需针对目标引擎或打印流程检查。" },
+  },
+  {
+    slug: "hyper3d-rodin", website: "https://hyper3d.ai/", kind: "app", pricing: "varies", categoryIds: ["3d-generation"], topicIds: ["creator-essentials"], icon: "R", accent: "#0B1220", platforms: ["Web"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://hyper3d.ai/", "https://docs.deemos.dev/addon", "https://www.producthunt.com/products/chatavatar-2"],
+    en: { name: "Hyper3D Rodin", tagline: "Turn reference images into textured 3D assets.", description: "Rodin generates 3D objects from images or text. Its workflow includes additional reference views, generation controls, and integrations for moving assets into 3D tools.", features: ["Image and text to 3D", "Multiple reference views", "Blender integration"], bestFor: "3D creators who want a starting asset from a sketch, image, or concept.", requirements: "Generation and export use plan-dependent credits. The documented Blender add-on requires Blender 4.0+ and Chrome 116+; production assets may need further cleanup." },
+    zh: { name: "Hyper3D Rodin", tagline: "将参考图片转成带纹理的 3D 资产。", description: "Rodin 从图片或文字生成 3D 对象，支持补充参考视角、调整生成控制，并通过集成将资产带入 3D 制作工具。", features: ["图片与文字生成 3D", "多视角参考输入", "Blender 工作流集成"], bestFor: "希望从草图、图片或概念获得初始资产的 3D 创作者。", requirements: "生成与导出额度依方案而定；官方 Blender 插件文档要求 Blender 4.0+ 与 Chrome 116+，正式制作仍可能需要整理模型。" },
+  },
+  {
+    slug: "mochi-desktop-pet", website: "https://nickmorefun.itch.io/mochi", kind: "app", pricing: "freemium", categoryIds: ["companions", "productivity"], topicIds: ["desktop-browser"], icon: "M", accent: "#0B1220", platforms: ["macOS"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://nickmorefun.itch.io/mochi", "https://www.producthunt.com/products/mochi-6"],
+    en: { name: "Mochi Desktop Pet", tagline: "A little desktop companion with optional file-tidying duties.", description: "Mochi is a floating Mac pet that reacts to your activity. You can keep it as company or allow it to move loose desktop files into folders, with an undo option.", features: ["An interactive desktop pet", "Optional desktop file organization", "Optional AI comments with your API key"], bestFor: "Mac users who enjoy a playful companion while working.", requirements: "macOS 13+ on Apple silicon or Intel. The maker reports the app is not notarized. AI comments require your own supported provider key; Pro adds a paid life-sim mode." },
+    zh: { name: "Mochi Desktop Pet", tagline: "一只陪你工作的桌面宠物，也能选择让它整理文件。", description: "Mochi 是浮在 Mac 桌面上的互动宠物，会回应你的使用活动。可以只让它陪伴，也可允许它把散落文件移入文件夹，并通过撤销恢复。", features: ["可互动的桌面宠物", "可选的桌面文件整理", "接入自有 API Key 的 AI 评论"], bestFor: "喜欢在工作时有轻松互动陪伴的 Mac 用户。", requirements: "需要 macOS 13+，支持 Apple silicon 与 Intel。作者注明应用尚未公证；AI 评论需自有支持服务的 Key，Pro 提供付费养成模式。" },
+  },
+  {
+    slug: "airi", website: "https://airi.moeru.ai/docs/en/", repository: "https://github.com/moeru-ai/airi", kind: "open-source", pricing: "varies", categoryIds: ["companions"], topicIds: ["desktop-browser"], icon: "A", accent: "#0B1220", platforms: ["Web", "Desktop"], verifiedAt: "2026-10-09",
+    sourceUrls: ["https://airi.moeru.ai/docs/en/docs/overview/", "https://www.producthunt.com/products/airi"],
+    en: { name: "AIRI", tagline: "Build a virtual character with voice and a presence on screen.", description: "AIRI is an open-source virtual companion project supporting Live2D and VRM characters. It combines conversation and voice interaction with web and desktop interfaces.", features: ["Live2D and VRM character support", "Voice and text interaction", "Web and desktop versions"], bestFor: "Developers and virtual-character enthusiasts who want to configure their own companion.", requirements: "Requires setup of a compatible model provider or local model. Hosting, speech services, and provider API usage can incur costs; features vary by version." },
+    zh: { name: "AIRI", tagline: "配置一个能语音互动、出现在屏幕上的虚拟角色。", description: "AIRI 是开源虚拟陪伴项目，支持 Live2D 与 VRM 角色，将文字对话、语音互动与网页及桌面界面结合。", features: ["Live2D 与 VRM 角色支持", "语音和文字互动", "网页与桌面版本"], bestFor: "希望自行配置虚拟角色的开发者与爱好者。", requirements: "需要配置兼容模型服务或本地模型；托管、语音服务与模型 API 可能产生费用，具体功能依版本而定。" },
+  },
+];

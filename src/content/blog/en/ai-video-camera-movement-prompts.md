@@ -2,10 +2,9 @@
 title: "Camera Movement Prompt Engineering: Directing Cinematic Shots in AI Video"
 description: "Master pan, tilt, zoom, dolly, and roll using the 6-DOF Cinematographic Syntax Matrix to produce predictable, studio-grade AI video camera dynamics."
 date: "2026-08-19"
-updatedAt: "2026-08-19T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 Most AI video creators hit the same frustrating bottleneck: you generate a visually stunning character or scene, but the camera drifts aimlessly, tilts upside-down, or behaves like a floating smartphone held by an amateur.
@@ -92,26 +91,13 @@ Smooth upward vertical pedestal movement with simultaneous downward tilt transit
 
 ---
 
-## 4. Vague Prompting vs. Vector Syntax Benchmarks
+## Trying a text prompt in NavoKit
 
-| Prompting Paradigm | Prompt Example | Typical Resulting Failure Rate | Spatial Consistency Score |
-| :--- | :--- | :--- | :--- |
-| **Vague Adjectives** | *"Epic cinematic drone flying around a cool cyberpunk city"* | **74%** (Morphing buildings, inconsistent speed) | 2.8 / 10 |
-| **Natural Action** | *"Camera moves closer to the girl's face quickly"* | **48%** (Face warping, sudden focal jumps) | 5.2 / 10 |
-| **6-DOF Vector Syntax** | `[Push in at 0.5m/s], [focal_length=85mm], [eye-level tracking]` | **< 12%** (Smooth linear acceleration, zero warp) | **9.4 / 10** |
+[NavoKit AI Video Generator](/en/tools/free-ai-video-generator) accepts a text prompt, a format, and an automatic or approximately 3, 5, 10, or 18 second duration preset. You can preview and download a generated clip. The result panel and returned file determine the actual dimensions and duration.
 
----
+Write one camera movement in the prompt and compare the result with your intention. There are no 6-DOF presets, camera-path controls, seed locks, or batch rendering controls. Prompt wording cannot guarantee an exact camera trajectory.
 
-## 5. Executing Production Camera Work in NavoKit
-
-While you can write these formulas manually in raw text interfaces, running experiments across dozens of video seeds can quickly become tedious.
-
-If you want an optimized environment that pre-configures spatio-temporal camera vectors and eliminates prompt guessing, try **[NavoKit Free AI Video Generator](/en/tools/ai-video-generator)**:
-* **Built-in 6-DOF Presets**: Toggle between Orbital Arcs, Crane Rises, and Dolly Zooms with single clicks.
-* **Aspect Ratio & Seed Locking**: Keep character vectors locked while testing different camera paths.
-* **Instant Export**: Preview and generate high-resolution MP4 clips without watermarks.
-
----
+Start with one simple shot and change one prompt detail between attempts. Queue time varies, and the output needs a human check for quality and accuracy.
 
 ## Summary
 

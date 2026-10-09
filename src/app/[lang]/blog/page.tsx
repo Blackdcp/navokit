@@ -1,140 +1,17 @@
 import type { Metadata } from "next";
-import { formatBlogIntent, formatDifficulty, formatReadingTime, getBlogPosts } from "../../../lib/blog";
-import { getWorkflowRails } from "../../../lib/workflows";
-import Link from "next/link";
-import SiteHeader from "../../../components/SiteHeader";
-import SiteFooter from "../../../components/SiteFooter";
-import { localizedCanonical, SITE_URL } from "../../../lib/site";
-import { breadcrumbList, safeJsonLd } from "../../../lib/schema";
-import AdBanner from "../../../components/AdBanner";
+import UpdatesPage from "../../../components/updates/UpdatesPage";
+import { localizedCanonical, siteSocialMetadata } from "../../../lib/site";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: "en" | "zh" }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: "en" | "zh" }> }): Promise<Metadata> {
   const { lang } = await params;
-
-  return {
-    title: lang === "zh" ? "实用 AI 工具指南 | NavoKit" : "Practical AI Tool Guides | NavoKit",
-    description:
-      lang === "zh"
-        ? "阅读 NavoKit 的实用指南，学习如何使用 AI 视频生成、Markdown 图片导出和社媒文案工具完成真实工作流。"
-        : "Read practical NavoKit guides for AI video generation, Markdown image export, social copy drafting, and lightweight creator workflows.",
-    alternates: localizedCanonical(lang, "/blog"),
-    openGraph: {
-      title: lang === "zh" ? "实用 AI 工具指南 | NavoKit" : "Practical AI Tool Guides | NavoKit",
-      description:
-        lang === "zh"
-          ? "围绕 NavoKit 免费工具的提示词、检查清单和实用工作流。"
-          : "Prompts, checklists, and practical workflows around NavoKit free tools.",
-      type: "website",
-    },
-  };
+  const title = lang === "zh" ? "指南与观点 | NavoKit" : "Guides & Perspectives | NavoKit";
+  const description = lang === "zh"
+    ? "探索 NavoKit 的 AI 技术文章、工具指南与工作流。按专题搜索，找到与你相关的内容。"
+    : "Explore AI articles, tool guides, and workflows from NavoKit. Search the archive and browse by topic.";
+  return { title, description, alternates: localizedCanonical(lang, "/blog"), ...siteSocialMetadata(lang, "/blog", title, description) };
 }
 
-export default async function BlogListPage({
-  params,
-}: {
-  params: Promise<{ lang: "en" | "zh" }>;
-}) {
-  const { lang } = await params;
-  const posts = getBlogPosts(lang);
-  const workflowRails = getWorkflowRails(lang).filter(rail => rail.showInBlog !== false);
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        name: lang === "zh" ? "NavoKit 实用 AI 工具指南" : "NavoKit Practical AI Tool Guides",
-        url: `${SITE_URL}/${lang}/blog`,
-        description:
-          lang === "zh"
-            ? "围绕 NavoKit 免费工具的提示词、检查清单和实用工作流。"
-            : "Prompts, checklists, and practical workflows around NavoKit free tools.",
-      },
-      {
-        "@type": "ItemList",
-        name: lang === "zh" ? "NavoKit 指南列表" : "NavoKit guide list",
-        itemListElement: posts.map((post, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: post.title,
-          url: `${SITE_URL}/${lang}/blog/${post.slug}`,
-          description: post.description,
-        })),
-      },
-      breadcrumbList([
-        { name: "NavoKit", url: `${SITE_URL}/${lang}` },
-        { name: lang === "zh" ? "指南" : "Guides", url: `${SITE_URL}/${lang}/blog` },
-      ]),
-    ],
-  };
-
-  return (
-    <div className="site-shell">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
-      <SiteHeader lang={lang} />
-
-      <main className="marketing-container blog-list-page">
-        <header className="blog-list-hero">
-          <span className="eyebrow">{lang === "zh" ? "实用指南" : "Practical guides"}</span>
-          <h1>{lang === "zh" ? "把工具变成稳定工作流。" : "Turn small tools into steady workflows."}</h1>
-          <p>
-            {lang === "zh"
-              ? "少一点概念，多一点可复用的提示词、检查清单和工具使用方法。"
-              : "Less hype, more reusable prompts, checklists, and practical ways to use the tools."}
-          </p>
-        </header>
-
-        <AdBanner adKey="5681eab12afa08484fbf5519ae7b0dfd" width={728} height={90} className="hidden md:flex" />
-        <AdBanner adKey="c8f2c965c00540fcd54ab30efc5a218b" width={320} height={50} className="md:hidden" />
-
-        {workflowRails.length > 0 && (
-          <nav className="blog-topic-strip" aria-label={lang === "zh" ? "按工作流浏览指南" : "Browse guides by workflow"}>
-            {workflowRails.map(rail => (
-              <Link key={rail.id} href={`/${lang}${rail.href}`}>
-                <strong>{rail.label}</strong>
-                <span>{rail.description}</span>
-              </Link>
-            ))}
-          </nav>
-        )}
-
-        {posts.length === 0 ? (
-          <div className="empty-card">{lang === "zh" ? "暂无文章，敬请期待" : "No posts yet. Stay tuned."}</div>
-        ) : (
-          <div className="blog-list">
-            {posts.map(post => (
-              <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="blog-card">
-                <div className="blog-card__inner">
-                  <div className="blog-card__meta">
-                    <span>{post.date}</span>
-                    <i />
-                    <span className="blog-card__intent">{formatBlogIntent(post.intent, lang)}</span>
-                    <i />
-                    <span>{formatReadingTime(post, lang)}</span>
-                    {post.difficulty && (
-                      <>
-                        <i />
-                        <span>{formatDifficulty(post.difficulty, lang)}</span>
-                      </>
-                    )}
-                  </div>
-                  <h2>{post.title}</h2>
-                  <p>{post.description}</p>
-                  <div className="read-more-link">
-                    <span>{lang === "zh" ? "阅读全文" : "Read article"}</span>
-                    <span className="arrow">→</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </main>
-
-      <SiteFooter lang={lang} />
-    </div>
-  );
+export default async function BlogListPage({ params, searchParams }: { params: Promise<{ lang: "en" | "zh" }>; searchParams: Promise<{ topic?: string | string[]; q?: string | string[] }> }) {
+  const [{ lang }, filters] = await Promise.all([params, searchParams]);
+  return <UpdatesPage lang={lang} archive initialTopic={typeof filters.topic === "string" ? filters.topic : "all"} initialQuery={typeof filters.q === "string" ? filters.q : ""} />;
 }

@@ -2,13 +2,13 @@
 title: "The 30/70 Rule: How to Survive AI Content Fatigue (and Actually Get Engagement)"
 description: "People are tired of 'delve' and 'testament to'. Here is the 30/70 rule for AI content creation, a De-AI checklist, and a complete text-image-video workflow to stand out."
 date: "2026-07-20"
-updatedAt: "2026-07-20"
 workflowId: "social-media"
 toolIds: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
 relatedTools: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
 intent: "framework"
 difficulty: "intermediate"
 readingTime: 5
+updatedAt: "2026-10-09"
 ---
 
 This week, a developer named Simon Willison built an "LLM cliché highlighter." Its only job is to scan text and highlight words like *delve, tapestry, testament to*, and *realm*. 
@@ -46,10 +46,10 @@ You don't need a massive team to create high-quality, authentic content. You jus
 Don't ask AI to "write a post about marketing." Instead, brain-dump your raw, messy thoughts into our [AI Social Post Generator](/en/tools/ai-social-booster). It takes your human ideas and instantly drafts structured versions for X, LinkedIn, and Instagram. You then review, tweak, and inject your personality. 
 
 ### Step 2: Grab Attention (Video)
-Static text is easy to scroll past. To stop the scroll, take the core theme of your post and generate a 5-second cinematic B-roll clip using our [Free AI Video Generator](/en/tools/free-ai-video-generator). A custom, high-quality visual loop instantly elevates your post from "just another tweet" to premium content.
+If a short visual supports your idea, use the [AI Video Generator](/en/tools/free-ai-video-generator) to request a clip of about 5 seconds. Check the actual duration, composition, and motion before deciding whether to use it in the post.
 
 ### Step 3: Summarize for Sharing (Image)
-If your post contains a framework or a list (like the checklist above!), don't just leave it in the text. People love saving visuals. Paste your key points into our [Markdown to Image](/en/tools/markdown-to-image) tool to generate a sleek, dark-mode visual card. Put it at the end of your carousel or thread.
+If your post contains a framework or a list (like the checklist above!), don't just leave it in the text. People love saving visuals. Paste your key points into our [Markdown to Image](/en/tools/markdown-to-image) tool to preview and export a PNG card. Put it at the end of your carousel or thread.
 
 ## The Takeaway
 

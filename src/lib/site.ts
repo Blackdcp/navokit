@@ -14,6 +14,22 @@ export const BRAND_ICONS = {
 export const SUPPORTED_LANGUAGES = ["en", "zh"] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
+// Metadata objects are shallow-merged by Next.js: every page that supplies
+// openGraph or twitter must explicitly retain its sharing image.
+export function siteSocialMetadata(lang: SupportedLanguage, pathname: string, title: string, description: string) {
+  return {
+    openGraph: {
+      title, description, type: "website" as const,
+      url: `${SITE_URL}/${lang}${pathname}`,
+      images: [{ url: `${SITE_URL}/opengraph-image.png`, width: 1024, height: 1024, alt: "NavoKit · Navigation + Tools" }],
+    },
+    twitter: {
+      title, description, card: "summary_large_image" as const,
+      images: [`${SITE_URL}/twitter-image.png`],
+    },
+  };
+}
+
 export function isSupportedLanguage(value: string): value is SupportedLanguage {
   return SUPPORTED_LANGUAGES.includes(value as SupportedLanguage);
 }

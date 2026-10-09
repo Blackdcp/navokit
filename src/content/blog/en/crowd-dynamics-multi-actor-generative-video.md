@@ -2,10 +2,9 @@
 title: "Crowd Dynamics in AI Video: Orchestrating Multi-Actor Scenes Without Latent Glitches and Morphing"
 description: "Why generative video models fail when rendering multiple moving actors, and how spatial-temporal cross-attention conditioning prevents limb fusion and identity bleeding."
 date: "2026-09-23"
-updatedAt: "2026-09-23T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 In modern generative video workflows, prompting a single subject—a lone cyberpunk detective walking through a neon-lit alley or an espresso machine pouring coffee—yields breathtaking, hyper-photorealistic fidelity.
@@ -90,40 +89,13 @@ When Actor A's bounding box intersects with Actor B's bounding box, a monocular 
 
 ---
 
-## 3. Production Benchmark: Naive Prompting vs. MALA Pipeline
+## Trying a text prompt in NavoKit
 
-| Visual Fidelity Metric | Naive Text-to-Video Prompting | ControlNet / Pose Only | MALA-Conditioned Pipeline |
-| :--- | :--- | :--- | :--- |
-| **Max Concurrent Distinct Actors**| 2 actors (Before severe morphing) | 3 – 4 actors | **12+ Distinct Actors (Coherent Crowd)** |
-| **Limb Fusion & Artifacts** | Very High (Limbs fuse on contact) | Moderate (Limbs snap to skeleton)| **Near Zero (Physics-aware collision bounds)**|
-| **Color / Wardrobe Bleed** | Severe (Blue suit stains red dress) | Moderate | **Zero (Masked cross-attention separation)** |
-| **Post-Occlusion Identity Preservation**| 12% (Face completely changes) | 45% (Partial drift) | **94% (Exact face & clothing retained)** |
-| **Background Commuter Face Quality**| Melted / Featureless | Blurry / Low resolution | **Crisp & Sharp (Dynamic micro-tile upscale)**|
+[NavoKit AI Video Generator](/en/tools/free-ai-video-generator) accepts a text prompt, a format, and an automatic or approximately 3, 5, 10, or 18 second duration preset. You can preview and download a generated clip. The result panel and returned file determine the actual dimensions and duration.
 
----
+Start with a simple scene and describe the actors in text. There is no character setup panel, portrait upload, bounding-box canvas, or separate motion path for each actor. More complex interactions may produce mistakes; inspect faces, limbs, and occlusions before using a clip.
 
-## 4. Effortless Cinematic Multi-Actor Control with NavoKit
-
-Implementing spatial-temporal attention masking and bounding box pipelines from scratch requires custom PyTorch kernels and expensive multi-GPU clusters.
-
-**[NavoKit Free AI Video Generator](/tools/ai-video-generator)** abstracts this entire technical stack into an intuitive creator studio:
-
-```mermaid
-graph LR
-    User["Scene Vision: 'Action sequence with 4 heroes'"] --> Engine["NavoKit AI Video Engine"]
-    Engine --> AutoLayout["Automatic Multi-Subject Depth & Pose Layout"]
-    AutoLayout --> MALA["Active MALA Attention Decoupling"]
-    MALA --> Render["Cinematic 4K 60fps Output with Zero Morphing"]
-```
-
-### The 3-Step Multi-Actor Workflow in NavoKit:
-1. **Define Your Ensemble**: Upload distinct character portrait references or describe individual actors separately in the actor setup panel.
-2. **Assign Spatial Interaction Trajectories**: Use NavoKit's simple visual canvas to position where each character enters, interacts, and exits the frame.
-3. **One-Click Cinematic Render**: NavoKit’s underlying video diffusion pipeline automatically enforces spatial-temporal attention boundaries, delivering crisp crowd dynamics, realistic depth occlusions, and zero facial melting.
-
-Experience state-of-the-art multi-actor generation with **[NavoKit AI Video Generator](/tools/ai-video-generator)** today.
-
----
+Start with one simple shot and change one prompt detail between attempts. Queue time varies, and the output needs a human check for quality and accuracy.
 
 ## Summary
 

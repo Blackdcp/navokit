@@ -6,6 +6,7 @@ import { getDictionary } from "../../lib/dictionaries";
 import { Analytics } from '@vercel/analytics/react';
 import GoogleAnalytics from "../../components/GoogleAnalytics";
 import { BRAND_ICONS, isSupportedLanguage, localizedCanonical, SITE_URL, SUPPORTED_LANGUAGES } from "../../lib/site";
+import { safeJsonLd, siteEntities } from "../../lib/schema";
 
 export const dynamicParams = false;
 
@@ -35,16 +36,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       images: [
         {
           url: "/opengraph-image.png",
-          width: 1200,
-          height: 630,
+          width: 1024,
+          height: 1024,
           alt: dict.meta.title,
         }
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: dict.meta.title,
-      description: dict.meta.description,
       images: ["/twitter-image.png"],
     }
   };
@@ -71,6 +70,7 @@ export default async function RootLayout({
         <Script src="https://arkgleamfox.com/0f/d6/9f/0fd69ffd67d75569f9b2c18492129e08.js" strategy="lazyOnload" />
       </head>
       <body className={lang === 'en' ? 'font-en tracking-tight' : 'font-zh tracking-tight'}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(siteEntities()) }} />
         {children}
         <Analytics />
         <GoogleAnalytics measurementId={gaMeasurementId} />

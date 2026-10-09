@@ -2,13 +2,13 @@
 title: "AI Video Prompt Formula: Write Better Text-to-Video Prompts"
 description: "Use a simple AI video prompt formula: subject, action, setting, camera movement, lighting, and style."
 date: "2026-07-01"
-updatedAt: "2026-07-01"
 workflowId: "ai-video"
 toolIds: ["free-ai-video-generator"]
 relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
 intent: "how_to"
 difficulty: "beginner"
 readingTime: 7
+updatedAt: "2026-10-09"
 ---
 
 The easiest way to improve an AI video prompt is to stop describing an entire video and start describing one clear shot.
@@ -174,7 +174,7 @@ A lone cyclist crossing a foggy bridge at sunrise, wide shot, soft blue light, s
 
 ## Use Auto duration first
 
-When testing a new prompt in the [Free AI Video Generator](/en/tools/free-ai-video-generator), start with Auto duration. Auto mode prioritizes a stable short clip before trying longer output.
+When testing a new prompt in the [Free AI Video Generator](/en/tools/free-ai-video-generator), start with Auto duration. Auto mode chooses a preset using an explicit duration in the prompt, prompt length, and scene keywords.
 
 Use fixed duration only when you have a publishing constraint, such as a short loop, an edit slot, or a platform requirement.
 

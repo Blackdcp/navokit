@@ -49,6 +49,10 @@ function hasHreflang(html, lang) {
   return new RegExp(`<(?:link)[^>]+rel=["']alternate["'][^>]+(?:hrefLang|hreflang)=["']${escapeRegExp(lang)}["']`, "i").test(html);
 }
 
+function getVisibleText(html) {
+  return decodeHtmlEntities(html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ").replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ").replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ");
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -97,9 +101,9 @@ function collectTypes(value, types) {
   }
 }
 
-function checkHtmlPage({ path, titleIncludes, descriptionIncludes, canonical, schemas = [], visibleText = [] }, html) {
-  const title = getTitle(html);
-  const description = getMetaDescription(html);
+function checkHtmlPage({ path, titleIncludes, descriptionIncludes, canonical, schemas = [], visibleText = [], hreflangs = ["en", "zh", "x-default"] }, html) {
+  const title = decodeHtmlEntities(getTitle(html));
+  const description = decodeHtmlEntities(getMetaDescription(html));
   const pageCanonical = getCanonical(html);
   const { types, count, parseErrors } = extractJsonLdTypes(html);
 
@@ -108,10 +112,11 @@ function checkHtmlPage({ path, titleIncludes, descriptionIncludes, canonical, sc
   record(Boolean(description), `${path} has meta description`, description);
   if (descriptionIncludes) record(description.includes(descriptionIncludes), `${path} description includes expected text`, descriptionIncludes);
   record(pageCanonical === canonical, `${path} canonical is correct`, pageCanonical || "missing");
-  record(hasHreflang(html, "en"), `${path} has en hreflang`);
-  record(hasHreflang(html, "zh"), `${path} has zh hreflang`);
-  record(hasHreflang(html, "x-default"), `${path} has x-default hreflang`);
-  record(!/noindex|nofollow/i.test(html), `${path} does not contain noindex/nofollow`);
+  for (const lang of ["en", "zh", "x-default"]) {
+    record(hasHreflang(html, lang) === hreflangs.includes(lang), `${path} ${hreflangs.includes(lang) ? "has" : "omits unavailable"} ${lang} hreflang`);
+  }
+  const robots = [...html.matchAll(/<meta\b[^>]*name=["'](?:robots|googlebot)["'][^>]*>/gi)].map(match => match[0]).join(" ");
+  record(!/noindex|nofollow/i.test(robots), `${path} permits indexing and following`);
 
   if (schemas.length > 0) {
     record(count > 0, `${path} has JSON-LD scripts`, `${count}`);
@@ -122,7 +127,18 @@ function checkHtmlPage({ path, titleIncludes, descriptionIncludes, canonical, sc
   }
 
   for (const text of visibleText) {
-    record(html.includes(text), `${path} contains visible text`, text);
+    record(getVisibleText(html).includes(text), `${path} contains visible text`, text);
+  }
+  if (path === "/en/updates" || path === "/zh/updates") {
+    record(!/<article\b[^>]+class="[^"]*updates-entry--catalog/.test(html), `${path} contains no synthesized directory events`);
+    const launches = [...html.matchAll(/<article\b[^>]*class="[^"]*updates-entry--launch[^"]*"[^>]*>([\s\S]*?)<\/article>/g)].map(match => match[1]);
+    record(launches.length > 0, `${path} includes reviewed product launches`);
+    for (const [index, launch] of launches.entries()) {
+      const source = launch.match(/href="https:\/\/www\.producthunt\.com\/leaderboard\/daily\/(\d{4})\/(\d{1,2})\/(\d{1,2})"/);
+      const date = launch.match(/<time dateTime="([^"]+)"/i)?.[1];
+      const expected = source ? `${source[1]}-${source[2].padStart(2, "0")}-${source[3].padStart(2, "0")}` : undefined;
+      record(Boolean(source && date === expected), `${path} launch ${index + 1} links its displayed date to a dated primary source`);
+    }
   }
 
   const banned = [
@@ -132,7 +148,6 @@ function checkHtmlPage({ path, titleIncludes, descriptionIncludes, canonical, sc
     "Product principles",
     "产品原则",
     "AI Social Booster",
-    "AI 社媒文案",
     "开头钩子",
     "future Pro",
     "后续 Pro",
@@ -175,16 +190,49 @@ async function auditSitemap() {
   record(response.status === 200, "/sitemap.xml returns 200", `${response.status}`);
   record((response.headers.get("content-type") || "").includes("application/xml"), "/sitemap.xml is application/xml");
 
-  const urlCount = (text.match(/<url>/g) || []).length;
-  const xDefaultCount = (text.match(/hreflang="x-default"/g) || []).length;
+  const entries = [...text.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, block]) => ({
+    loc: block.match(/<loc>([^<]+)<\/loc>/)?.[1],
+    alternates: [...block.matchAll(/<xhtml:link\b[^>]*hreflang="([^"]+)"[^>]*href="([^"]+)"/g)].map(([, lang, href]) => ({ lang, href })),
+  }));
+  const urlCount = entries.length;
+  const locs = new Set(entries.map(entry => entry.loc));
   record(urlCount >= 20, "/sitemap.xml has expected URL volume", `${urlCount}`);
-  record(xDefaultCount === urlCount, "/sitemap.xml has x-default for every URL", `${xDefaultCount}/${urlCount}`);
+  record(locs.size === urlCount, "/sitemap.xml has no duplicate URLs");
+  const invalidAlternates = [];
+  const missingAlternates = [];
+  for (const entry of entries) {
+    for (const alternate of entry.alternates) {
+      if (!locs.has(alternate.href)) invalidAlternates.push(`${entry.loc} -> ${alternate.href}`);
+    }
+    const pathname = entry.loc?.slice(siteUrl.length) ?? "";
+    const localePath = pathname.match(/^\/(en|zh)(\/.*)?$/);
+    if (!localePath) continue;
+    const suffix = localePath[2] || "";
+    const en = expectedUrl(`/en${suffix}`);
+    const zh = expectedUrl(`/zh${suffix}`);
+    if (locs.has(en) && locs.has(zh)) {
+      for (const [lang, href] of [["en", en], ["zh", zh], ["x-default", en]]) {
+        if (!entry.alternates.some(alternate => alternate.lang === lang && alternate.href === href)) missingAlternates.push(`${pathname}:${lang}`);
+      }
+    }
+  }
+  record(invalidAlternates.length === 0, "/sitemap.xml links only to existing language counterparts", invalidAlternates.slice(0, 5).join("; "));
+  record(missingAlternates.length === 0, "/sitemap.xml has complete alternates for bilingual pages", missingAlternates.slice(0, 5).join("; "));
 
   const requiredLocs = [
     "/en",
     "/zh",
     "/en/tools",
     "/en/blog",
+    "/en/updates",
+    "/zh/updates",
+    "/en/topics",
+    "/zh/topics",
+    "/en/submit",
+    "/zh/submit",
+    "/en/topics/video-workflows",
+    "/zh/topics/video-workflows",
+    ...["pexo", "tucky", "velozity", "rill"].flatMap(slug => [`/en/tools/${slug}`, `/zh/tools/${slug}`]),
     "/en/tools/free-ai-video-generator",
     "/en/tools/markdown-to-image",
     "/en/tools/ai-social-booster",
@@ -212,11 +260,12 @@ async function auditSitemap() {
   for (const loc of requiredLocs) {
     record(text.includes(`<loc>${expectedUrl(loc)}</loc>`), `/sitemap.xml includes ${loc}`);
   }
+  for (const loc of ["/en/tools/dify", "/zh/tools/dify", "/en/tools/chatgpt", "/zh/tools/chatgpt"]) {
+    record(!locs.has(expectedUrl(loc)), `/sitemap.xml omits unlisted product ${loc}`);
+  }
 
-  const blogAlternatePattern = new RegExp(
-    `<loc>${escapeRegExp(expectedUrl("/en/blog/how-to-convert-markdown-to-png"))}</loc>[\\s\\S]*hreflang="zh"[\\s\\S]*${escapeRegExp(expectedUrl("/zh/blog/how-to-convert-markdown-to-png"))}`,
-  );
-  record(blogAlternatePattern.test(text), "/sitemap.xml has blog hreflang alternates");
+  const pairedBlog = entries.find(entry => entry.loc === expectedUrl("/en/blog/how-to-convert-markdown-to-png"));
+  record(pairedBlog?.alternates.some(alternate => alternate.lang === "zh" && alternate.href === expectedUrl("/zh/blog/how-to-convert-markdown-to-png")), "/sitemap.xml has correct blog hreflang alternates");
 }
 
 async function auditGeoDiscovery() {
@@ -232,10 +281,23 @@ async function auditGeoDiscovery() {
   record(llms.text.includes("Free AI Video Generator"), "/llms.txt includes AI Video tool");
   record(llms.text.includes("Markdown to Image"), "/llms.txt includes Markdown to Image tool");
   record(llms.text.includes("AI Social"), "/llms.txt includes AI Social tool");
+  record(llms.text.includes("Navigation + tools"), "/llms.txt describes the discovery brand");
+  for (const path of ["/en/tools/markdown-to-image", "/en/topics", "/en/updates", "/en/submit", ...["pexo", "tucky", "velozity", "rill"].map(slug => `/en/tools/${slug}`)]) {
+    record(llms.text.includes(expectedUrl(path)), `/llms.txt links to ${path}`);
+  }
+  for (const path of ["/en/tools/dify", "/en/tools/chatgpt"]) {
+    record(!llms.text.includes(expectedUrl(path)), `/llms.txt omits unlisted product ${path}`);
+  }
   record(llms.text.includes(expectedUrl("/sitemap.xml")), "/llms.txt points to sitemap");
 }
 
 async function auditRoutingHygiene() {
+  for (const path of ["/en/tools/dify", "/zh/tools/dify", "/en/tools/not-a-real-product", "/zh/tools/not-a-real-product", "/en/topics/not-a-real-topic", "/zh/topics/not-a-real-topic"]) {
+    const missing = await fetchText(path);
+    record(missing.response.status === 404, `${path} returns 404`, `${missing.response.status}`);
+  }
+  const missingTranslation = await fetchText("/zh/blog/federated-llm-fine-tuning-differential-privacy");
+  record(missingTranslation.response.status === 404, "unavailable article translation returns 404", `${missingTranslation.response.status}`);
   const randomPage = await fetchText("/random-test-path");
   record(randomPage.response.status === 404, "/random-test-path returns 404", `${randomPage.response.status}`);
 
@@ -269,69 +331,183 @@ async function auditImages() {
   }
 }
 
+async function auditDiscoveryFilters() {
+  for (const sample of [
+    { path: "/en/updates?topic=video-workflows&q=pexo", canonical: "/en/updates", expected: "Pexo", count: 1 },
+    { path: "/en/updates?topic=desktop-browser&q=pexo", canonical: "/en/updates", expected: "No matching entries", count: 0 },
+    { path: "/zh/blog?q=navokit-no-match-7b53", canonical: "/zh/blog", expected: "没有找到匹配内容", count: 0 },
+  ]) {
+    const { response, text } = await fetchText(sample.path);
+    record(response.status === 200, `${sample.path} returns 200`, `${response.status}`);
+    if (response.status !== 200) continue;
+    record(getCanonical(text) === expectedUrl(sample.canonical), `${sample.path} keeps the collection canonical`);
+    record(getVisibleText(text).includes(sample.expected), `${sample.path} applies URL filters`, sample.expected);
+    const renderedCount = (text.match(/<article\b[^>]*class="updates-entry /g) || []).length;
+    record(renderedCount === sample.count, `${sample.path} renders the expected matching entries`, `${renderedCount}`);
+  }
+}
+
 async function auditPages() {
   const pages = [
+    ...["en", "zh"].flatMap(lang => [
+      { slug: "pexo", name: "Pexo", date: "2026-09-30" },
+      { slug: "tucky", name: "Tucky", date: "2026-09-07" },
+      { slug: "velozity", name: "Velozity", date: "2026-10-07" },
+      { slug: "rill", name: "Rill Browser", date: "2026-10-06" },
+    ].map(product => ({
+      path: `/${lang}/tools/${product.slug}`,
+      titleIncludes: product.name,
+      canonical: expectedUrl(`/${lang}/tools/${product.slug}`),
+      schemas: ["WebPage", "SoftwareApplication", "BreadcrumbList"],
+      visibleText: [product.name, product.date, "2026-10-08", "Product Hunt", lang === "zh" ? "信息来源" : "Sources"],
+    }))),
     {
       path: "/en",
       titleIncludes: "NavoKit",
-      descriptionIncludes: "Create short AI videos",
+      descriptionIncludes: "Discover emerging tech",
       canonical: expectedUrl("/en"),
       schemas: ["Organization", "WebSite"],
-      visibleText: ["Free online AI tools", "Explore tools"],
+      visibleText: ["NAVIGATION + TOOLS", "New possibilities", "Pexo", "FLORA", "Sloyd", "Msty Studio", "A few tools of our own", "On the radar"],
     },
     {
       path: "/zh",
       titleIncludes: "NavoKit",
-      descriptionIncludes: "AI 短视频",
+      descriptionIncludes: "导航与工具的结合",
       canonical: expectedUrl("/zh"),
       schemas: ["Organization", "WebSite"],
-      visibleText: ["免费 AI 工具箱", "浏览工具"],
+      visibleText: ["发现新工具", "打开新可能", "Pexo", "最近动态", "我们的随手工具"],
     },
     {
       path: "/en/tools",
-      titleIncludes: "Free AI Tools",
-      descriptionIncludes: "Browse NavoKit tools",
+      titleIncludes: "Discover emerging",
+      descriptionIncludes: "Discover",
       canonical: expectedUrl("/en/tools"),
       schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
-      visibleText: ["Choose a tool", "Free AI Video Generator"],
+      visibleText: ["Find something worth trying", "Pexo", "Tucky", "Markdown to Image", "Free AI Video Generator"],
     },
     {
       path: "/en/blog",
-      titleIncludes: "Practical AI Tool Guides",
-      descriptionIncludes: "Read practical NavoKit guides",
+      titleIncludes: "Guides & Perspectives",
+      descriptionIncludes: "Explore AI articles",
       canonical: expectedUrl("/en/blog"),
       schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
-      visibleText: ["Turn small tools into steady workflows", "How to Convert Markdown to PNG"],
+      visibleText: ["Guides & perspectives", "Load more", "All topics", "Analysis"],
+    },
+    {
+      path: "/zh/blog",
+      titleIncludes: "指南与观点",
+      descriptionIncludes: "技术文章",
+      canonical: expectedUrl("/zh/blog"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["指南与观点", "加载更多", "所有专题", "行业分析"],
+    },
+    {
+      path: "/en/updates",
+      titleIncludes: "Updates",
+      descriptionIncludes: "sourced product launch records",
+      canonical: expectedUrl("/en/updates"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["Keep your discoveries current", "Analysis", "Tool guide", "Articles retain their original publication dates"],
+    },
+    {
+      path: "/zh/updates",
+      titleIncludes: "更新动态",
+      descriptionIncludes: "有来源的产品发布记录",
+      canonical: expectedUrl("/zh/updates"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["发现，持续更新", "行业分析", "工具指南", "文章显示原始发布日期"],
+    },
+    {
+      path: "/en/submit",
+      titleIncludes: "Submit a product",
+      descriptionIncludes: "Recommend an emerging tech product",
+      canonical: expectedUrl("/en/submit"),
+      visibleText: ["worth discovering", "Product name", "Website or repository", "Submitting is free"],
+    },
+    {
+      path: "/zh/submit",
+      titleIncludes: "提交产品",
+      descriptionIncludes: "免费提交",
+      canonical: expectedUrl("/zh/submit"),
+      visibleText: ["从你的推荐开始", "产品名称", "官网", "提交免费"],
+    },
+    {
+      path: "/en/blog/federated-llm-fine-tuning-differential-privacy",
+      titleIncludes: "Federated LLM Fine-Tuning",
+      canonical: expectedUrl("/en/blog/federated-llm-fine-tuning-differential-privacy"),
+      schemas: ["BlogPosting", "BreadcrumbList"],
+      hreflangs: [],
+      visibleText: ["Analysis", "2026-10-05"],
+    },
+    {
+      path: "/zh/tools",
+      titleIncludes: "产品库",
+      descriptionIncludes: "新锐 AI 产品",
+      canonical: expectedUrl("/zh/tools"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["发现下一个值得尝试的产品", "Pexo", "Markdown 转图片", "AI 视频生成器"],
+    },
+    {
+      path: "/en/topics",
+      titleIncludes: "Collections",
+      descriptionIncludes: "Explore emerging products",
+      canonical: expectedUrl("/en/topics"),
+      schemas: ["CollectionPage", "BreadcrumbList"],
+      visibleText: ["New ways to make video", "Help where you already work", "Small tools for creators"],
+    },
+    {
+      path: "/zh/topics",
+      titleIncludes: "专题",
+      descriptionIncludes: "相关新产品与内容",
+      canonical: expectedUrl("/zh/topics"),
+      schemas: ["CollectionPage", "BreadcrumbList"],
+      visibleText: ["视频创作新方式", "桌面与浏览器助手", "创作者的轻工具"],
+    },
+    {
+      path: "/en/topics/video-workflows",
+      titleIncludes: "New ways to make video",
+      descriptionIncludes: "Start with a link",
+      canonical: expectedUrl("/en/topics/video-workflows"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["New ways to make video", "Pexo", "Read a little deeper"],
+    },
+    {
+      path: "/zh/topics/video-workflows",
+      titleIncludes: "视频创作新方式",
+      descriptionIncludes: "从一个链接",
+      canonical: expectedUrl("/zh/topics/video-workflows"),
+      schemas: ["CollectionPage", "ItemList", "BreadcrumbList"],
+      visibleText: ["视频创作新方式", "Pexo", "继续阅读"],
     },
     {
       path: "/en/about",
       titleIncludes: "About NavoKit",
-      descriptionIncludes: "free online AI tools",
+      descriptionIncludes: "discover emerging tech products",
       canonical: expectedUrl("/en/about"),
-      schemas: ["AboutPage", "Organization"],
-      visibleText: ["Small tools for practical creative work", "The current tools are free to use", "Clear limits"],
+      schemas: ["AboutPage"],
+      visibleText: ["New discoveries", "Navo + Kit", "Discover new products", "Third-party advertising"],
     },
     {
       path: "/zh/about",
       titleIncludes: "关于 NavoKit",
-      descriptionIncludes: "免费的在线 AI 工具",
+      descriptionIncludes: "发现新锐科技产品",
       canonical: expectedUrl("/zh/about"),
-      schemas: ["AboutPage", "Organization"],
-      visibleText: ["为具体创作任务而生", "当前工具免费使用", "透明边界"],
+      schemas: ["AboutPage"],
+      visibleText: ["发现新东西", "Navo + Kit", "让信息可以追溯", "第三方广告"],
     },
     {
       path: "/en/privacy",
       titleIncludes: "Privacy Policy",
-      descriptionIncludes: "Learn how NavoKit handles data",
+      descriptionIncludes: "How NavoKit handles product submissions",
       canonical: expectedUrl("/en/privacy"),
-      visibleText: ["Privacy Policy", "AI Video Generation", "Advertising and Cookies"],
+      visibleText: ["Privacy Policy", "AI Video Generator", "Advertising and browser controls", "Adsterra"],
     },
     {
       path: "/en/terms",
       titleIncludes: "Terms of Service",
-      descriptionIncludes: "Read the terms",
+      descriptionIncludes: "Terms for NavoKit product discovery",
       canonical: expectedUrl("/en/terms"),
-      visibleText: ["Terms of Service", "Description of Service"],
+      visibleText: ["Terms of Service", "The service", "Product submissions"],
     },
       {
         path: "/en/tools/free-ai-video-generator",
@@ -562,7 +738,7 @@ async function auditPages() {
   for (const page of pages) {
     const { response, text } = await fetchText(page.path);
     record(response.status === 200, `${page.path} returns 200`, `${response.status}`);
-    checkHtmlPage(page, text);
+    if (response.status === 200) checkHtmlPage(page, text);
   }
 }
 
@@ -578,6 +754,7 @@ async function main() {
     await auditGeoDiscovery();
     await auditRoutingHygiene();
     await auditImages();
+    await auditDiscoveryFilters();
     await auditPages();
   } catch (error) {
     record(false, "audit runtime error", error instanceof Error ? error.message : String(error));

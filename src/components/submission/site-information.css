@@ -1,0 +1,43 @@
+.information-page { padding-top: 64px; padding-bottom: 80px; }
+.information-page--narrow { max-width: 800px; }
+.information-heading { max-width: 760px; margin-bottom: 40px; }
+.information-heading > span { color: var(--color-navo-muted); font-size: 12px; font-weight: 600; letter-spacing: .06em; }
+.information-heading h1 { margin: 16px 0 20px; color: var(--color-navo-ink); font-size: clamp(32px, 4.8vw, 48px); font-weight: 650; line-height: 1.2; letter-spacing: -.035em; }
+.information-heading p { max-width: 680px; margin: 0; color: var(--color-navo-muted); font-size: 16px; line-height: 1.8; }
+.information-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.information-brand { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 32px; margin: 40px 0; border: 1px solid var(--color-navo-border); border-radius: var(--radius-navo-panel); background: var(--color-navo-white); }
+.information-brand h2 { margin: 0 0 16px; color: var(--color-navo-ink); font-size: 24px; line-height: 1.4; }
+.information-brand p { margin: 0; color: var(--color-navo-muted); font-size: 16px; line-height: 1.8; }
+.information-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 32px 0 40px; }
+.information-card { display: flex; flex-direction: column; padding: 24px; border: 1px solid var(--color-navo-border); border-radius: var(--radius-navo-card); background: var(--color-navo-white); }
+.information-card > span { color: var(--color-navo-muted); font-size: 12px; }
+.information-card h2 { margin: 24px 0 12px; color: var(--color-navo-ink); font-size: 20px; line-height: 1.4; }
+.information-card p { margin: 0; color: var(--color-navo-muted); font-size: 14px; line-height: 1.8; }
+.information-card a { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: auto; padding-top: 24px; font-size: 14px; font-weight: 600; }
+.information-section { display: grid; grid-template-columns: 280px 1fr; gap: 48px; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-navo-border); }
+.information-section h2 { margin: 0; font-size: 24px; line-height: 1.4; }
+.information-section p { margin: 0 0 16px; color: var(--color-navo-muted); font-size: 16px; line-height: 1.8; }
+.information-section p:last-child { margin-bottom: 0; }
+.information-contact { padding: 32px; border: 1px solid var(--color-navo-border); border-radius: var(--radius-navo-card); background: var(--color-navo-white); }
+.information-contact h2 { margin: 0 0 12px; font-size: 24px; }
+.information-contact p { margin: 0; color: var(--color-navo-muted); font-size: 16px; line-height: 1.8; }
+.information-contact a { overflow-wrap: anywhere; }
+.information-document { padding: 32px; border: 1px solid var(--color-navo-border); border-radius: var(--radius-navo-panel); background: var(--color-navo-white); font-size: 16px; line-height: 1.8; }
+.information-document section + section { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-navo-border); }
+.information-document h2 { margin: 0 0 12px; font-size: 20px; line-height: 1.4; }
+.information-document p { margin: 0 0 12px; color: var(--color-navo-muted); }
+.information-document p:last-child { margin-bottom: 0; }
+.information-document ul { margin: 12px 0; padding-left: 24px; color: var(--color-navo-muted); }
+.information-document li + li { margin-top: 8px; }
+.information-document strong { color: var(--color-navo-ink); font-weight: 600; }
+.information-document a { color: var(--color-navo-ink); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.information-updated { margin: -16px 0 24px; color: var(--color-navo-muted); font-size: 12px; }
+.information-page a:focus-visible { outline: 2px solid var(--color-navo-blue); outline-offset: 4px; }
+@media (max-width: 760px) {
+  .information-page { padding-top: 40px; padding-bottom: 56px; }
+  .information-heading { margin-bottom: 32px; }
+  .information-brand, .information-cards, .information-section { grid-template-columns: 1fr; gap: 24px; }
+  .information-brand, .information-contact, .information-document { padding: 24px; }
+  .information-cards { gap: 16px; }
+  .information-section { margin-top: 32px; padding-top: 24px; }
+}

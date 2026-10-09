@@ -2,10 +2,9 @@
 title: "The Anti-AI Social Matrix: 5 Algorithmic Patterns to Bypass Platform Content Penalties"
 description: "How social feed classifiers detect and suppress generic LLM copy, and how to use the Burstiness-Entropy Copywriting Matrix to produce authentic, high-reach posts."
 date: "2026-08-23"
-updatedAt: "2026-08-23T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 Have you noticed your AI-generated posts on LinkedIn, X, or Threads hitting an invisible algorithmic ceiling?
@@ -96,15 +95,13 @@ LLMs default to diplomatic, balanced neutrality (*"While X has benefits, Y also 
 
 ---
 
-## 4. Supercharge Your Social Pipeline with NavoKit
+## Drafting and reviewing with NavoKit
 
-Rewriting generic AI copy by hand takes time. If you want AI-generated social posts that already come pre-engineered with high entropy, dynamic hooks, and zero AI clichés, use **[NavoKit AI Social Post Generator](/en/tools/ai-social-post-generator)**:
+Enter your original notes and the tone you want in [NavoKit AI Social Post Generator](/en/tools/ai-social-booster). You can describe the audience and desired tone in the same text field. The tool requests X, LinkedIn, Instagram, and opening-line drafts for you to review, edit, and copy.
 
-* **Anti-Slop Engine**: Strips away generic transition words, robotic emoji lists, and corporate filler automatically.
-* **Platform-Specific Formatting**: Formats specifically for X character limits and LinkedIn dwell-time algorithms.
-* **Tone Modulation**: Switch instantly between Contrarian Founder, Hardcore Engineer, and Punchy Teardown voices.
+There is no tone-preset selector, readability-scoring loop, or promised boost in reach. The draft does not prove any framework or performance claim made elsewhere in this article.
 
----
+Keep only facts you can substantiate. Remove invented numbers, experiences, and outcome claims, then check length and tone before publishing the draft yourself.
 
 ## Summary
 

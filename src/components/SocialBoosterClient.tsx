@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import SiteFooter from "./SiteFooter";
+import { useEffect, useRef, useState } from "react";
 import ToolPageContent from "./ToolPageContent";
 import { trackToolError, trackToolEvent } from "../lib/clientAnalytics";
 import type { ToolPageContentData } from "../types/toolPageContent";
@@ -69,16 +68,21 @@ export default function SocialBoosterClient({
   const [loading, setLoading] = useState(false);
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
+  const [copyError, setCopyError] = useState("");
+  const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [error, setError] = useState("");
+  useEffect(() => () => { if (copyTimer.current) clearTimeout(copyTimer.current); }, []);
   const orderedDrafts = outputIds
     .map(id => drafts.find(draft => draft.id === id))
     .filter((draft): draft is Draft => Boolean(draft));
 
   async function generate() {
-    if (!topic.trim()) return;
+    if (!topic.trim() || loading) return;
     setLoading(true);
     setDrafts([]);
     setError("");
+    setCopyError("");
+    setCopied(null);
     trackToolEvent("tool_social_generate_started", {
       tool: "ai_social_booster",
       lang,
@@ -123,9 +127,16 @@ export default function SocialBoosterClient({
   }
 
   async function copyText(value: string, key: string) {
-    await navigator.clipboard.writeText(value);
-    setCopied(key);
-    setTimeout(() => setCopied(null), 1600);
+    if (copyTimer.current) clearTimeout(copyTimer.current);
+    setCopyError("");
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(key);
+      copyTimer.current = setTimeout(() => setCopied(null), 1600);
+    } catch {
+      setCopied(null);
+      setCopyError(zh ? "浏览器未允许自动复制，请选中下方文案手动复制。" : "Your browser did not allow automatic copying. Select the draft below and copy it manually.");
+    }
   }
 
   return (
@@ -139,15 +150,15 @@ export default function SocialBoosterClient({
       <section className="tool-workspace tool-container">
         <div className="workspace-panel">
           <div className="workspace-panel__header">
-            <div><span>01</span><strong>{t.inputTitle}</strong></div>
+            <div><span>01</span><strong id="social-input-label">{t.inputTitle}</strong></div>
             <small>{topic.length}/1000</small>
           </div>
           <div className="social-input-panel">
-            <textarea className="navo-input" maxLength={1000} value={topic} onChange={event => setTopic(event.target.value)} placeholder={t.placeholder} />
+            <textarea className="navo-input" aria-labelledby="social-input-label" maxLength={1000} value={topic} onChange={event => setTopic(event.target.value)} placeholder={t.placeholder} />
             <div className="social-guidance" aria-label={zh ? "输出内容" : "Generated outputs"}>
               {t.guidance.map(item => <span key={item}>{item}</span>)}
             </div>
-            {error && <p className="inline-error">{error}</p>}
+            {error && <p className="inline-error" role="alert">{error}</p>}
             <button className="button button--blue" disabled={loading || !topic.trim()} onClick={generate}>
               {loading ? t.generating : t.generate}
             </button>
@@ -164,6 +175,7 @@ export default function SocialBoosterClient({
               </button>
             )}
           </div>
+          {copyError && <p className="inline-error" role="status">{copyError}</p>}
           <div className="social-result">
             {orderedDrafts.length > 0 ? (
               <div className="social-result-grid">
@@ -189,7 +201,6 @@ export default function SocialBoosterClient({
       </section>
 
       <ToolPageContent lang={lang} {...content} />
-      <SiteFooter lang={lang} />
     </>
   );
 }

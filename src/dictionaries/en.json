@@ -8,9 +8,9 @@
     }
   },
   "meta": {
-    "title": "NavoKit | Practical AI Tools for Faster Creative Work",
-    "description": "Create short AI videos, turn Markdown and AI responses into images, and draft social posts with lightweight online tools.",
-    "keywords": "AI video generator, text to video, markdown to image, AI social post generator, creator tools"
+    "title": "NavoKit — Discover Emerging Tech & Useful Tools",
+    "description": "Discover emerging tech products and useful tools. Explore 15 categories, follow practical collections, and keep up with sourced product launches and technology articles on NavoKit.",
+    "keywords": "emerging tech, AI tools, product discovery, useful tools, Product Hunt, NavoKit"
   },
   "tools": {
     "chatExporter": {
@@ -40,7 +40,12 @@
       "resultTitle": "Platform-ready drafts",
       "emptyTitle": "Your drafts will appear here",
       "emptyDesc": "Enter one specific idea. NavoKit will turn it into several editable publishing options.",
-      "guidance": ["X post", "LinkedIn post", "Instagram caption", "Hook ideas"],
+      "guidance": [
+        "X post",
+        "LinkedIn post",
+        "Instagram caption",
+        "Hook ideas"
+      ],
       "outputLabels": {
         "x": "X / Twitter",
         "linkedin": "LinkedIn",

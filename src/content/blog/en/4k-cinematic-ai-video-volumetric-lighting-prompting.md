@@ -1,11 +1,10 @@
 ---
-title: "4K Cinematic AI Video Prompting: Directing Volumetric Lighting and Subsurface Scattering"
-description: "How to eliminate the plastic CGI sheen in generative AI video using the Photometric Volumetric Matrix (PVM) to control rayleigh scattering, anamorphic flares, and skin textures."
+title: "Lighting Descriptions for AI Video Prompts: A Practical Starting Point"
+description: "Explore lighting descriptions for text-to-video prompts, then review actual outputs. Prompting for a cinematic look does not guarantee 4K resolution or consistent materials."
 date: "2026-09-02"
-updatedAt: "2026-09-02T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 When generating AI video clips in 2026, the primary visual defect is rarely low resolution. High-end diffusion models (Sora, Runway Gen-3, Kling, Luma) render pixels at blistering 4K clarity.
@@ -95,31 +94,13 @@ Materials: Warm red subcutaneous light bleeding through the earlobes and fingert
 
 ---
 
-## 4. Visual Quality Benchmark: Generic vs. PVM Directives
+## Trying a text prompt in NavoKit
 
-We evaluated 100 generated clips across professional colorists and directors:
+[NavoKit AI Video Generator](/en/tools/free-ai-video-generator) accepts a text prompt, a format, and an automatic or approximately 3, 5, 10, or 18 second duration preset. You can preview and download a generated clip. The result panel and returned file determine the actual dimensions and duration.
 
-| Prompt Technique | Perceived "CGI/Plastic" Rating | Depth & Volume Score (1-10) | Commercial Ad-Readiness |
-| :--- | :--- | :--- | :--- |
-| **Generic "4K Cinematic"** | 82% (High artificial sheen) | 3.4 / 10 | 14% |
-| **Medium Camera Prompts** | 51% (Decent composition, flat skin) | 6.1 / 10 | 48% |
-| **PVM Photometric Matrix** | **< 7% (True photographic emulsion)** | **9.6 / 10** | **91%** |
+Describe the lighting in the prompt, then inspect the generated clip. There are no lighting-style presets, 4K output controls, or camera/character locks. A phrase such as “cinematic lighting” is a creative request, not an output specification.
 
-Controlling subsurface scattering and volumetric density single-handedly eliminates the synthetic sheen, turning hobbyist clips into commercial-ready visual assets.
-
----
-
-## 5. Directing Studio-Grade Cinematic Clips in NavoKit
-
-Mastering light and shadow shouldn't mean wasting hundreds of generation credits on failed prompt permutations.
-
-With **[NavoKit Free AI Video Generator](/en/tools/ai-video-generator)**, testing and executing complex optical prompts is fast and frictionless:
-
-* **Photometric Lighting Styles**: Toggle between Noir Chiaroscuro, Cyberpunk Volumetric, and Golden Hour Rim lighting with dedicated prompt builders.
-* **Aspect Ratio & Camera Locking**: Keep character faces and clothing materials consistent across diverse lighting setups.
-* **Instant MP4 Export**: High-bitrate 4K-ready video clips with zero compression watermarks.
-
----
+Start with one simple shot and change one prompt detail between attempts. Queue time varies, and the output needs a human check for quality and accuracy.
 
 ## Summary
 

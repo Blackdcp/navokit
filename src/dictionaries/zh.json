@@ -8,9 +8,9 @@
     }
   },
   "meta": {
-    "title": "NavoKit | 让创作更快的实用 AI 工具",
-    "description": "使用轻量在线工具生成 AI 短视频、将 Markdown 和 AI 回复转成图片，并起草社交媒体文案。",
-    "keywords": "AI视频生成器, 文生视频, Markdown转图片, AI社媒文案生成器, 创作者工具"
+    "title": "NavoKit — 发现新锐科技产品与实用工具",
+    "description": "NavoKit，导航与工具的结合。发现有新意的科技产品，按用途探索 15 类工具，沿着专题了解真实场景，跟进有来源的产品发布和技术文章。",
+    "keywords": "新锐科技产品,AI 工具,产品发现,工具导航,Product Hunt,技术内容,NavoKit"
   },
   "tools": {
     "chatExporter": {
@@ -40,7 +40,12 @@
       "resultTitle": "多平台文案初稿",
       "emptyTitle": "生成结果会显示在这里",
       "emptyDesc": "输入一个具体想法，NavoKit 会整理成几种可继续修改的发布版本。",
-      "guidance": ["X 短帖", "LinkedIn 帖子", "Instagram 文案", "开场句"],
+      "guidance": [
+        "X 短帖",
+        "LinkedIn 帖子",
+        "Instagram 文案",
+        "开场句"
+      ],
       "outputLabels": {
         "x": "X / Twitter",
         "linkedin": "LinkedIn",

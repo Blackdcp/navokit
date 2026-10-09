@@ -2,8 +2,19 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export type BlogIntent = "how_to" | "examples" | "troubleshooting" | "comparison" | "use_case";
+export type BlogIntent = "how_to" | "examples" | "troubleshooting" | "comparison" | "use_case" | "industry_analysis" | "tool_guide" | "framework";
 export type BlogDifficulty = "beginner" | "intermediate" | "advanced";
+
+export interface BlogAuthor {
+  name: string;
+  type: "Person" | "Organization";
+  url?: string;
+}
+
+export interface BlogSource {
+  url: string;
+  title: string;
+}
 
 export interface BlogPost {
   slug: string;
@@ -11,6 +22,10 @@ export interface BlogPost {
   description: string;
   date: string;
   updatedAt?: string;
+  author?: BlogAuthor;
+  sources: BlogSource[];
+  topicIds?: string[];
+  tags?: string[];
   workflowId?: string;
   toolIds: string[];
   relatedTools: string[];
@@ -19,6 +34,41 @@ export interface BlogPost {
   readingTime: number;
   content: string;
   language: 'en' | 'zh';
+}
+
+function publicUrl(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  try {
+    const url = new URL(value);
+    return ["https:", "http:"].includes(url.protocol) ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function normalizeAuthor(value: unknown): BlogAuthor | undefined {
+  if (typeof value === "string" && value.trim()) {
+    const name = value.trim();
+    return { name, type: name.toLowerCase() === "navokit" ? "Organization" : "Person" };
+  }
+  if (!value || typeof value !== "object" || !("name" in value) || typeof value.name !== "string" || !value.name.trim()) return undefined;
+  return {
+    name: value.name.trim(),
+    type: "type" in value && value.type === "Organization" ? "Organization" : "Person",
+    url: "url" in value ? publicUrl(value.url) : undefined,
+  };
+}
+
+function normalizeSources(value: unknown): BlogSource[] {
+  const entries = Array.isArray(value) ? value : value ? [value] : [];
+  const sources = new Map<string, BlogSource>();
+  for (const entry of entries) {
+    const url = publicUrl(typeof entry === "string" ? entry : entry?.url);
+    if (!url) continue;
+    const title = typeof entry?.title === "string" && entry.title.trim() ? entry.title.trim() : new URL(url).hostname;
+    sources.set(url, { url, title });
+  }
+  return [...sources.values()];
 }
 
 function asStringArray(value: unknown): string[] {
@@ -45,7 +95,7 @@ function estimateReadingTime(content: string, lang: "en" | "zh") {
 }
 
 function normalizeIntent(value: unknown): BlogIntent | undefined {
-  const allowed: BlogIntent[] = ["how_to", "examples", "troubleshooting", "comparison", "use_case"];
+  const allowed: BlogIntent[] = ["how_to", "examples", "troubleshooting", "comparison", "use_case", "industry_analysis", "tool_guide", "framework"];
   return typeof value === "string" && allowed.includes(value as BlogIntent) ? value as BlogIntent : undefined;
 }
 
@@ -78,7 +128,11 @@ export function getBlogPosts(lang: 'en' | 'zh'): BlogPost[] {
         title: data.title || '',
         description: data.description || '',
         date: data.date || '',
-        updatedAt: data.updatedAt || data.date || '',
+        updatedAt: typeof data.updatedAt === "string" ? data.updatedAt : undefined,
+        author: normalizeAuthor(data.author),
+        sources: normalizeSources(data.sources ?? data.source),
+        topicIds: asStringArray(data.topicIds),
+        tags: asStringArray(data.tags),
         workflowId: typeof data.workflowId === "string" ? data.workflowId : undefined,
         toolIds,
         relatedTools: relatedTools.length > 0 ? relatedTools : toolIds,
@@ -124,9 +178,13 @@ export function getRelatedBlogPosts(lang: "en" | "zh", post: BlogPost, limit = 3
         }
       });
 
-      if (post.intent && candidate.intent === post.intent) {
-        score += 1;
-      }
+      // An article format alone (for example "analysis") is not a shared subject.
+      candidate.topicIds?.forEach(topicId => {
+        if (post.topicIds?.includes(topicId)) score += 2;
+      });
+      candidate.tags?.forEach(tag => {
+        if (post.tags?.includes(tag)) score += 2;
+      });
 
       return { candidate, score };
     })
@@ -166,6 +224,9 @@ export function formatBlogIntent(intent: BlogIntent | undefined, lang: "en" | "z
       troubleshooting: "Troubleshooting",
       comparison: "Comparison",
       use_case: "Use case",
+      industry_analysis: "Analysis",
+      tool_guide: "Tool guide",
+      framework: "Framework",
     },
     zh: {
       how_to: "操作指南",
@@ -173,6 +234,9 @@ export function formatBlogIntent(intent: BlogIntent | undefined, lang: "en" | "z
       troubleshooting: "排错",
       comparison: "对比",
       use_case: "使用场景",
+      industry_analysis: "行业分析",
+      tool_guide: "工具指南",
+      framework: "方法框架",
     },
   };
 

@@ -1,170 +1,129 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Tool } from "../../types/tool";
-import type { WorkflowRail } from "../../types/workflow";
-import type { BlogPost } from "../../lib/blog";
-import { getToolAccent, getToolIcon, stripHtml } from "../../lib/toolGroups";
+import { ArrowRight, ArrowUpRight, Search } from "lucide-react";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
+import ProductLogo from "../../components/catalog/ProductLogo";
+import ProductVisual from "../../components/catalog/ProductVisual";
+import TopicVisual from "../../components/catalog/TopicVisual";
+import ArticleCover from "../../components/updates/ArticleCover";
+import { getCatalogProducts, getProductCategories, getProductHref, getTopics } from "../../lib/catalog";
+import { getCategoryHref } from "../../lib/categoryRoutes";
+import { getUpdates } from "../../lib/discovery";
+import "../../components/catalog/catalog.css";
+import "./discovery-home.css";
 
-function toolHref(lang: string, tool: Tool) {
-  return `/${lang}/tools/${tool.id}`;
-}
-
-export default function HomePage({
-  tools,
-  posts,
-  workflowRails,
-  lang,
-}: {
-  dict: unknown;
-  tools: Tool[];
-  posts: BlogPost[];
-  workflowRails: WorkflowRail[];
-  lang: string;
-}) {
+export default function HomePage({ lang }: { lang: "en" | "zh" }) {
   const zh = lang === "zh";
-  const ordered = [...tools].sort((a, b) => (a.homePriority ?? 999) - (b.homePriority ?? 999));
-  const featured = ordered.find(tool => tool.isFeatured) ?? ordered[0];
-  const heroTools = ordered.slice(0, 4);
-  const featuredTools = [
-    ...ordered.filter(tool => tool.isFeatured),
-    ...ordered.filter(tool => !tool.isFeatured),
-  ].slice(0, 6);
-  const heroWorkflowRails = workflowRails.filter(rail => rail.showInHome !== false).slice(0, 4);
-  const workflowSteps = zh
-    ? [
-        ["输入", "写一句提示词、粘贴 Markdown，或描述你要发布的想法。"],
-        ["处理", "选择工具和格式，让 NavoKit 生成、转换或起草初稿。"],
-        ["带走结果", "下载图片、复制文案、预览视频，继续完成下一步工作。"],
-      ]
-    : [
-        ["Input", "Write a prompt, paste Markdown, or describe the idea you want to publish."],
-        ["Process", "Choose a tool and format, then generate, convert, or draft the first result."],
-        ["Take the result", "Download an image, copy a draft, preview a video, and keep moving."],
-      ];
+  const products = getCatalogProducts(lang);
+  const discoveries = products.filter(product => !product.internalPath);
+  const utilities = products.filter(product => product.internalPath);
+  const topics = getTopics(lang);
+  const categories = getProductCategories(lang);
+  const updates = getUpdates(lang);
+  const recent = updates.slice(0, 4);
+  const articles = updates.filter(item => item.kind === "article").slice(0, 2);
+  const spotlight = discoveries.find(product => product.slug === "pexo") ?? discoveries[0];
+  const featuredSlugs = ["flora", "sloyd", "msty"];
+  const moreFinds = [
+    ...featuredSlugs.flatMap(slug => discoveries.filter(product => product.slug === slug)),
+    ...discoveries.filter(product => product.slug !== spotlight?.slug && !featuredSlugs.includes(product.slug)),
+  ];
+  const spotlightHeadline = spotlight?.slug === "pexo"
+    ? (zh ? "制作视频，也可以像交流想法一样。" : "Making a video can start with a conversation.")
+    : spotlight?.tagline;
 
   return (
-    <div className="site-shell site-shell--home">
+    <div className="site-shell discovery-home">
       <SiteHeader lang={lang} />
-      <main>
-        <section className="home-hero marketing-container">
-          <div className="hero-copy">
-            <span className="eyebrow">{zh ? "免费 AI 工具箱" : "Free online AI tools"}</span>
-            <h1>{zh ? <>小工具，<br />快一点完成工作。</> : <>Small tools.<br />Faster work.</>}</h1>
-            <p className="hero-lead">
-              {zh
-                ? "给创作者、开发者和运营人的免费 AI 工具箱。把内容、文档和想法快速变成可分享、可使用的结果。"
-                : "Free AI tools for creators, developers, and marketers. Turn text, files, and ideas into useful, shareable output."}
-            </p>
-            <div className="hero-actions">
-              <Link href={`/${lang}/tools`} className="button button--ink">{zh ? "浏览工具" : "Explore tools"}</Link>
-              {featured && <Link href={toolHref(lang, featured)} className="button button--secondary">{zh ? "打开精选工具" : "Open featured tool"}</Link>}
-            </div>
-            {heroWorkflowRails.length > 0 && (
-              <div className="hero-category-row" aria-label={zh ? "工作流主题" : "Workflow topics"}>
-                {heroWorkflowRails.map(rail => <span key={rail.id}>{rail.label}</span>)}
-              </div>
-            )}
+      <main id="main-content">
+        <section className="marketing-container discover-hero">
+          <div>
+            <span className="discover-kicker">NAVIGATION + TOOLS</span>
+            <h1>{zh ? <>发现新工具，<br className="discover-mobile-break" />打开新可能。</> : "Good finds. New possibilities."}</h1>
+            <p>{zh ? "有新意的产品，有意思的用法。为你的下一次创作找点灵感。" : "Fresh products, thoughtful ideas, and a little inspiration for what you make next."}</p>
           </div>
+          <div className="discover-search-block">
+            <form className="discover-search" action={`/${lang}/tools`}>
+              <Search size={20} aria-hidden="true" />
+              <label className="sr-only" htmlFor="home-search">{zh ? "搜索产品或用途" : "Search products or tasks"}</label>
+              <input id="home-search" name="q" type="search" placeholder={zh ? "找一个产品，或一种新可能" : "Find a product or a new possibility"} />
+              <button type="submit" aria-label={zh ? "搜索产品" : "Search products"}><ArrowRight size={20} /></button>
+            </form>
+            <div className="discover-quicklinks">
+              {categories.filter(category => ["video", "coding", "productivity"].includes(category.id)).map(category => <Link href={getCategoryHref(category.id, lang)} key={category.id}>{category.name}<ArrowUpRight size={13} aria-hidden="true" /></Link>)}
+            </div>
+          </div>
+        </section>
 
-          <aside className="hero-directory" aria-label={zh ? "热门免费工具" : "Popular free tools"}>
-            <div className="hero-directory__header">
-              <div>
-                <span>{zh ? "热门工具" : "Popular free tools"}</span>
-                <h2>{zh ? "先选一个任务。" : "Choose a task first."}</h2>
+        <section className="marketing-container discover-finds" aria-labelledby="featured-heading">
+          <div className="discover-section-heading">
+            <div><span className="discover-kicker">THE DISCOVERY EDIT</span><h2 id="featured-heading">{zh ? "值得认识的新产品" : "Meet your next find"}</h2></div>
+            <Link href={`/${lang}/tools`}>{zh ? "探索产品库" : "Explore all products"}<ArrowRight size={16} aria-hidden="true" /></Link>
+          </div>
+          {spotlight ? <div className="discover-showcase">
+            <Link className="discover-spotlight" href={getProductHref(spotlight, lang)}>
+              <div className="discover-spotlight__visual">
+                <ProductVisual product={spotlight} lang={lang} eager sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1168px) 62vw, 700px" />
+                <span className="discover-spotlight__label">{zh ? "精选发现" : "IN FOCUS"}<ArrowUpRight size={14} aria-hidden="true" /></span>
+                <span className="discover-spotlight__source">{zh ? "官网产品画面" : "Official product preview"}</span>
               </div>
-              <Link href={`/${lang}/tools`}>{zh ? "全部工具" : "All tools"} →</Link>
-            </div>
+              <div className="discover-spotlight__body">
+                <ProductLogo product={spotlight} size={54} />
+                <div><span className="discover-product-meta">{spotlight.name} <span>／</span> {categories.find(category => category.id === spotlight.categoryIds[0])?.name}</span><h3>{spotlightHeadline}</h3><p>{spotlight.tagline}</p></div>
+                <span className="discover-card-arrow"><ArrowUpRight size={22} aria-hidden="true" /></span>
+              </div>
+            </Link>
+            <div className="discover-find-stack">{moreFinds.slice(0, 3).map(product => <Link className="discover-small-find" href={getProductHref(product, lang)} key={product.slug}>
+              <div className="discover-small-find__copy"><ProductLogo product={product} size={40} /><span className="discover-product-meta">{categories.find(category => category.id === product.categoryIds[0])?.name}</span><h3>{product.name}</h3><p>{product.tagline}</p><ArrowUpRight size={17} aria-hidden="true" /></div>
+              <ProductVisual product={product} lang={lang} sizes="(max-width: 760px) 38vw, 160px" />
+            </Link>)}</div>
+          </div> : <div className="discover-empty"><h3>{zh ? "第一批新发现，正在整理。" : "Our first finds are taking shape."}</h3><p>{zh ? "有值得推荐的产品？把它介绍给我们。" : "Know a product worth discovering? Send it our way."}</p><Link className="button button--secondary" href={`/${lang}/submit`}>{zh ? "推荐产品" : "Recommend a product"}</Link></div>}
+        </section>
 
-            <div className="hero-tool-list">
-              {heroTools.map((tool, index) => {
-                return (
-                  <Link key={tool.id} href={toolHref(lang, tool)} className="hero-tool-row">
-                    <span className="hero-tool-row__number">{String(index + 1).padStart(2, "0")}</span>
-                    <div className={`tool-icon tool-icon--${getToolAccent(tool, index)}`}>{getToolIcon(tool, index)}</div>
-                    <div>
-                      <strong>{tool.title}</strong>
-                      <p>{stripHtml(tool.subtitle)}</p>
-                    </div>
-                    <b>→</b>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="hero-directory__footer">
-              <span>{zh ? "你可以完成什么" : "What you can finish here"}</span>
-              <p>{zh ? "生成一段 AI 视频，把 Markdown 导出成图片，或为社交平台起草一版可继续修改的文案。" : "Generate a short AI video, export Markdown as an image, or draft a social post you can keep editing."}</p>
-            </div>
+        <div className="marketing-container discover-reading-layout">
+          <section aria-labelledby="reading-heading">
+            <div className="discover-section-heading"><div><span className="discover-kicker">A LITTLE DEEPER</span><h2 id="reading-heading">{zh ? "新工具之外，再读一点。" : "A little more to think about."}</h2></div><Link href={`/${lang}/blog`}>{zh ? "全部文章" : "All articles"}<ArrowRight size={16} aria-hidden="true" /></Link></div>
+            <div className="discover-reading-grid">{articles.map(article => <Link className="discover-reading-card" href={article.href} key={article.id}>
+              <ArticleCover slug={article.id.slice("article:".length)} title={article.title} lang={lang} className="discover-reading-cover" />
+              <div className="discover-reading-meta"><span>{article.label}</span><time dateTime={article.date}>{article.date.slice(0, 10)}</time></div>
+              <h3>{article.title}</h3><span className="discover-reading-more">{zh ? "继续阅读" : "Read the story"}<ArrowUpRight size={15} aria-hidden="true" /></span>
+            </Link>)}</div>
+          </section>
+          <aside className="discover-feed" aria-labelledby="updates-heading">
+            <div className="discover-section-heading"><div><span className="discover-kicker">ON THE RADAR</span><h2 id="updates-heading">{zh ? "最近动态" : "On the radar"}</h2></div><Link href={`/${lang}/updates`} aria-label={zh ? "全部动态" : "All updates"}><ArrowUpRight size={20} aria-hidden="true" /></Link></div>
+            <div className="discover-feed__list">{recent.map(item => {
+              const product = item.kind === "launch" ? products.find(product => item.productIds?.includes(product.slug)) : undefined;
+              return <Link className="discover-feed__item" href={item.href} key={item.id}>
+                {product ? <ProductLogo product={product} size={44} /> : <ArticleCover slug={item.id.slice("article:".length)} title={item.title} lang={lang} thumbnail className="discover-feed-cover" />}
+                <div className="discover-feed__copy"><div><span>{item.kind === "launch" ? item.dateLabel : item.label}</span><time dateTime={item.date}>{item.date.slice(0, 10)}</time></div><h3>{item.title}</h3></div>
+                <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>;
+            })}</div>
+            <Link className="discover-submit-note" href={`/${lang}/submit`}><span>{zh ? "做了个有意思的产品？" : "Making something interesting?"}<strong>{zh ? "让更多人发现它。" : "Help people find it."}</strong></span><ArrowUpRight size={22} aria-hidden="true" /></Link>
           </aside>
-        </section>
+        </div>
 
-        <section className="home-workflows marketing-container" aria-label={zh ? "NavoKit 使用方式" : "How NavoKit works"}>
-          {workflowSteps.map(([title, text], index) => (
-            <div key={title}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{title}</strong>
-              <p>{text}</p>
-            </div>
-          ))}
-        </section>
-
-        <section id="tools" className="section marketing-container">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">{zh ? "精选工具" : "Featured tools"}</span>
-              <h2>{zh ? "打开一个工具，完成一个小任务。" : "Open one tool. Finish one small task."}</h2>
-            </div>
-            <p>{zh ? "每个工具都服务一个明确结果：生成视频、导出图片、起草文案。" : "Each tool serves one clear outcome: generate a video, export an image, or draft copy."}</p>
-          </div>
-          <div className="tools-grid tools-grid--premium">
-            {featuredTools.map((tool, index) => {
-              return (
-                <Link key={tool.id} href={toolHref(lang, tool)} className="tool-card tool-card--premium">
-                  <div className="tool-card__top">
-                    <div className={`tool-icon tool-icon--${getToolAccent(tool, index)}`}>{getToolIcon(tool, index)}</div>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                  </div>
-                  <span className="tool-category">{tool.categoryName}</span>
-                  <h3>{tool.title}</h3>
-                  <p>{stripHtml(tool.subtitle)}</p>
-                  <div className="tool-card__meta">
-                    {(tool.tags ?? []).slice(0, 3).map(tag => <i key={tag}>{tag}</i>)}
-                  </div>
-                  <span className="tool-link">{zh ? "打开工具" : "Open tool"} <b>→</b></span>
-                </Link>
-              );
-            })}
+        <section className="discover-topics-section" aria-labelledby="topics-heading">
+          <div className="marketing-container">
+            <div className="discover-section-heading"><div><span className="discover-kicker">FOLLOW A THREAD</span><h2 id="topics-heading">{zh ? "从一个兴趣，继续探索。" : "Follow your curiosity."}</h2></div><Link href={`/${lang}/topics`}>{zh ? "全部专题" : "All collections"}<ArrowRight size={16} aria-hidden="true" /></Link></div>
+            <div className="discover-topic-grid">{topics.map(topic => {
+              const related = products.filter(product => product.topicIds.includes(topic.id));
+              return <Link className="discover-topic" href={`/${lang}/topics/${topic.id}`} key={topic.id}><TopicVisual products={related} lang={lang} compact /><div className="discover-topic__body"><span className="discover-topic-meta">{related.length} {zh ? "个产品" : "products"}</span><h3>{topic.name}<ArrowUpRight size={18} aria-hidden="true" /></h3><p>{topic.description}</p></div></Link>;
+            })}</div>
           </div>
         </section>
 
-        <section className="section marketing-container guides-preview">
-          <div className="section-heading">
-            <div><span className="eyebrow">{zh ? "实用指南" : "Practical guides"}</span><h2>{zh ? "把工具变成工作流。" : "Turn tools into workflows."}</h2></div>
-            <Link href={`/${lang}/blog`} className="text-link">{zh ? "查看全部指南 →" : "View all guides →"}</Link>
-          </div>
-          {posts.length > 0 && (
-            <div className="guide-grid">
-              {posts.map(post => (
-                <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="guide-card">
-                  <span>{post.date} · {zh ? "指南" : "GUIDE"}</span>
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                </Link>
-              ))}
-            </div>
-          )}
+        <section className="marketing-container discover-categories" aria-labelledby="category-heading">
+          <div className="discover-section-heading"><div><span className="discover-kicker">FIND YOUR WAY</span><h2 id="category-heading">{zh ? "按用途，找到方向。" : "Find a starting point."}</h2></div></div>
+          <div className="discover-category-grid">{categories.map(category => {
+            const count = products.filter(product => product.categoryIds.includes(category.id)).length;
+            return <Link href={getCategoryHref(category.id, lang)} key={category.id}><span>{category.name}</span><span className="discover-category-count" aria-label={`${count} ${zh ? "个产品" : "products"}`}>{count}</span><ArrowUpRight size={14} aria-hidden="true" /></Link>;
+          })}</div>
         </section>
 
-        <section id="about" className="about-strip">
-          <div className="marketing-container about-strip__inner">
-            <Image src="/logo.png" alt="NavoKit" width={1672} height={941} />
-            <div>
-              <h2>{zh ? "实用的小工具，打开就能用。" : "Useful tools, ready when you are."}</h2>
-              <p>{zh ? "从 AI 视频生成到 Markdown 图片导出，NavoKit 帮你把零散输入整理成可以继续使用的内容资产。" : "From AI video generation to Markdown image export, NavoKit helps turn rough input into content assets you can keep using."}</p>
-            </div>
-          </div>
+        <section className="marketing-container discover-utilities" aria-labelledby="utilities-heading">
+          <div className="discover-section-heading"><div><span className="discover-kicker">MADE BY NAVOKIT</span><h2 id="utilities-heading">{zh ? "我们的随手工具" : "A few tools of our own"}</h2></div></div>
+          <div className="discover-utility-grid">{utilities.map(product => <Link href={getProductHref(product, lang)} key={product.slug}><ProductLogo product={product} size={40} /><div><h3>{product.name}</h3><p>{product.tagline}</p></div><ArrowUpRight size={18} aria-hidden="true" /></Link>)}</div>
         </section>
       </main>
       <SiteFooter lang={lang} />

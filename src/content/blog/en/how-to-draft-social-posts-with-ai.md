@@ -2,13 +2,13 @@
 title: "How to Draft Social Posts with AI: Real NavoKit Workflow"
 description: "Turn one idea into platform-ready X, LinkedIn, Instagram, and hook drafts with NavoKit, then edit the AI output into posts that sound specific and credible."
 date: "2026-06-23"
-updatedAt: "2026-07-04"
 workflowId: "social-drafting"
 toolIds: ["ai-social-booster"]
 relatedTools: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
 intent: "how_to"
 difficulty: "beginner"
 readingTime: 10
+updatedAt: "2026-10-09"
 ---
 
 AI is useful for social writing when it helps you get from a rough idea to a structured first draft. It is not useful when it turns every thought into the same shiny, generic post.
@@ -21,7 +21,7 @@ This guide shows the real workflow with product screenshots and examples, so you
 
 ## What the tool actually generates
 
-Paste one idea into NavoKit, choose the draft types you need, and generate platform-ready starting points.
+Paste one idea into NavoKit and generate several platform-oriented starting points. Choose which drafts to use after reviewing the results.
 
 | Output | Use it for | What to check before publishing |
 | --- | --- | --- |

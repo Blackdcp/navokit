@@ -2,10 +2,9 @@
 title: "Cross-Scene Lighting Continuity in AI Video: How to Lock Color Grading and Photometric Consistency"
 description: "Why sequential AI video shots drift into mismatched color spaces, and how the Color Palette Invariance Vector (CPIV) locks grading, exposure ratios, and key-light angles across multi-shot cuts."
 date: "2026-09-16"
-updatedAt: "2026-09-16T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 If you have ever tried editing multiple AI-generated video shots into a continuous cinematic sequence, you have hit the most notorious wall in generative filmmaking:
@@ -99,31 +98,13 @@ Face illumination maintains 4200K cyan rim on left temple, 2200K amber bounce on
 
 ---
 
-## 4. Continuity Benchmark: Raw Prompting vs. CPIV Anchoring
+## Trying a text prompt in NavoKit
 
-We tested 50 multi-shot video sequences across colorist teams, measuring perceptual color difference ($\Delta E$ in CIE Lab space):
+[NavoKit AI Video Generator](/en/tools/free-ai-video-generator) accepts a text prompt, a format, and an automatic or approximately 3, 5, 10, or 18 second duration preset. You can preview and download a generated clip. The result panel and returned file determine the actual dimensions and duration.
 
-| Metric | Random Independent Prompts | Shared Seed Without CPIV | CPIV Anchored Prompts |
-| :--- | :--- | :--- | :--- |
-| **Color Temperature Drift ($\Delta K$)** | $\pm 1,800\text{K}$ (Extreme Shift) | $\pm 750\text{K}$ (Visible Jolt) | **$< 120\text{K}$ (Studio Grade)** |
-| **Shadow Black Point Variance** | 24% Fluctuation | 14% Fluctuation | **< 2% Variance** |
-| **Direct Timeline Cut Usability** | 6.2% | 34.0% | **89.4% (Cut-Ready)** |
+Reuse the same written character, lighting, and palette descriptions when generating separate clips. The tool does not retain scene memory, lock style/seed values, or assemble parallel shots into a sequence. Match color and assemble the selected clips in a separate editor.
 
-Using the CPIV framework boosts timeline-ready cut usability from **6% to nearly 90%**, slashing editing time by hours.
-
----
-
-## 5. Direct Continuous Cinematic Sequences in NavoKit
-
-Managing multi-scene character and lighting continuity shouldn't require complex command-line scripts.
-
-With **[NavoKit Free AI Video Generator](/en/tools/ai-video-generator)**, locking down your visual universe is built directly into the creative workflow:
-
-* **Scene Memory & Style Anchoring**: Lock your camera optics, ambient color palette, and character seeds across multiple sequential prompt iterations.
-* **Aspect Ratio Stability**: Seamlessly generate 16:9 widescreen or 9:16 vertical sequences with consistent frame-to-frame dynamic range.
-* **Rapid Multi-Shot Iteration**: Generate wide, medium, and close-up clips in parallel, previewing them in a single dashboard before exporting uncompressed MP4 assets.
-
----
+Start with one simple shot and change one prompt detail between attempts. Queue time varies, and the output needs a human check for quality and accuracy.
 
 ## Summary
 

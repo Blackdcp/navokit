@@ -2,13 +2,13 @@
 title: "AI 视频提示词公式：写出更稳定的文生视频提示词"
 description: "使用一个简单的 AI 视频提示词公式：主体、动作、场景、镜头运动、光线和风格。"
 date: "2026-07-01"
-updatedAt: "2026-07-01"
 workflowId: "ai-video"
 toolIds: ["free-ai-video-generator"]
 relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
 intent: "how_to"
 difficulty: "beginner"
 readingTime: 7
+updatedAt: "2026-10-09"
 ---
 
 想让 AI 视频提示词更稳定，最简单的方法不是写得更长，而是从“描述一整支视频”改成“描述一个清晰镜头”。
@@ -174,7 +174,7 @@ readingTime: 7
 
 ## 先使用自动时长
 
-在 [免费 AI 视频生成器](/zh/tools/free-ai-video-generator) 中测试新提示词时，建议先使用自动时长。自动模式会优先保证短片生成稳定，再考虑更长输出。
+在 [免费 AI 视频生成器](/zh/tools/free-ai-video-generator) 中测试新提示词时，建议先使用自动时长。自动模式会根据提示词中的明确秒数、文本长度与场景关键词选择时长档位，再考虑更长输出。
 
 只有在有明确发布限制时，才使用固定时长，比如短循环、已有剪辑时间槽或平台要求。
 

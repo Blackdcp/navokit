@@ -2,13 +2,13 @@
 title: "Free AI Video Generator Without Watermark: A Publishing Checklist"
 description: "Learn how to test a free AI video generator, check watermark expectations, review rights, and prepare short clips for social publishing."
 date: "2026-07-01"
-updatedAt: "2026-07-01"
 workflowId: "ai-video"
 toolIds: ["free-ai-video-generator"]
 relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
 intent: "use_case"
 difficulty: "beginner"
 readingTime: 6
+updatedAt: "2026-10-09"
 ---
 
 Many people search for a free AI video generator without watermark because they want a clean clip they can test, share, or use as a visual idea without turning the output into an ad for another service.
@@ -41,7 +41,7 @@ If your prompt asks for several scenes, several characters, readable text, a log
 
 ## Use a short test first
 
-Open the [Free AI Video Generator](/en/tools/free-ai-video-generator) and start with Auto duration. Auto mode prioritizes a stable short clip before trying longer output.
+Open the [Free AI Video Generator](/en/tools/free-ai-video-generator) and start with Auto duration. Auto mode chooses a preset using an explicit duration in the prompt, prompt length, and scene keywords.
 
 Short tests are useful because they answer the most important questions quickly:
 

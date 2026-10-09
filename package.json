@@ -10,6 +10,9 @@
     "smoke:test": "node scripts/smoke-test.mjs",
     "smoke:test:prod": "node scripts/smoke-test.mjs https://www.navokit.com",
     "seo:audit": "node scripts/seo-audit.mjs",
+    "catalog:check": "node scripts/catalog-check.mjs",
+    "geo:audit": "node scripts/geo-audit.mjs",
+    "crawl:check": "node scripts/crawl-check.mjs",
     "indexnow:dry-run": "node scripts/indexnow-submit.mjs --dry-run",
     "indexnow:submit": "node scripts/indexnow-submit.mjs"
   },

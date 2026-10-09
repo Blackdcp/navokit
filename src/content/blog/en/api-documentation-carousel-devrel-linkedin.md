@@ -2,10 +2,9 @@
 title: "API Documentation Carousel: The Developer Advocate's Secret Weapon for Viral LinkedIn & X Reach"
 description: "Why pasting raw code blocks into social feeds kills developer engagement, and how visual API carousels and card decks drive 6.4x higher dwell time and repository stars."
 date: "2026-09-18"
-updatedAt: "2026-09-18T10:00:00Z"
 intent: "tool_guide"
 difficulty: "intermediate"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 If you are a Developer Relations (DevRel) engineer, open-source maintainer, or technical founder trying to promote an API or SDK on social media, you have likely experienced this agonizing scenario:
@@ -89,41 +88,13 @@ To turn a complex API endpoint or SDK method into a high-converting visual carou
 
 ---
 
-## 3. Formatting Benchmark: Text vs. Screenshot vs. Rendered Visual Deck
+## Making a Markdown card with NavoKit
 
-| Metric / Attribute | Plain Text Code in Post | Raw Terminal Screenshot | Formatted VCN Card Carousel |
-| :--- | :--- | :--- | :--- |
-| **Mobile Formatting Retention** | ❌ Ruined by auto-wrap | ⚠️ Tiny font, blurry zoom | ✅ **Crisp, native 4K card vector** |
-| **Average Feed Dwell Time** | 1.2 seconds | 2.4 seconds | **9.6 seconds (+300% boost)** |
-| **Carousel Swipe Interactions** | 0 (None possible) | 0 (Static image) | **3 to 5 deliberate swipes per user** |
-| **Algorithm Reach Multiplier** | 1.0x (Baseline) | 1.4x | **4.8x – 6.4x Organic Virality** |
-| **Direct Repository Click-Through (CTR)**| 0.4% | 0.8% | **3.2% (High-intent developers)** |
-| **Shareability & Repost Rate** | Low (Looks messy) | Low (Lacks branding) | **Very High (Saved as reference cheat sheet)** |
+Paste an API example with a short explanation into [NavoKit Markdown to Image](/en/tools/markdown-to-image). Organize it with headings, lists, tables, or code blocks, inspect the live preview, and export a PNG. Conversion runs in the browser and the image includes a NavoKit mark.
 
----
+The current interface uses a fixed white card style. It has no theme, syntax-highlighting, window-frame, transparent-background, or aspect-ratio selector, and does not offer PDF, vector, or batch export. The image height follows the content, so split long material before exporting.
 
-## 4. How to Generate Clean Visual Code Cards with NavoKit
-
-Creating multi-slide visual code decks manually in Figma or Photoshop is exhausting. It takes 45 minutes of aligning font bounding boxes, adjusting drop shadows, and wrestling with syntax themes.
-
-DevRel teams using **[NavoKit Markdown to Image](/tools/markdown-to-image)** automate this entire production pipeline in seconds:
-
-```mermaid
-graph LR
-    Doc["Raw Markdown / Code Snippet (.md)"] --> Tool["NavoKit Markdown to Image Engine"]
-    Tool --> Style["Choose Preset: Tokyo Night / Mac Window / Glassmorphism"]
-    Style --> Render["Instant High-DPI Vector Render"]
-    Render --> Export["Download 1080x1350 Carousel Ready PNG/PDF"]
-```
-
-### The 3-Step DevRel Workflow with NavoKit:
-1. **Drop in Your Markdown**: Paste your code snippets alongside Markdown headers, bullet points, and code annotations directly into the editor.
-2. **Select Developer Aesthetic**: Toggle between sleek dark-mode palettes (Cyberpunk, GitHub Dark, Tokyo Night) and enable macOS window controls with subtle frosted glass shadows.
-3. **Export Carousel-Ready Dimensions**: One-click export to 4:5 vertical aspect ratio (1080 $\times$ 1350px)—the mathematical sweet spot that occupies maximum vertical screen real estate on mobile feeds without clipping.
-
-Try creating your first viral developer carousel today with **[NavoKit Free Markdown to Image](/tools/markdown-to-image)**.
-
----
+For a carousel or presentation, prepare and export each card separately, then assemble it in your publishing or presentation tool. Keep the original text and code links available for readers who need to copy them.
 
 ## Summary
 

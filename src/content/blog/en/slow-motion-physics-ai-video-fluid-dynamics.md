@@ -2,10 +2,9 @@
 title: "Slow-Motion Physics in AI Video: How to Prompt Fluid Dynamics and Particle Explosions"
 description: "Why high-speed generative video clips turn into muddy pixel mush, and how the Navier-Stokes Particle Prompting (NSPP) matrix controls viscosity, surface tension, and 1000fps cinematic motion."
 date: "2026-09-09"
-updatedAt: "2026-09-09T10:00:00Z"
 intent: "tool_guide"
 difficulty: "advanced"
-readingTime: 8
+updatedAt: "2026-10-09"
 ---
 
 Creating slow-motion footage in generative video diffusion models is one of the most punishing stress tests in digital cinematography.
@@ -100,31 +99,13 @@ Optics: Total internal reflection inside ice cube, condensation beads trickling 
 
 ---
 
-## 4. Physical Consistency Benchmarks: Vague vs. NSPP Prompts
+## Trying a text prompt in NavoKit
 
-We evaluated 80 slow-motion generations across leading video diffusion models:
+[NavoKit AI Video Generator](/en/tools/free-ai-video-generator) accepts a text prompt, a format, and an automatic or approximately 3, 5, 10, or 18 second duration preset. You can preview and download a generated clip. The result panel and returned file determine the actual dimensions and duration.
 
-| Metric | Vague "Slow-Mo" Prompt | NSPP Physics Matrix Prompt | Improvement |
-| :--- | :--- | :--- | :--- |
-| **Particle Conservation (No Vanishing Shards)** | 18% | **88%** | **$4.8\times$ Physical Reality** |
-| **Fluid Surface Tension Realism** | 24% | **92%** | **$3.8\times$ Liquid Fidelity** |
-| **Temporal Jitter & Ghosting** | 64% (Heavy distortion) | **< 8% (Smooth linear flow)** | **- 87.5% Artifacts** |
+Describe slow motion as a visual intention in the prompt. The request uses a fixed 24 fps setting; there is no high-speed capture, frame interpolation, fluid-simulation toggle, or 4K/60 fps export control. Review the actual motion and file specifications instead of treating a high-frame-rate phrase as a technical setting.
 
-Conditioning the model with exact fluid dynamic terminology anchors the latent trajectory, preventing temporal collapse.
-
----
-
-## 5. Directing Studio-Grade Slow Motion in NavoKit
-
-Executing complex fluid simulations shouldn't require burning through expensive API tokens on trial and error.
-
-With **[NavoKit Free AI Video Generator](/en/tools/ai-video-generator)**, you can bring high-speed cinematic concepts to life effortlessly:
-
-* **High-Speed Physics Presets**: One-click toggles for Fluid Crown Splashes, Explosive Shatters, and Macro Viscosity flows.
-* **Aspect Ratio Optimization**: Lock widescreen 16:9 or vertical 9:16 aspect ratios tailored for luxury brand commercials and viral social clips.
-* **High-Bitrate MP4 Export**: Zero-watermark exports preserving every razor-sharp droplet and particle transient.
-
----
+Start with one simple shot and change one prompt detail between attempts. Queue time varies, and the output needs a human check for quality and accuracy.
 
 ## Summary
 

@@ -159,7 +159,7 @@ export default function ToolPageContent({
 
       {examples && examples.length > 0 && (
         <section className="tool-content__section">
-          <span className="eyebrow">{zh ? "真实示例" : "Product examples"}</span>
+          <span className="eyebrow">{zh ? "产品示例" : "Product examples"}</span>
           <h2>{exampleHeading}</h2>
           <div className="example-proof-grid" aria-label={zh ? "产品示例" : "Product examples"}>
             {examples.map((item, index) => (

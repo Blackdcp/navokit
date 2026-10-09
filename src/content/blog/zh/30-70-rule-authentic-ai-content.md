@@ -2,13 +2,13 @@
 title: "30/70 黄金法则：如何避免沦为 AI 套话生成器？"
 description: "人们对 AI 废话已经审美疲劳。本文将为你介绍 AI 内容创作的 30/70 法则、发布前“去 AI 化”清单，以及一个完整的多平台图文视频工作流。"
 date: "2026-07-20"
-updatedAt: "2026-07-20"
 workflowId: "social-media"
 toolIds: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
 relatedTools: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
 intent: "framework"
 difficulty: "intermediate"
 readingTime: 5
+updatedAt: "2026-10-09"
 ---
 
 本周，一位名叫 Simon Willison 的开发者做了一个名为「LLM cliché highlighter（AI 套话高亮器）」的小工具。它的唯一功能，就是扫描文本并高亮那些大模型最爱用的词：*深入探讨（delve）、画卷（tapestry）、证明了（testament to）、领域（realm）*。
@@ -46,10 +46,10 @@ readingTime: 5
 不要对 AI 说“帮我写一篇关于营销的文章”。相反，把你在备忘录里那些粗糙、凌乱的真实想法，直接扔进我们的 [AI 社交媒体文案生成器](/zh/tools/ai-social-booster)。它会吸收你的人类思想，瞬间为你起草出适配 X、LinkedIn 和小红书格式的初稿。你只需在初稿上稍加个性化微调。
 
 ### 第二步：抓住眼球（视频）
-纯文本很容易被滑过。为了在信息流里留住读者，你可以从文章中提取核心主题，用我们的 [免费 AI 视频生成器](/zh/tools/free-ai-video-generator) 跑一段 5 秒的电影级 B-roll 短片作为封面或配图。一段定制的高清动态画面，能立刻让你的帖子从“普通的碎碎念”升级为高级内容。
+如果一段短画面能帮助表达，可以用 [AI 视频生成器](/zh/tools/free-ai-video-generator) 请求生成约 5 秒的片段。检查实际时长、构图与动作后，再决定是否放进帖子。
 
 ### 第三步：总结与传播（图像）
-如果你的帖子包含框架、方法论或清单（比如上面的 Checklist！），千万不要只让它们留在正文里。人们非常喜欢收藏和转发干货图。把你提炼的要点复制到我们的 [Markdown 转图片](/zh/tools/markdown-to-image) 工具中，一键生成带有高级暗色玻璃质感的视觉卡片，放在帖子的末尾或者作为九宫格的中心。
+如果你的帖子包含框架、方法论或清单（比如上面的 Checklist！），千万不要只让它们留在正文里。人们非常喜欢收藏和转发干货图。把你提炼的要点复制到我们的 [Markdown 转图片](/zh/tools/markdown-to-image) 工具中，检查白色卡片预览并导出 PNG，放在帖子的末尾或者作为九宫格的中心。
 
 ## 写在最后
 

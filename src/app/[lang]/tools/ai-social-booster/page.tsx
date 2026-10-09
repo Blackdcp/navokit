@@ -1,6 +1,7 @@
 import { getDictionary } from '../../../../lib/dictionaries'
 import SocialBoosterClient from '../../../../components/SocialBoosterClient'
 import SiteHeader from '../../../../components/SiteHeader'
+import SiteFooter from '../../../../components/SiteFooter'
 import { Metadata } from 'next'
 import { localizedCanonical } from '../../../../lib/site'
 import { SITE_URL } from '../../../../lib/site'
@@ -93,6 +94,7 @@ export default async function SocialBoosterPage({
       <main>
         <SocialBoosterClient dict={dict} lang={lang} content={content} />
       </main>
+      <SiteFooter lang={lang} />
     </div>
   )
 }

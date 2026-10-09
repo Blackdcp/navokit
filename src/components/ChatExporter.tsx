@@ -157,8 +157,9 @@ function saveBlob(blob: Blob, filename: string) {
 }
 
 export default function ChatExporter({ dict, lang, content }: { dict: Dictionary; lang: "en" | "zh"; content: ToolPageContentData }) {
-  const [markdown, setMarkdown] = useState("# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
+  const [markdown, setMarkdown] = useState(lang === "zh" ? "# 项目笔记\n\n用**小工具**，把想法整理清楚。\n\n- 清晰的输入\n- 实用的输出\n- 方便分享" : "# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
   const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
   const watermarkLogoRef = useRef<HTMLImageElement>(null);
   const zh = lang === "zh";
@@ -168,8 +169,9 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
   }, []);
 
   async function download() {
-    if (!previewRef.current) return;
+    if (!previewRef.current || exporting || !markdown.trim()) return;
     setExporting(true);
+    setExportError("");
     const exportNode = previewRef.current;
     const watermarkLogo = watermarkLogoRef.current;
     try {
@@ -232,6 +234,7 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
         characters: markdown.length,
       });
       console.error("Markdown export failed", caught);
+      setExportError(zh ? "暂时无法导出图片。请保留输入内容，移除无法加载的外部图片后重试，或换一个浏览器。" : "The image could not be exported. Keep your text, remove any external images that cannot load, and try again or use another browser.");
     } finally {
       setExporting(false);
     }
@@ -250,19 +253,20 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
         <section className="tool-workspace tool-container">
           <div className="workspace-panel">
             <div className="workspace-panel__header">
-              <div><span>01</span><strong>{zh ? "粘贴 Markdown" : "Paste Markdown"}</strong></div>
-              <small>{markdown.length} characters</small>
+              <div><span>01</span><strong id="markdown-input-label">{zh ? "粘贴 Markdown" : "Paste Markdown"}</strong></div>
+              <small>{markdown.length} {zh ? "个字符" : "characters"}</small>
             </div>
-            <textarea className="workspace-textarea" value={markdown} onChange={event => setMarkdown(event.target.value)} placeholder={dict.tools.chatExporter.editor.placeholder} />
+            <textarea className="workspace-textarea" aria-labelledby="markdown-input-label" value={markdown} onChange={event => setMarkdown(event.target.value)} placeholder={dict.tools.chatExporter.editor.placeholder} />
           </div>
 
           <div className="workspace-panel workspace-panel--preview">
             <div className="workspace-panel__header">
               <div><span>02</span><strong>{dict.tools.chatExporter.editor.previewTitle}</strong></div>
-              <button className="button button--blue button--small" disabled={!markdown || exporting} onClick={download}>
+              <button className="button button--blue button--small" disabled={!markdown.trim() || exporting} onClick={download}>
                 {exporting ? dict.tools.chatExporter.editor.downloading : dict.tools.chatExporter.editor.downloadImage}
               </button>
             </div>
+            {exportError && <p className="inline-error" role="alert">{exportError}</p>}
             <div className="preview-canvas">
               <div ref={previewRef} className="markdown-export">
                 <div className="export-markdown prose">
