@@ -1,50 +1,38 @@
-name: Submit production sitemap
+name: SEO URL Indexing
 
 on:
-  deployment_status:
-  workflow_dispatch:
-    inputs:
-      production_confirmed:
-        description: The release is live and verified at https://www.navokit.com
-        type: boolean
-        required: true
-        default: false
-
-permissions:
-  contents: read
-
-concurrency:
-  group: production-sitemap
-  cancel-in-progress: false
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/content/blog/**/*.md'
 
 jobs:
-  submit-sitemap:
-    if: >-
-      (github.event_name == 'deployment_status' &&
-       github.event.deployment_status.state == 'success' &&
-       (github.event.deployment.production_environment == true ||
-        (github.event.deployment.environment == 'Production' &&
-         github.event.deployment.transient_environment == false))) ||
-      (github.event_name == 'workflow_dispatch' && inputs.production_confirmed == true)
+  submit-urls:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
-      - name: Checkout trusted production branch
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          fetch-depth: 0 # Required by tj-actions/changed-files
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: npm
+          node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Submit and verify the production sitemap
+      - name: Get Changed Markdown Files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: src/content/blog/**/*.md
+
+      - name: Submit URLs to Google Indexing API
+        if: steps.changed-files.outputs.any_changed == 'true'
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-          GSC_SITE_URL: ${{ vars.GSC_SITE_URL }}
-        run: node scripts/submit-sitemap.mjs --submit
+        run: |
+          node scripts/submit-urls.mjs "${{ steps.changed-files.outputs.all_changed_files }}"

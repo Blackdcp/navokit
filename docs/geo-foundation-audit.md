@@ -47,7 +47,7 @@ node --test scripts/crawl-dates.test.mjs
 
 The audits use public GET requests, local image decoding, or mocked submission validation. They do not run paid AI generation, send email, or submit IndexNow requests. A local pass confirms implementation, not live indexing.
 
-Local validation on 2026-10-09: production build passed; GEO audit passed 578 checks across 44 pages; crawl audit passed 2,731 checks across 313 sitemap URLs and 310 text-index links; existing SEO audit passed 1,141 checks; catalog audit passed 973 checks; smoke tests passed 26 checks (live paid generation skipped). Seven IndexNow/date regression tests passed. Lint has no errors and retains two existing warnings in `scripts/submit-urls.mjs`. Desktop and 390px mobile checks confirmed category tables, product source anchors, article bylines, and section links. IndexNow was dry-run only.
+Final release validation on 2026-10-09: production build passed; GEO 582/582, catalog 1,027/1,027, crawl 2,731/2,731, and SEO 1,141/1,141 passed. Fourteen date/IndexNow/Search Console mock tests and submission mock checks passed. Browser verification covered 72 English/Chinese desktop/mobile page states plus filter focus, load-more focus, language/menu behavior, submission-email preparation, and an actual PNG export. Live paid AI generation was not invoked.
 
 ## After deployment
 
@@ -61,3 +61,14 @@ Local validation on 2026-10-09: production build passed; GEO audit passed 578 ch
 - [Google: AI features and your website](https://developers.google.com/search/docs/appearance/ai-features): existing search eligibility and content practices apply; there is no special required AI file or schema, and inclusion is not guaranteed.
 - [Google: structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies): markup should represent visible, relevant content; no fabricated reviews or identities.
 - [IndexNow documentation](https://www.indexnow.org/documentation): URL notification and key verification protocol. Operational steps are in [bing-geo-indexing.md](bing-geo-indexing.md).
+
+## Production release record — 2026-10-09
+
+- Published through the existing Vercel project to https://www.navokit.com, deployment `dpl_BJxSrsxgFBZjg5FTv8qaZwbYdpQB` (source release commit `2b46a82`).
+- Production route audit: 313/313 canonical HTML pages, 2,292 unique internal links, 1,053 assets, 1,938 anchors; 5,223 checks, no failures or warnings. Production smoke: 26 passed, with 2 intentional skips for live AI generation. Production GEO 582/582 and crawl 2,731/2,731 passed.
+- Google Search Console: https://www.navokit.com/sitemap.xml manually resubmitted to `sc-domain:navokit.com`; success dialog and October 9 submission date verified. Its older crawl count remains pending refresh.
+- Bing Webmaster Tools: the canonical www sitemap manually resubmitted; October 9 submission date and Processing status verified. No unrelated property or historical discovered apex sitemap was changed.
+- IndexNow: public key verified, all 313 canonical URLs submitted once; HTTP 200 receipt. Receipt does not establish indexing, rankings, or citations.
+- The owner explicitly declined a GitHub workflow update and chose manual submission. The existing workflow and legacy script are restored unchanged. The release was deployed from the local workspace; the rejected GitHub push did not update remote main. Source commits remain local. Do not assume remote main is the production source for a subsequent deployment.
+- Content review corrected 73 localized articles and removed 46 unsupported site-specific performance/test sections. This was not a complete factual review of the historical research archive; formal references are still missing.
+- Production SMTP is not configured. The submission page truthfully prepares a mail draft for the visitor to send; it does not claim automatic delivery. No real submission emails were sent during testing.

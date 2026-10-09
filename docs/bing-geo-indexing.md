@@ -13,32 +13,27 @@ Google states that ordinary SEO requirements also apply to its AI features and t
 
 Configuration files in the repository do not prove an account is verified or a production URL is indexed. Record those results from the owner dashboards after publishing.
 
-## Google Search Console automation
+## Google Search Console submission
 
-Ordinary product and article pages use the Search Console sitemap API. The old Google Indexing API job has been removed: that API is restricted to supported job-posting and livestream pages. [Google Indexing API scope](https://developers.google.com/search/apis/indexing-api/v3/using-api)
+For the October 9, 2026 release, the owner chose a direct Vercel production deployment and manual sitemap updates. The existing GitHub Actions workflow was not changed or activated by this release. Its historical Google Indexing API approach is not appropriate for ordinary articles: that API is restricted to supported job-posting and livestream pages. Do not use it for this manual release. [Google Indexing API scope](https://developers.google.com/search/apis/indexing-api/v3/using-api)
 
-The `Submit production sitemap` workflow runs after a GitHub deployment is marked successful with `production_environment: true`, or with environment `Production` and `transient_environment: false`. The latter matches this repository's observed Vercel production deployment payload, which leaves the production flag false. It does not run on a source push or a preview deployment. Hosting integrations that do not emit that production deployment event can run it manually after the release is live, setting `production_confirmed` to `true`. The workflow checks out the trusted `main` branch, then validates the public sitemap before any submission.
+After the production site is verified, resubmit `https://www.navokit.com/sitemap.xml` in the existing NavoKit Search Console property. Bing Webmaster Tools must be updated separately. A successful submission confirms receipt, not indexing.
 
-Configuration:
-
-- Enable the **Google Search Console API** in the service account's Google Cloud project.
-- Retain the existing `GCP_SA_KEY` Actions secret containing the service-account JSON. Add that service account to an existing NavoKit Search Console property with owner or full-user access.
-- Optional Actions variable `GSC_SITE_URL` selects `https://www.navokit.com/`, `sc-domain:navokit.com`, or `sc-domain:www.navokit.com`. When omitted, the script discovers an authorized property in that order. It never creates properties or selects unrelated sites.
-
-The script uses the `https://www.googleapis.com/auth/webmasters` scope, submits only `https://www.navokit.com/sitemap.xml`, and retrieves its registration receipt. A pending receipt is a successful submission awaiting processing, not proof that any page is indexed. [Sitemap submission API](https://developers.google.com/webmaster-tools/v1/sitemaps/submit), [property discovery API](https://developers.google.com/webmaster-tools/v1/sites/list)
+A tested optional manual script is available for a future release with API credentials. It uses the Search Console sitemap API, selects only an existing authorized NavoKit property, validates the live sitemap and retrieves a receipt. It is not connected to an automatic workflow.
 
 ```bash
 # Read-only production sitemap validation; no credentials required.
 node scripts/submit-sitemap.mjs --dry-run
 
-# After production deployment, with GCP_SA_KEY loaded securely into the environment.
+# Optional manual API submission after production verification.
+# Requires Search Console API access and GCP_SA_KEY loaded securely.
 node scripts/submit-sitemap.mjs --submit
 
 # Mocked notification tests; no external requests or real credentials.
 node --test scripts/submit-sitemap.test.mjs
 ```
 
-This Google workflow does not register the sitemap with Bing; complete Bing Webmaster Tools registration separately and use IndexNow for changed-page notifications below.
+Optional API configuration requires the Google Search Console API enabled and the existing service account granted owner or full-user access to the NavoKit property. `GSC_SITE_URL` can select `https://www.navokit.com/`, `sc-domain:navokit.com`, or `sc-domain:www.navokit.com`; otherwise the script discovers an authorized NavoKit property. This release does not create credentials or grant access. [Sitemap API](https://developers.google.com/webmaster-tools/v1/sitemaps/submit)
 
 ## Validate before publishing
 
