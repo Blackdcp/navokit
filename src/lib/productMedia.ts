@@ -38,6 +38,17 @@ export const productMedia: Record<string, ProductMedia> = {
     imageSourceUrl: "/images/tool-examples/ai-video-red-fox.mp4",
     checkedAt: "2026-10-09",
   },
+  railmystery: {
+    logo: "/products/railmystery/logo.png",
+    logoAlt: "RailMystery",
+    image: "/products/railmystery/preview.png",
+    imageAlt: {
+      en: "RailMystery’s official tabletop investigation terminal and mobile detective interface.",
+      zh: "RailMystery 官方剧本杀推理解谜大屏终端与手机探员交互界面。",
+    },
+    sourceUrl: "https://railmystery.onrender.com/presale/",
+    checkedAt: "2026-10-16",
+  },
   pexo: {
     logo: "/products/pexo/logo.png",
     logoAlt: "Pexo",
