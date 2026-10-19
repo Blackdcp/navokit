@@ -38,6 +38,29 @@ export const productMedia: Record<string, ProductMedia> = {
     imageSourceUrl: "/images/tool-examples/ai-video-red-fox.mp4",
     checkedAt: "2026-10-09",
   },
+  "shift-calendar-alarm": {
+    logo: "/products/shift-calendar-alarm/logo.png",
+    logoAlt: "Shift Calendar Alarm",
+    image: "/products/shift-calendar-alarm/preview.jpg",
+    imageAlt: {
+      en: "Shift Calendar Alarm showing a monthly shift calendar and synced upcoming iPhone alarms.",
+      zh: "班表闹钟展示的月度轮班日历与已自动同步的 iPhone 原生闹钟列表。",
+    },
+    sourceUrl: "https://shift-calendar-alarm.pages.dev/",
+    imageSourceUrl: "https://shift-calendar-alarm.pages.dev/assets/og/en.jpg",
+    checkedAt: "2026-10-19",
+  },
+  yonaris: {
+    logo: "/products/yonaris/logo.png",
+    logoAlt: "Yonaris",
+    image: "/products/yonaris/preview.png",
+    imageAlt: {
+      en: "Yonaris AI visibility dashboard comparing AI answers with product truth records.",
+      zh: "Yonaris AI 可见度诊断界面，对照 AI 回答与结构化产品事实依据。",
+    },
+    sourceUrl: "https://yonaris.com/",
+    checkedAt: "2026-10-19",
+  },
   railmystery: {
     logo: "/products/railmystery/logo.png",
     logoAlt: "RailMystery",
