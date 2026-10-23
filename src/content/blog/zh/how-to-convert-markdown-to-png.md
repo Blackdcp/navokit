@@ -1,6 +1,6 @@
 ---
 title: "如何把 Markdown 转成 PNG 图片"
-description: "把 Markdown、AI 回复和结构化笔记转换成干净 PNG 图片卡片的实用流程。"
+description: "了解如何把 Markdown、AI 回复和结构化笔记导出为清晰的 PNG 图片卡片。本文说明内容整理、实时预览、标题列表与代码块检查、PNG 导出和移动端排版建议，并介绍适合分享的场景及发布前的隐私检查。"
 date: "2026-06-29"
 updatedAt: "2026-07-01"
 workflowId: "content-export"

@@ -17,7 +17,7 @@ export async function generateMetadata({
       : "Free AI Video Generator - Create Videos from Text | NavoKit";
   const description =
     lang === "zh"
-      ? "将文本提示词生成 AI 短视频。支持横版、竖版和方形画面，无需注册。"
+      ? "使用 NavoKit 免费 AI 视频生成器，将文字描述转为可预览和下载的 MP4 短视频。支持横版、竖版和方形画面，可自动推荐或指定视频长度。查看真实生成示例、提示词写法和使用限制；免费共享容量繁忙时可能需要排队。"
       : "Create short AI videos from text prompts. Choose landscape, portrait, or square formats without signing up.";
 
   return {
@@ -59,7 +59,7 @@ export default async function AiVideoPage({
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         description:
           lang === "zh"
-            ? "在线文生视频工具，可将提示词生成短视频。"
+            ? "使用 NavoKit 免费 AI 视频生成器，将文字描述转为可预览和下载的 MP4 短视频。支持横版、竖版和方形画面，可自动推荐或指定视频长度。查看真实生成示例、提示词写法和使用限制；免费共享容量繁忙时可能需要排队。"
             : "An online text-to-video tool that turns prompts into short videos.",
       },
       {
