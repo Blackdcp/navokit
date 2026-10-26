@@ -38,6 +38,17 @@ export const productMedia: Record<string, ProductMedia> = {
     imageSourceUrl: "/images/tool-examples/ai-video-red-fox.mp4",
     checkedAt: "2026-10-09",
   },
+  voicewarp: {
+    logo: "/products/voicewarp/logo.png",
+    logoAlt: "VoiceWarp",
+    image: "/products/voicewarp/preview.png",
+    imageAlt: {
+      en: "VoiceWarp online voice changer interface showing 22 sound effect presets and live microphone controls.",
+      zh: "VoiceWarp 免费在线变声器主界面，展示 22 种声音预设与麦克风实时调节面板。",
+    },
+    sourceUrl: "https://voicewarp.ai",
+    checkedAt: "2026-10-26",
+  },
   "shift-calendar-alarm": {
     logo: "/products/shift-calendar-alarm/logo.png",
     logoAlt: "Shift Calendar Alarm",
