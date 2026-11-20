@@ -1,14 +1,28 @@
 ---
-title: "如何把 Markdown 转成 PNG 图片"
-description: "了解如何把 Markdown、AI 回复和结构化笔记导出为清晰的 PNG 图片卡片。本文说明内容整理、实时预览、标题列表与代码块检查、PNG 导出和移动端排版建议，并介绍适合分享的场景及发布前的隐私检查。"
-date: "2026-06-29"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image"]
-intent: "how_to"
-difficulty: "beginner"
+title: 如何把 Markdown 转成 PNG 图片
+description: >-
+  了解如何把 Markdown、AI 回复和结构化笔记导出为清晰的 PNG 图片卡片。本文说明内容整理、实时预览、标题列表与代码块检查、PNG
+  导出和移动端排版建议，并介绍适合分享的场景及发布前的隐私检查。
+date: '2026-06-29'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+intent: how_to
+difficulty: beginner
 readingTime: 5
+tldr: >-
+  把 Markdown 转为高清 PNG 最省心的方式，是直接将标准 GFM 语法（标题、列表、表格、代码块）粘贴到纯浏览器本地渲染工具中，按 2x
+  像素比一键导出。全程在本地 Canvas 完成，既避免截屏模糊与留白不均，也无需上传文本到服务器。
+sources:
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
+  - title: CommonMark 官方规范
+    url: 'https://spec.commonmark.org/'
+  - title: 'MDN Web Docs: Canvas API'
+    url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'
 ---
 
 Markdown 很适合写作、整理笔记和保存 AI 回复，但它并不总是适合直接分享。很多聊天工具、社交平台和视觉内容场景不会保留 Markdown 格式：标题层级可能丢失，列表可能变成普通文字，代码块也可能很难阅读。

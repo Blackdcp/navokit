@@ -1,14 +1,25 @@
 ---
-title: "Free AI Video Generator Without Watermark: A Publishing Checklist"
-description: "Learn how to test a free AI video generator, check watermark expectations, review rights, and prepare short clips for social publishing."
-date: "2026-07-01"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
-intent: "use_case"
-difficulty: "beginner"
+title: 'Free AI Video Generator Without Watermark: A Publishing Checklist'
+description: >-
+  Learn how to test a free AI video generator, check watermark expectations,
+  review rights, and prepare short clips for social publishing.
+date: '2026-07-01'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+  - markdown-to-image
+intent: use_case
+difficulty: beginner
 readingTime: 6
-updatedAt: "2026-10-09"
+updatedAt: '2026-10-09'
+tldr: >-
+  When evaluating free AI video generators, check four practical boundaries
+  before committing a workflow: queue wait times on shared capacity, actual
+  output resolution and duration presets, watermark and commercial-use terms,
+  and whether prompts are sent to third-party processing services.
 ---
 
 Many people search for a free AI video generator without watermark because they want a clean clip they can test, share, or use as a visual idea without turning the output into an ad for another service.

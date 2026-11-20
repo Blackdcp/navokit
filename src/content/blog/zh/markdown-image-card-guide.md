@@ -1,14 +1,25 @@
 ---
-title: "Markdown 图片卡片指南：把笔记变成可分享视觉内容"
-description: "学习如何把笔记、AI 回复、清单、提示词和短教程整理成干净的 Markdown 图片卡片。"
-date: "2026-07-01"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: Markdown 图片卡片指南：把笔记变成可分享视觉内容
+description: 学习如何把笔记、AI 回复、清单、提示词和短教程整理成干净的 Markdown 图片卡片。
+date: '2026-07-01'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  高转发率的 Markdown 图片卡片核心在于“3
+  秒可读”：每张只放一个主题、使用清晰标题层级与短列表、保留充足留白与高对比度字体，把卡片当作可独立传播的结论单元，而不是把整篇长文塞进一张长图。
+sources:
+  - title: CommonMark 官方规范
+    url: 'https://spec.commonmark.org/'
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
 ---
 
 Markdown 图片卡片，是由结构化文本生成的小型视觉资产。它通常包含一个标题、几个短段落或列表，并通过排版让内容更容易扫读。

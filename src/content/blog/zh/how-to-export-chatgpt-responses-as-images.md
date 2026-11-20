@@ -1,14 +1,25 @@
 ---
-title: "如何把 ChatGPT 回复导出成图片"
-description: "把有价值的 AI 回复转换成清晰、可分享的图片卡片，同时保留标题、列表、表格和代码格式。"
-date: "2026-06-29"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: 如何把 ChatGPT 回复导出成图片
+description: 把有价值的 AI 回复转换成清晰、可分享的图片卡片，同时保留标题、列表、表格和代码格式。
+date: '2026-06-29'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  与其反复拼接模糊的手机长截屏，不如直接点击 ChatGPT 回复底部的「复制」按钮获取原始 Markdown，删去开头寒暄后粘贴到浏览器本地卡片工具导出
+  2x PNG。标题、列表、表格与代码块都能保持锐利排版，且内容不离开本机。
+sources:
+  - title: 'OpenAI Help Center: ChatGPT 官方说明'
+    url: 'https://help.openai.com/en/articles/6783457-what-is-chatgpt'
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
 ---
 
 ChatGPT 和其他 AI 助手经常会生成有结构的信息：清单、总结、提示词模板、代码片段、对比表格和步骤说明。但这些内容通常被困在聊天界面里。

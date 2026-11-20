@@ -1,5 +1,7 @@
 import { getBlogPosts } from "../../lib/blog";
-import { getCatalogProducts, getProductCategories, getProductHref, getTopics } from "../../lib/catalog";
+import { getCatalogProduct, getCatalogProducts, getProductCategories, getProductHref, getTopics } from "../../lib/catalog";
+import { getAlternativeEligibleSlugs, getAlternativesHref, getComparisonHref, getComparisons } from "../../lib/comparisons";
+import { getMarkdownUseCaseHref, getMarkdownUseCases } from "../../lib/markdownUseCases";
 import { SITE_URL, SUPPORTED_LANGUAGES, type SupportedLanguage } from "../../lib/site";
 
 export const dynamic = "force-static";
@@ -18,6 +20,7 @@ function edition(lang: SupportedLanguage) {
   const navigation = [
     ["", zh ? "首页" : "Home"],
     ["/tools", zh ? "产品库" : "Product directory"],
+    ["/compare", zh ? "产品对比与替代方案" : "Product comparisons & alternatives"],
     ["/topics", zh ? "专题" : "Collections"],
     ["/updates", zh ? "更新动态" : "Updates"],
     ["/blog", zh ? "文章" : "Articles"],
@@ -30,6 +33,19 @@ function edition(lang: SupportedLanguage) {
   return [
     `## ${zh ? "中文 · 导航" : "English · Explore"}`, "",
     ...navigation.map(([path, label]) => link(label, `/${lang}${path}`)), "",
+    `## ${zh ? "中文 · Markdown 转图片场景工具" : "English · Markdown to Image workflows"}`, "",
+    ...getMarkdownUseCases().map(item => link(item[lang].heroTitle, getMarkdownUseCaseHref(item.slug, lang), item[lang].heroSubtitle)), "",
+    `## ${zh ? "中文 · 产品对比" : "English · Product comparisons"}`, "",
+    ...getComparisons().map(pair => {
+      const left = getCatalogProduct(lang, pair.leftSlug);
+      const right = getCatalogProduct(lang, pair.rightSlug);
+      return link(`${left?.name ?? pair.leftSlug} vs ${right?.name ?? pair.rightSlug}`, getComparisonHref(pair.id, lang), pair[lang].verdict);
+    }), "",
+    `## ${zh ? "中文 · 产品替代方案" : "English · Product alternatives"}`, "",
+    ...getAlternativeEligibleSlugs().map(slug => {
+      const product = getCatalogProduct(lang, slug);
+      return link(zh ? `${product?.name ?? slug} 替代品` : `${product?.name ?? slug} alternatives`, getAlternativesHref(slug, lang), product?.tagline);
+    }), "",
     `## ${zh ? "中文 · 产品分类" : "English · Product categories"}`, "",
     ...getProductCategories(lang).map(category => link(category.name, `/${lang}/categories/${category.id}`, category.description)), "",
     `## ${zh ? "中文 · 产品" : "English · Products"}`, "",

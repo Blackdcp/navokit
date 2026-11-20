@@ -1,14 +1,21 @@
 ---
-title: "AI 视频提示词公式：写出更稳定的文生视频提示词"
-description: "使用一个简单的 AI 视频提示词公式：主体、动作、场景、镜头运动、光线和风格。"
-date: "2026-07-01"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
-intent: "how_to"
-difficulty: "beginner"
+title: AI 视频提示词公式：写出更稳定的文生视频提示词
+description: 使用一个简单的 AI 视频提示词公式：主体、动作、场景、镜头运动、光线和风格。
+date: '2026-07-01'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+  - markdown-to-image
+intent: how_to
+difficulty: beginner
 readingTime: 7
-updatedAt: "2026-10-09"
+updatedAt: '2026-10-09'
+tldr: >-
+  可复用的文生视频提示词公式由五个固定模块组成：[主体与外观细节] + [单一明确动作] + [场景与氛围] + [镜头运动与机位] +
+  [光线与视觉风格]。把每个提示词收敛到“一个连续动作”，能明显降低画面崩坏与主体漂移。
 ---
 
 想让 AI 视频提示词更稳定，最简单的方法不是写得更长，而是从“描述一整支视频”改成“描述一个清晰镜头”。

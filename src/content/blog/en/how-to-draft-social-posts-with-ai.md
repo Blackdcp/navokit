@@ -1,14 +1,30 @@
 ---
-title: "How to Draft Social Posts with AI: Real NavoKit Workflow"
-description: "Turn one idea into platform-ready X, LinkedIn, Instagram, and hook drafts with NavoKit, then edit the AI output into posts that sound specific and credible."
-date: "2026-06-23"
-workflowId: "social-drafting"
-toolIds: ["ai-social-booster"]
-relatedTools: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
-intent: "how_to"
-difficulty: "beginner"
+title: 'How to Draft Social Posts with AI: Real NavoKit Workflow'
+description: >-
+  Turn one idea into platform-ready X, LinkedIn, Instagram, and hook drafts with
+  NavoKit, then edit the AI output into posts that sound specific and credible.
+date: '2026-06-23'
+workflowId: social-drafting
+toolIds:
+  - ai-social-booster
+relatedTools:
+  - ai-social-booster
+  - markdown-to-image
+  - free-ai-video-generator
+intent: how_to
+difficulty: beginner
 readingTime: 10
-updatedAt: "2026-10-09"
+updatedAt: '2026-10-09'
+tldr: >-
+  Use AI to generate structured first drafts—hooks, angle variations, and
+  concise outlines—then edit in your own concrete examples, numbers, and voice.
+  Pairing a short drafted post with a clean Markdown-exported visual card
+  typically outperforms raw AI-generated text walls.
+sources:
+  - title: 'X Help Center: How to Post'
+    url: 'https://help.x.com/en/using-x/how-to-post'
+  - title: 'LinkedIn Help: Share Documents on LinkedIn'
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
 ---
 
 AI is useful for social writing when it helps you get from a rough idea to a structured first draft. It is not useful when it turns every thought into the same shiny, generic post.

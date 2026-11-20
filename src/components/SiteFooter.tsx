@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function SiteFooter({ lang }: { lang: string }) {
   const zh = lang === "zh";
   const groups = [
-    { title: zh ? "探索" : "Explore", links: [[zh ? "产品库" : "Products", `/${lang}/tools`], [zh ? "专题" : "Collections", `/${lang}/topics`], [zh ? "更新动态" : "Updates", `/${lang}/updates`], [zh ? "文章" : "Articles", `/${lang}/blog`]] },
+    { title: zh ? "探索" : "Explore", links: [[zh ? "产品库" : "Products", `/${lang}/tools`], [zh ? "产品对比" : "Comparisons", `/${lang}/compare`], [zh ? "专题" : "Collections", `/${lang}/topics`], [zh ? "更新动态" : "Updates", `/${lang}/updates`], [zh ? "文章" : "Articles", `/${lang}/blog`]] },
     { title: "NavoKit", links: [[zh ? "关于我们" : "About", `/${lang}/about`], [zh ? "收录与编辑说明" : "Editorial policy", `/${lang}/editorial-policy`], [zh ? "提交产品" : "Submit a product", `/${lang}/submit`], [zh ? "联系我们" : "Contact", `/${lang}/contact`]] },
     { title: zh ? "条款" : "Legal", links: [[zh ? "隐私政策" : "Privacy Policy", `/${lang}/privacy`], [zh ? "服务条款" : "Terms of Service", `/${lang}/terms`]] },
   ];

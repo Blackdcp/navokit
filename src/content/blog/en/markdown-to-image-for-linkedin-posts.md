@@ -1,14 +1,29 @@
 ---
-title: "Markdown to Image for LinkedIn Posts: Make Clean Visual Cards"
-description: "Learn how to turn Markdown notes, AI answers, checklists, and frameworks into readable image cards for LinkedIn posts."
-date: "2026-07-01"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: 'Markdown to Image for LinkedIn Posts: Make Clean Visual Cards'
+description: >-
+  Learn how to turn Markdown notes, AI answers, checklists, and frameworks into
+  readable image cards for LinkedIn posts.
+date: '2026-07-01'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 6
+tldr: >-
+  For LinkedIn feeds, keep each visual card under 100 words with one clear H1
+  heading, 3 to 5 bullet points, or a compact 3-column table. Exporting Markdown
+  directly to high-contrast PNG cards saves design time and produces uniform
+  slides you can post individually or merge into a LinkedIn Document PDF.
+sources:
+  - title: 'LinkedIn Help: Share Documents on LinkedIn'
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
 ---
 
 LinkedIn posts often work better when the idea is easy to scan. A strong paragraph can still disappear in the feed, but a clean visual card can help the reader understand the point before they decide to read the full caption.

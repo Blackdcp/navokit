@@ -1,14 +1,26 @@
 ---
-title: "如何用 AI 起草社交媒体文案"
-description: "从一个真实想法开始，用 AI 生成多版社交媒体文案初稿，并在发布前检查事实、语气、平台适配和最终表达。"
-date: "2026-06-23"
-updatedAt: "2026-07-01"
-workflowId: "social-drafting"
-toolIds: ["ai-social-booster"]
-relatedTools: ["ai-social-booster", "markdown-to-image", "free-ai-video-generator"]
-intent: "how_to"
-difficulty: "beginner"
+title: 如何用 AI 起草社交媒体文案
+description: 从一个真实想法开始，用 AI 生成多版社交媒体文案初稿，并在发布前检查事实、语气、平台适配和最终表达。
+date: '2026-06-23'
+updatedAt: '2026-07-01'
+workflowId: social-drafting
+toolIds:
+  - ai-social-booster
+relatedTools:
+  - ai-social-booster
+  - markdown-to-image
+  - free-ai-video-generator
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  用 AI 写社媒文案的正确姿势不是直接一键发布，而是用它快速产出开头思路、不同切入角度与结构草稿，再替换进你的真实案例与数据；同时把核心要点做成
+  Markdown 视觉卡片配图，效果通常远胜纯文字长文。
+sources:
+  - title: X 帮助中心：如何发帖
+    url: 'https://help.x.com/en/using-x/how-to-post'
+  - title: LinkedIn 帮助中心：在 LinkedIn 分享文档
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
 ---
 
 AI 可以帮你把一个粗糙想法整理成社交媒体文案初稿，但它不应该替你完成最终判断。更可靠的流程不是“生成后直接发布”，而是“生成、检查、改写、确认符合你的真实表达后再发布”。

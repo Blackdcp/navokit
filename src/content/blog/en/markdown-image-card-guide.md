@@ -1,14 +1,29 @@
 ---
-title: "Markdown Image Card Guide: Turn Notes into Shareable Visuals"
-description: "Learn how to create a clean Markdown image card from notes, AI responses, checklists, prompts, and short tutorials."
-date: "2026-07-01"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: 'Markdown Image Card Guide: Turn Notes into Shareable Visuals'
+description: >-
+  Learn how to create a clean Markdown image card from notes, AI responses,
+  checklists, prompts, and short tutorials.
+date: '2026-07-01'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  Effective Markdown image cards prioritize scannability over density: use one
+  strong heading, short bullet lines, generous padding, and high-contrast
+  monochrome typography. Treat each card as a standalone visual takeaway rather
+  than a full article dump.
+sources:
+  - title: CommonMark Specification
+    url: 'https://spec.commonmark.org/'
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
 ---
 
 A Markdown image card is a small visual asset made from structured text. It usually contains a title, a few short sections, and enough formatting to make the content easy to scan.

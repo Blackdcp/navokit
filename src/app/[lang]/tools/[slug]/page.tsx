@@ -10,9 +10,11 @@ import ProductVisual from "@/components/catalog/ProductVisual";
 import { productMedia } from "@/lib/productMedia";
 import { getCategoryHref } from "@/lib/categoryRoutes";
 import { getCatalogProduct, getCatalogProducts, getPricingLabel, getProductCategories, getProductKindLabel, getTopics, type Locale } from "@/lib/catalog";
+import { getAlternativeEligibleSlugs, getAlternativesHref, getComparisonHref, getComparisonsForProduct } from "@/lib/comparisons";
 import { SITE_URL, localizedCanonical } from "@/lib/site";
 import { breadcrumbList, pageIdentity, safeJsonLd } from "@/lib/schema";
 import "@/components/catalog/catalog.css";
+import "@/components/catalog/compare-pages.css";
 
 export const dynamicParams = false;
 
@@ -38,6 +40,8 @@ export default async function ProductPage({ params }: { params: Promise<{ lang: 
   const topics = getTopics(lang).filter(topic => product.topicIds.includes(topic.id));
   const categories = getProductCategories(lang).filter(category => product.categoryIds.includes(category.id));
   const related = getCatalogProducts(lang).filter(item => item.slug !== slug && item.categoryIds.some(id => product.categoryIds.includes(id))).slice(0, 3);
+  const comparisons = getComparisonsForProduct(slug);
+  const hasAlternatives = getAlternativeEligibleSlugs().includes(slug);
   const url = `${SITE_URL}/${lang}/tools/${slug}`;
   const entityId = `${SITE_URL}/en/tools/${slug}#product`;
   const media = productMedia[slug];
@@ -74,6 +78,30 @@ export default async function ProductPage({ params }: { params: Promise<{ lang: 
           <section className="cat-detail-section" id="overview"><h2>{zh ? `${product.name} 能做什么` : `What ${product.name} does`}</h2><p>{product.description}</p><ul className="cat-feature-list">{product.features.map(feature => <li key={feature}><Check size={18} aria-hidden="true" /><span>{feature}</span></li>)}</ul></section>
           {product.bestFor && <section className="cat-detail-section cat-use-case" id="use-cases"><h2>{zh ? "可以从这个场景开始" : "A place to start"}</h2><p>{product.bestFor}</p></section>}
           {topics.length > 0 && <section className="cat-detail-section"><h2>{zh ? "相关专题" : "Explore the context"}</h2><div className="cat-topic-links">{topics.map(topic => <Link href={`/${lang}/topics/${topic.id}`} key={topic.id}><span>{topic.name}</span><ArrowUpRight size={17} aria-hidden="true" /></Link>)}</div></section>}
+          {(comparisons.length > 0 || hasAlternatives) && (
+            <section className="cat-detail-section" id="comparisons">
+              <h2>{zh ? "对比与替代方案" : "Comparisons & alternatives"}</h2>
+              <div className="geo-inline-links">
+                {comparisons.map(pair => {
+                  const left = getCatalogProduct(lang, pair.leftSlug);
+                  const right = getCatalogProduct(lang, pair.rightSlug);
+                  if (!left || !right) return null;
+                  return (
+                    <Link key={pair.id} className="geo-pill-link" href={getComparisonHref(pair.id, lang)}>
+                      <span>{left.name} vs {right.name}</span>
+                      <ArrowUpRight size={15} aria-hidden="true" />
+                    </Link>
+                  );
+                })}
+                {hasAlternatives && (
+                  <Link className="geo-pill-link" href={getAlternativesHref(slug, lang)}>
+                    <span>{zh ? `查看 ${product.name} 同类替代品` : `Explore ${product.name} alternatives`}</span>
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </Link>
+                )}
+              </div>
+            </section>
+          )}
           <section className="cat-detail-section cat-source-section" id="sources"><h2>{zh ? "信息来源" : "Sources"}</h2><p>{zh ? "产品介绍依据官方公开资料整理，具体功能与方案以产品官网为准。" : "Product details are summarized from official public materials. See the provider for current features and plans."}{product.launchSource && (zh ? "所列发布记录来自 Product Hunt。" : " The listed launch record comes from Product Hunt.")}</p><p><Link href={`/${lang}/editorial-policy`}>{zh ? "了解收录、引用与更正方式" : "How we list, cite, and correct information"}</Link></p></section>
         </div>
         <aside className="cat-facts" id="product-facts">

@@ -1,14 +1,25 @@
 ---
-title: "AI Video Prompt Formula: Write Better Text-to-Video Prompts"
-description: "Use a simple AI video prompt formula: subject, action, setting, camera movement, lighting, and style."
-date: "2026-07-01"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
-intent: "how_to"
-difficulty: "beginner"
+title: 'AI Video Prompt Formula: Write Better Text-to-Video Prompts'
+description: >-
+  Use a simple AI video prompt formula: subject, action, setting, camera
+  movement, lighting, and style.
+date: '2026-07-01'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+  - markdown-to-image
+intent: how_to
+difficulty: beginner
 readingTime: 7
-updatedAt: "2026-10-09"
+updatedAt: '2026-10-09'
+tldr: >-
+  A repeatable text-to-video prompt follows five ordered building blocks:
+  [Subject + Key Detail] + [Single Clear Action] + [Setting & Atmosphere] +
+  [Camera Movement & Lens] + [Lighting & Visual Style]. Keeping prompts focused
+  on one continuous motion reduces flicker and composition drift.
 ---
 
 The easiest way to improve an AI video prompt is to stop describing an entire video and start describing one clear shot.

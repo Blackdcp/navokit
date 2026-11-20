@@ -1,11 +1,25 @@
 ---
-title: "搜索引擎的凛冬：内容创作者如何在生成式引擎优化 (GEO) 时代求生"
-description: "AI 搜索引擎正在无情吞噬自然流量。硬核解析 GEO 引用三角法则，带你突围零点击搜索时代。"
-date: "2026-07-27"
-updatedAt: "2026-07-27T10:00:00Z"
-intent: "industry_analysis"
-difficulty: "advanced"
+title: 搜索引擎的凛冬：内容创作者如何在生成式引擎优化 (GEO) 时代求生
+description: AI 搜索引擎正在无情吞噬自然流量。硬核解析 GEO 引用三角法则，带你突围零点击搜索时代。
+date: '2026-07-27'
+updatedAt: '2026-07-27T10:00:00Z'
+intent: industry_analysis
+difficulty: advanced
 readingTime: 8
+tldr: >-
+  GEO（生成式引擎优化）并非依赖某个神奇标签，而是建立在扎实的技术 SEO 之上：提供可抓取的 SSR
+  HTML、结论前置（Answer-First）摘要块、结构化对比表、可验证的一手来源引用，以及清晰的发布者实体 Schema，让搜索引擎和 AI
+  系统都能准确抽取并引用你的内容。
+sources:
+  - title: Google 搜索中心：AI 功能与你的网站
+    url: 'https://developers.google.com/search/docs/appearance/ai-features'
+  - title: Google 搜索中心：结构化数据通用指南
+    url: >-
+      https://developers.google.com/search/docs/appearance/structured-data/sd-policies
+  - title: IndexNow 协议官方文档
+    url: 'https://www.indexnow.org/documentation'
+relatedTools:
+  - markdown-to-image
 ---
 
 “十条蓝色链接”的黄金时代已经宣告死亡，而尸检报告异常残酷。随着 AI 搜索引擎——Perplexity、SearchGPT 以及 Google 的 AI Overviews——全面接管战场，传统的搜索范式已经彻底崩塌。对于内容创作者、发布商和 SEO 从业者而言，这绝不仅仅是算法的更迭，而是一场生死攸关的生存危机。你花了十年时间建立的流量管道，正被大语言模型 (LLM) 肆意榨取。它们咀嚼你的心血，向用户吐出合成答案，留给你的却只有一个微小、极易被忽视的引用链接。

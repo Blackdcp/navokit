@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { ComponentPropsWithoutRef } from "react";
+import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -156,8 +157,38 @@ function saveBlob(blob: Blob, filename: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
 }
 
-export default function ChatExporter({ dict, lang, content }: { dict: Dictionary; lang: "en" | "zh"; content: ToolPageContentData }) {
-  const [markdown, setMarkdown] = useState(lang === "zh" ? "# 项目笔记\n\n用**小工具**，把想法整理清楚。\n\n- 清晰的输入\n- 实用的输出\n- 方便分享" : "# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share");
+type BreadcrumbItem = { label: string; href?: string };
+type UseCaseLink = { title: string; description: string; href: string };
+
+export default function ChatExporter({
+  dict,
+  lang,
+  content,
+  initialMarkdown,
+  exportFilename = "navokit-markdown.png",
+  heroBadge,
+  heroTitle,
+  heroSubtitle,
+  answerFirst,
+  breadcrumbItems,
+  useCaseLinks,
+}: {
+  dict: Dictionary;
+  lang: "en" | "zh";
+  content: ToolPageContentData;
+  initialMarkdown?: string;
+  exportFilename?: string;
+  heroBadge?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  answerFirst?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  useCaseLinks?: UseCaseLink[];
+}) {
+  const defaultMarkdown = lang === "zh"
+    ? "# 项目笔记\n\n用**小工具**，把想法整理清楚。\n\n- 清晰的输入\n- 实用的输出\n- 方便分享"
+    : "# Project notes\n\n**Small tools** help people finish work faster.\n\n- Clear input\n- Useful output\n- Easy to share";
+  const [markdown, setMarkdown] = useState(initialMarkdown ?? defaultMarkdown);
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
@@ -221,7 +252,7 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
       }
 
       const blob = await canvasToPngBlob(canvas);
-      saveBlob(blob, "navokit-markdown.png");
+      saveBlob(blob, exportFilename);
       trackToolEvent("tool_markdown_export_succeeded", {
         tool: "markdown_to_image",
         lang,
@@ -243,11 +274,21 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
   return (
     <div className="site-shell">
       <SiteHeader lang={lang} />
-      <main>
+      <main id="main-content">
         <header className="tool-hero tool-container">
-          <span className="tool-badge">{zh ? "文本与导出" : "Text & Export"}</span>
-          <h1>{dict.tools.chatExporter.hero.title}</h1>
-          <p>{dict.tools.chatExporter.hero.subtitle}</p>
+          {breadcrumbItems && breadcrumbItems.length > 0 && (
+            <nav className="tool-breadcrumb" aria-label={zh ? "面包屑导航" : "Breadcrumb"}>
+              {breadcrumbItems.map((item, idx) => (
+                <span key={`${item.label}-${idx}`}>
+                  {idx > 0 && <span aria-hidden="true"> / </span>}
+                  {item.href ? <Link href={item.href}>{item.label}</Link> : <span aria-current="page">{item.label}</span>}
+                </span>
+              ))}
+            </nav>
+          )}
+          <span className="tool-badge">{heroBadge ?? (zh ? "文本与导出" : "Text & Export")}</span>
+          <h1>{heroTitle ?? dict.tools.chatExporter.hero.title}</h1>
+          <p>{heroSubtitle ?? dict.tools.chatExporter.hero.subtitle}</p>
         </header>
 
         <section className="tool-workspace tool-container">
@@ -292,7 +333,30 @@ export default function ChatExporter({ dict, lang, content }: { dict: Dictionary
           </div>
         </section>
 
+        {answerFirst && (
+          <section className="tool-container tool-answer-first" aria-label={zh ? "快速结论" : "Quick answer"}>
+            <div className="tool-answer-first__card">
+              <span className="tool-answer-first__label">{zh ? "快速结论" : "Quick answer"}</span>
+              <p>{answerFirst}</p>
+            </div>
+          </section>
+        )}
+
         <ToolPageContent lang={lang} {...content} />
+
+        {useCaseLinks && useCaseLinks.length > 0 && (
+          <section className="tool-container tool-usecase-links" aria-labelledby="markdown-usecase-heading">
+            <h2 id="markdown-usecase-heading">{zh ? "按使用场景直接导出" : "Export templates by workflow"}</h2>
+            <div className="tool-usecase-grid">
+              {useCaseLinks.map(item => (
+                <Link key={item.href} href={item.href} className="tool-usecase-card">
+                  <strong>{item.title}</strong>
+                  <span>{item.description}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
       <SiteFooter lang={lang} />
     </div>

@@ -5,6 +5,7 @@ import { localizedCanonical } from '../../../../lib/site';
 import { SITE_URL } from '../../../../lib/site';
 import { getToolPageContent } from '../../../../lib/toolPageContent';
 import { withToolGuideLinks } from '../../../../lib/toolGuideLinks';
+import { getMarkdownUseCaseHref, getMarkdownUseCases } from '../../../../lib/markdownUseCases';
 import { breadcrumbList, safeJsonLd } from '../../../../lib/schema';
 
 export async function generateMetadata({
@@ -79,10 +80,15 @@ export default async function ChatExporterPage({
       ]),
     ],
   };
+  const useCaseLinks = getMarkdownUseCases().map(item => ({
+    title: item[resolvedParams.lang].heroTitle,
+    description: item[resolvedParams.lang].heroSubtitle,
+    href: getMarkdownUseCaseHref(item.slug, resolvedParams.lang),
+  }));
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
-      <ChatExporter dict={dict} lang={resolvedParams.lang} content={content} />
+      <ChatExporter dict={dict} lang={resolvedParams.lang} content={content} useCaseLinks={useCaseLinks} />
     </>
   );
 }

@@ -1,10 +1,27 @@
 ---
-title: "Visualizing Complex Code: Why Plain Text Sharing on Twitter/X is Dead (And How to Fix It)"
-description: "Stop posting ugly code blocks on X. Discover the 4-Visual-Anchor Strategy and how turning code into stunning visuals can 10x your dev-influencer engagement."
-date: "2026-07-26"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: >-
+  Visualizing Complex Code: Why Plain Text Sharing on Twitter/X is Dead (And How
+  to Fix It)
+description: >-
+  Stop posting ugly code blocks on X. Discover the 4-Visual-Anchor Strategy and
+  how turning code into stunning visuals can 10x your dev-influencer engagement.
+date: '2026-07-26'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  Plain text posts on X cannot format code blocks or Markdown tables cleanly.
+  Wrap concise code snippets (10–20 lines) with a one-line takeaway in Markdown,
+  export a sharp 2x PNG card, and attach up to 4 cards per post for readable
+  mobile-friendly developer threads.
+sources:
+  - title: 'X Help Center: How to Post'
+    url: 'https://help.x.com/en/using-x/how-to-post'
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
 ---
 
 If you’re still copy-pasting raw code snippets into your Twitter/X timeline, I’m going to be brutally honest with you: you are shadow-banning yourself. 

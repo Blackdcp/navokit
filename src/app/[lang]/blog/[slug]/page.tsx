@@ -22,10 +22,12 @@ import NativeBanner from "../../../../components/NativeBanner";
 import AdBanner from "../../../../components/AdBanner";
 import { getTopics } from "../../../../lib/catalog";
 import { getPostTopicIds } from "../../../../lib/discovery";
+import { getBlogContextLinks } from "../../../../lib/blogContextLinks";
 import { getArticleHeadings, getArticleLinks, getArticleReferences } from "../../../../components/updates/articleContent";
 import ArticleCover from "../../../../components/updates/ArticleCover";
 import { getArticleCover } from "../../../../lib/articleCovers";
 import "../../../../components/updates/article.css";
+import "../../../../components/catalog/compare-pages.css";
 
 export const dynamicParams = false;
 
@@ -86,6 +88,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
   ].filter((candidate, index, all) => all.findIndex(item => item.slug === candidate.slug) === index).slice(0, 3);
   const relatedToolIds = new Set(post.relatedTools);
   const relatedTools = getTools(lang).filter(tool => relatedToolIds.has(tool.id)).slice(0, 3);
+  const contextLinks = getBlogContextLinks(post);
   const difficulty = formatDifficulty(post.difficulty, lang);
   const allHeadings = getArticleHeadings(post.content);
   const headings = allHeadings.filter(heading => heading.depth === 2);
@@ -174,6 +177,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
 
             <ArticleCover slug={post.slug} title={post.title} lang={lang} className="reading-cover" priority />
 
+            {post.tldr && (
+              <section className="geo-answer-box" aria-label={zh ? "核心结论" : "Key takeaway"}>
+                <span className="geo-answer-box__label">{zh ? "核心结论" : "Key takeaway"}</span>
+                <p>{post.tldr}</p>
+              </section>
+            )}
+
             {headings.length > 1 && <details className="reading-mobile-toc"><summary>{zh ? "本文目录" : "On this page"}<ChevronDown size={17} aria-hidden="true" /></summary><nav aria-label={zh ? "文章目录" : "Article contents"}>{headings.map(heading => <a key={heading.id} href={`#${heading.id}`}>{heading.title}</a>)}</nav></details>}
 
             <div className="reading-body prose max-w-none">
@@ -211,6 +221,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ lang:
             {relatedTools.length > 0 && <section className="reading-related">
               <div className="reading-section-title"><h2>{zh ? "文中相关工具" : "Related tools"}</h2><Link href={`/${lang}/tools`}>{zh ? "查看产品库" : "See directory"}<ArrowUpRight size={16} aria-hidden="true" /></Link></div>
               <div className="reading-tools">{relatedTools.map(tool => <Link key={tool.id} href={`/${lang}/tools/${tool.id}`}><strong>{tool.title}</strong><span>{tool.subtitle}</span><ArrowUpRight size={18} aria-hidden="true" /></Link>)}</div>
+            </section>}
+
+            {contextLinks.length > 0 && <section className="reading-related" aria-labelledby="reading-context-links">
+              <div className="reading-section-title"><h2 id="reading-context-links">{zh ? "相关场景工具与产品对比" : "Related workflows & comparisons"}</h2></div>
+              <div className="geo-inline-links">
+                {contextLinks.map(item => (
+                  <Link key={item.href} href={item.href} className="geo-pill-link">
+                    <span>{item.label}</span>
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </Link>
+                ))}
+              </div>
             </section>}
 
             {relatedPosts.length > 0 && <section className="reading-related">

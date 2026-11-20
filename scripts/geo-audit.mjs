@@ -185,7 +185,7 @@ async function main() {
     check((await getPage(base.origin, missingPath)).status === 404, `${missingPath}: unlisted category returns 404`);
     await Promise.all(["flora", "omi"].map(slug => auditProduct(base.origin, catalog, productMedia, lang, slug)));
     await auditArticle(base.origin, lang);
-    for (const suffix of ["", "/about", "/editorial-policy"]) {
+    for (const suffix of ["", "/about", "/editorial-policy", "/compare"]) {
       const pathname = `/${lang}${suffix}`;
       const page = await getPage(base.origin, pathname);
       basicPage(page, pathname);
@@ -195,6 +195,24 @@ async function main() {
         check(catalog.getProductCategories(lang).every(category => links.has(`/${lang}/categories/${category.id}`)), `${pathname}: all category pages have crawlable homepage links`);
       }
       if (suffix === "/editorial-policy") check(visibleText(page.dom).length > 600 && tags(page.dom, "a").some(item => item.href === `/${lang}/contact`), `${pathname}: substantive editorial and correction information`);
+      if (suffix === "/compare") {
+        const collection = page.entities.find(item => hasType(item, "CollectionPage") && item.url === `${site}${pathname}`);
+        checkPageEntity(collection, pathname);
+        check(page.entities.some(item => hasType(item, "ItemList")), `${pathname}: comparison hub has ItemList schema`);
+      }
+    }
+    for (const [suffix, expectedType] of [
+      ["/compare/aqua-voice-vs-willow-voice", "FAQPage"],
+      ["/alternatives/flora", "CollectionPage"],
+      ["/tools/markdown-to-image/chatgpt-to-image", "WebApplication"],
+    ]) {
+      const pathname = `/${lang}${suffix}`;
+      const page = await getPage(base.origin, pathname);
+      basicPage(page, pathname);
+      checkIdentity(page, pathname);
+      check(page.entities.some(item => hasType(item, expectedType)), `${pathname}: includes ${expectedType} schema`);
+      check(page.entities.some(item => hasType(item, "BreadcrumbList")), `${pathname}: includes BreadcrumbList schema`);
+      check(page.dom.includes("geo-answer-box") || page.dom.includes("tool-answer-first"), `${pathname}: includes visible Answer-First summary block`);
     }
   }
   if (failures.length) {

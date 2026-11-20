@@ -1,14 +1,21 @@
 ---
-title: "免费无水印 AI 视频生成器：发布前检查清单"
-description: "了解如何测试免费 AI 视频生成器，检查水印、输出质量、使用权和发布前的关键风险。"
-date: "2026-07-01"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster", "markdown-to-image"]
-intent: "use_case"
-difficulty: "beginner"
+title: 免费无水印 AI 视频生成器：发布前检查清单
+description: 了解如何测试免费 AI 视频生成器，检查水印、输出质量、使用权和发布前的关键风险。
+date: '2026-07-01'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+  - markdown-to-image
+intent: use_case
+difficulty: beginner
 readingTime: 5
-updatedAt: "2026-10-09"
+updatedAt: '2026-10-09'
+tldr: >-
+  挑选免费 AI
+  视频生成工具时，建议重点核对四个真实边界：共享算力的排队与失败重试机制、实际输出的分辨率与时长档位、水印与商用授权条款，以及提示词是否会经过第三方云端服务处理。
 ---
 
 很多人搜索免费无水印 AI 视频生成器，是因为他们想快速得到一段干净的视频，用来测试创意、做社交内容、做产品概念，或者作为后续剪辑的视觉参考。

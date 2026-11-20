@@ -1,10 +1,21 @@
 ---
-title: "GitHub README 已死：如何瞬间可视化你的代码仓库结构"
-description: "为什么冗长的纯文本 README 正在扼杀你的开源项目采用率？如何利用“README 转化漏斗”和可视化架构来拯救你的仓库跳出率。"
-date: "2026-08-16"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: GitHub README 已死：如何瞬间可视化你的代码仓库结构
+description: 为什么冗长的纯文本 README 正在扼杀你的开源项目采用率？如何利用“README 转化漏斗”和可视化架构来拯救你的仓库跳出率。
+date: '2026-08-16'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  高转化率的 GitHub README 应在首屏直接回答三个问题：项目解决什么痛点、60 秒内怎么跑起来、与同类方案有何区别。用清晰的 GFM
+  对比表、简洁架构图与可复制 CLI 示例替代冗长纯文字，能显著提升开发者停留与 Star 转化。
+sources:
+  - title: GitHub 官方文档：关于 README
+    url: >-
+      https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
 ---
 
 你刚刚花了整整六个月的时间，打造了一个足以改变游戏规则的开源项目。代码库干净整洁，测试覆盖率高达 99%，性能基准测试结果更是令人惊叹。你满怀期待地点击了“发布”，在 Hacker News、X（推特）和 Reddit 上疯狂发帖，然后坐等 Star 数量如潮水般涌来。

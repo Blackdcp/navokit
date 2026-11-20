@@ -9,6 +9,7 @@ import { getCatalogProducts, getProductCategories, getProductHref, getTopics, ty
 import { localizedCanonical, siteSocialMetadata, SITE_URL } from "@/lib/site";
 import { breadcrumbList, pageIdentity, safeJsonLd } from "@/lib/schema";
 import "@/components/catalog/catalog.css";
+import "@/components/catalog/compare-pages.css";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -39,7 +40,16 @@ export default async function ToolsPage({ params }: { params: Promise<{ lang: Lo
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
     <SiteHeader lang={lang} />
     <main className="marketing-container cat-page">
-      <header className="cat-page-heading"><span className="cat-eyebrow">{zh ? "产品发现" : "PRODUCT DISCOVERY"}</span><h1>{zh ? "发现下一个值得尝试的产品。" : "Find something worth trying."}</h1><p>{zh ? "关注有新想法、能解决具体问题的产品。按你的用途探索，看看它如何工作，再决定是否试一试。" : "Fresh ideas for specific tasks. Explore what a product does, where it fits, and whether it is right for your next project."}</p></header>
+      <header className="cat-page-heading">
+        <span className="cat-eyebrow">{zh ? "产品发现" : "PRODUCT DISCOVERY"}</span>
+        <h1>{zh ? "发现下一个值得尝试的产品。" : "Find something worth trying."}</h1>
+        <p>{zh ? "关注有新想法、能解决具体问题的产品。按你的用途探索，看看它如何工作，再决定是否试一试。" : "Fresh ideas for specific tasks. Explore what a product does, where it fits, and whether it is right for your next project."}</p>
+        <div className="geo-inline-links">
+          <Link href={`/${lang}/compare`} className="geo-pill-link">{zh ? "产品对比与替代方案 →" : "Comparisons & alternatives →"}</Link>
+          <Link href={`/${lang}/tools/markdown-to-image/chatgpt-to-image`} className="geo-pill-link">{zh ? "ChatGPT 回答转图片 →" : "ChatGPT to Image →"}</Link>
+          <Link href={`/${lang}/tools/markdown-to-image/linkedin-carousel`} className="geo-pill-link">{zh ? "Markdown 转 LinkedIn 卡片 →" : "LinkedIn Visual Cards →"}</Link>
+        </div>
+      </header>
       <Suspense fallback={<div className="cat-product-grid">{products.map(product => <ProductCard key={product.slug} product={product} lang={lang} />)}</div>}><ProductDirectory products={products} categories={categories} topics={topics} lang={lang} /></Suspense>
       <aside className="cat-submit-strip"><div><h2>{zh ? "有一个值得被看见的产品？" : "Building something worth discovering?"}</h2><p>{zh ? "提交产品信息，让更多人发现你的作品。" : "Tell us about it and help more people find your work."}</p></div><Link href={`/${lang}/submit`} className="cat-button cat-button--primary">{zh ? "提交产品" : "Submit a product"}<span aria-hidden="true">↗</span></Link></aside>
     </main>

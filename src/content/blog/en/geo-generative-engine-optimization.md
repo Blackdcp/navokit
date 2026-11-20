@@ -1,11 +1,32 @@
 ---
-title: "The Search Engine Backlash: Surviving the Transition to Generative Engine Optimization (GEO)"
-description: "AI search engines are cannibalizing traffic. Here is the hardcore practitioner's guide to the GEO Citation Triangle and survival in the era of zero-click generative search."
-date: "2026-07-27"
-updatedAt: "2026-07-27T10:00:00Z"
-intent: "industry_analysis"
-difficulty: "advanced"
+title: >-
+  The Search Engine Backlash: Surviving the Transition to Generative Engine
+  Optimization (GEO)
+description: >-
+  AI search engines are cannibalizing traffic. Here is the hardcore
+  practitioner's guide to the GEO Citation Triangle and survival in the era of
+  zero-click generative search.
+date: '2026-07-27'
+updatedAt: '2026-07-27T10:00:00Z'
+intent: industry_analysis
+difficulty: advanced
 readingTime: 8
+tldr: >-
+  Generative Engine Optimization (GEO) builds on sound technical SEO rather than
+  secret AI tags: provide crawlable server-rendered HTML, clear Answer-First
+  summaries, structured comparison tables, verifiable primary sources, and
+  consistent publisher entity markup so both search engines and AI systems can
+  accurately extract and cite your pages.
+sources:
+  - title: 'Google Search Central: AI Features and Your Website'
+    url: 'https://developers.google.com/search/docs/appearance/ai-features'
+  - title: 'Google Search Central: General Structured Data Guidelines'
+    url: >-
+      https://developers.google.com/search/docs/appearance/structured-data/sd-policies
+  - title: IndexNow Protocol Documentation
+    url: 'https://www.indexnow.org/documentation'
+relatedTools:
+  - markdown-to-image
 ---
 
 The golden era of "ten blue links" is dead, and the autopsy report is brutal. As AI search engines—Perplexity, SearchGPT, and Google’s AI Overviews—dominate the landscape, the traditional search paradigm has collapsed. For content creators, publishers, and SEO professionals, this isn't merely a shift in algorithm; it's an existential crisis. The traffic pipeline you spent a decade optimizing is being siphoned off by LLMs that synthesize your hard work, spit out the answer to the user, and offer you nothing but a tiny, easily-ignored citation link in return. 

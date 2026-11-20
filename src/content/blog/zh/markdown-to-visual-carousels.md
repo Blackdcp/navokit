@@ -1,10 +1,21 @@
 ---
-title: "Markdown 转化率革命：用视觉卡片击穿 X 与 LinkedIn 社媒算法"
-description: "为什么纯文本代码在社媒上等于算法自杀？揭秘「4页微叙事闭环模型」，教你如何用 Markdown 高清卡片拉满停留时长与互动率。"
-date: "2026-08-21"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: Markdown 转化率革命：用视觉卡片击穿 X 与 LinkedIn 社媒算法
+description: 为什么纯文本代码在社媒上等于算法自杀？揭秘「4页微叙事闭环模型」，教你如何用 Markdown 高清卡片拉满停留时长与互动率。
+date: '2026-08-21'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  把 Markdown 提纲做成多页轮播图（Carousel）的标准流程是：按 H2 小节拆分、每页只讲一个核心观点（控制在 40~80
+  词或百字左右）、逐页导出风格统一的 2x PNG，再合并为 PDF 发 LinkedIn 或以多图形式发 X / 小红书。
+sources:
+  - title: LinkedIn 帮助中心：在 LinkedIn 分享文档
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
 ---
 
 如果你是一位开发者、技术博主或独立开发者（Indie Hacker），在 X（Twitter）或 LinkedIn 上分享技术干货时，大概率遇到过这种尴尬：

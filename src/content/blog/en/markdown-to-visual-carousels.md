@@ -1,10 +1,28 @@
 ---
-title: "From Markdown to High-Converting Visual Carousels: The Growth Blueprint for Technical Founders"
-description: "Why text-heavy code posts are algorithmic suicide on X and LinkedIn, and how the 4-Slide Micro-Narrative Loop turns Markdown snippets into high-converting visual assets."
-date: "2026-08-21"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: >-
+  From Markdown to High-Converting Visual Carousels: The Growth Blueprint for
+  Technical Founders
+description: >-
+  Why text-heavy code posts are algorithmic suicide on X and LinkedIn, and how
+  the 4-Slide Micro-Narrative Loop turns Markdown snippets into high-converting
+  visual assets.
+date: '2026-08-21'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  To turn a Markdown outline into a multi-slide carousel, split the document by
+  H2 sections so each slide holds one idea (40–80 words), export each section as
+  a uniform 2x PNG card, and combine the PNGs into a single PDF for LinkedIn or
+  upload sequentially as multi-image posts on X.
+sources:
+  - title: 'LinkedIn Help: Share Documents on LinkedIn'
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
 ---
 
 If you are a developer, technical marketer, or startup founder trying to share code snippets or architecture insights on social media, you have likely noticed a painful reality:

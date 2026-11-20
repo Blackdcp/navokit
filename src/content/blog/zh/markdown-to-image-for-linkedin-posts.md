@@ -1,14 +1,25 @@
 ---
-title: "Markdown 转图片用于 LinkedIn 帖子：制作清晰内容卡片"
-description: "学习如何把 Markdown 笔记、AI 回复、清单和框架转成适合 LinkedIn 发布的图片卡片。"
-date: "2026-07-01"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: Markdown 转图片用于 LinkedIn 帖子：制作清晰内容卡片
+description: 学习如何把 Markdown 笔记、AI 回复、清单和框架转成适合 LinkedIn 发布的图片卡片。
+date: '2026-07-01'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 5
+tldr: >-
+  在 LinkedIn 发图文卡片时，单张内容建议控制在 100 字以内：1 个清晰标题 + 3~5 条短要点或简洁三列表格。直接由 Markdown
+  导出高对比度 PNG，既省去在设计软件里反复对齐文本框的时间，也能快速合并为风格统一的 LinkedIn PDF 轮播文档。
+sources:
+  - title: LinkedIn 帮助中心：在 LinkedIn 分享文档
+    url: 'https://www.linkedin.com/help/linkedin/answer/a568001'
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
 ---
 
 LinkedIn 帖子需要让人快速看懂重点。好的文字当然重要，但在信息流里，一张清晰的图片卡片常常能先帮读者抓住主题。

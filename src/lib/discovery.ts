@@ -32,8 +32,8 @@ const editorialSlugs: Record<string, readonly string[]> = {
     "4k-cinematic-ai-video-volumetric-lighting-prompting", "ai-video-cross-scene-lighting-color-consistency",
     "ai-video-consistent-characters", "ai-video-camera-movement-prompts", "ai-video-ip-adapter-controlnet",
     "crowd-dynamics-multi-actor-generative-video", "ai-video-sound-design-audio-sync-foley",
-    "ai-video-aspect-ratio-mastering-outpainting", "ai-video-character-consistency",
-    "slow-motion-physics-ai-video-fluid-dynamics", "ai-video-foley-sound-design-dynamics",
+    "ai-video-aspect-ratio-mastering-outpainting",
+    "slow-motion-physics-ai-video-fluid-dynamics",
     "ai-video-micro-expressions-lipsync",
   ],
   "teams-agents": [
@@ -43,7 +43,7 @@ const editorialSlugs: Record<string, readonly string[]> = {
   ],
   "creator-essentials": [
     "raw-mermaid-to-high-dpi-technical-diagrams", "api-documentation-carousel-devrel-linkedin",
-    "github-readme-visual-structure", "github-readme-visual-facade-design", "code-to-pitch-deck-visual-markdown-fundraising",
+    "github-readme-visual-structure", "code-to-pitch-deck-visual-markdown-fundraising",
     "visualize-code-on-x-twitter", "beautiful-code-snippets-conversion", "markdown-to-visual-carousels",
     "git-diff-visual-changelog-cards", "technical-writing-whitespace-psychology-social",
     "anti-cheat-social-storytelling-copywriting", "contrarian-product-launch-b2b-social-copy",

@@ -42,6 +42,16 @@ test("sitemap preserves recorded date precision and timezone instead of adding U
       getProductHref: (product, lang) => `/${lang}/tools/${product.slug}`,
       getTopics: () => [],
     },
+    "../lib/comparisons": {
+      getAlternativeEligibleSlugs: () => [],
+      getAlternativesHref: (slug, lang) => `/${lang}/alternatives/${slug}`,
+      getComparisonHref: (id, lang) => `/${lang}/compare/${id}`,
+      getComparisons: () => [],
+    },
+    "../lib/markdownUseCases": {
+      getMarkdownUseCaseHref: (slug, lang) => `/${lang}/tools/markdown-to-image/${slug}`,
+      getMarkdownUseCases: () => [],
+    },
     "../lib/site": { SITE_URL: "https://www.navokit.com", SUPPORTED_LANGUAGES: ["en", "zh"] },
   };
   const source = readFileSync(new URL("../src/app/sitemap.ts", import.meta.url), "utf8");

@@ -3,7 +3,16 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-type ToolSlug = "free-ai-video-generator" | "ai-social-booster" | "markdown-to-image";
+type ToolSlug =
+  | "free-ai-video-generator"
+  | "ai-social-booster"
+  | "markdown-to-image"
+  | "chatgpt-to-image"
+  | "claude-to-image"
+  | "obsidian-to-image"
+  | "linkedin-carousel"
+  | "github-readme-card"
+  | "x-thread-card";
 
 type OgToolConfig = {
   eyebrow: string;
@@ -57,6 +66,72 @@ const toolCards: Record<ToolSlug, OgToolConfig> = {
     footer: "Markdown to Image",
     accent: "#0B1220",
   },
+  "chatgpt-to-image": {
+    eyebrow: "CHATGPT EXPORT",
+    title: "Export ChatGPT answers as clean PNGs",
+    subtitle: "Copy raw Markdown from ChatGPT and render a crisp 2x card locally.",
+    inputLabel: "ChatGPT Markdown",
+    input: "# 5-Step Checklist\n1. Validate workflow\n2. Export clean proof\n3. Track UTM links",
+    outputLabel: "PNG Card",
+    outputs: ["No login required", "Tables & code intact", "100% browser-local"],
+    footer: "ChatGPT to Image",
+    accent: "#0B1220",
+  },
+  "claude-to-image": {
+    eyebrow: "CLAUDE EXPORT",
+    title: "Turn Claude responses & tables into PNGs",
+    subtitle: "Preserve comparison tables, outlines, and Markdown Artifacts cleanly.",
+    inputLabel: "Claude Markdown",
+    input: "| Dimension | Local | Cloud |\n| Latency | Instant | Queue |\n| Privacy | On-device | Server |",
+    outputLabel: "PNG Card",
+    outputs: ["GFM tables", "Zero upload", "2x high-DPI PNG"],
+    footer: "Claude to Image",
+    accent: "#0B1220",
+  },
+  "obsidian-to-image": {
+    eyebrow: "OBSIDIAN NOTES",
+    title: "Convert Obsidian notes to PNG cards",
+    subtitle: "Share atomic notes and highlights without installing extra plugins.",
+    inputLabel: "Obsidian Note",
+    input: "# Atomic Note\n- One concept per card\n- Clear 2-line summary\n- Concrete examples",
+    outputLabel: "PNG Card",
+    outputs: ["No plugins needed", "Local-first privacy", "Crisp typography"],
+    footer: "Obsidian to Image",
+    accent: "#0B1220",
+  },
+  "linkedin-carousel": {
+    eyebrow: "LINKEDIN VISUALS",
+    title: "Markdown to LinkedIn visual cards",
+    subtitle: "Skip heavy design tools. Export high-contrast cards for posts & PDFs.",
+    inputLabel: "Outline",
+    input: "# B2B Content Rules\n- Lead with one takeaway\n- Show a checklist\n- Keep under 100 words",
+    outputLabel: "Slide PNG",
+    outputs: ["Mobile legible", "Uniform slide padding", "Ready for PDF merge"],
+    footer: "LinkedIn Visual Cards",
+    accent: "#0B1220",
+  },
+  "github-readme-card": {
+    eyebrow: "DEVELOPER VISUALS",
+    title: "GitHub README & changelog to PNG",
+    subtitle: "Turn release notes, CLI steps, and GFM tables into launch graphics.",
+    inputLabel: "CHANGELOG.md",
+    input: "# Release v2.4\n- 3x faster indexing\n- Zero-config CLI\n- Strict TypeScript types",
+    outputLabel: "Release Card",
+    outputs: ["GFM tables & code", "Safe for private drafts", "2x sharp export"],
+    footer: "GitHub README Card",
+    accent: "#0B1220",
+  },
+  "x-thread-card": {
+    eyebrow: "X / TWITTER VISUALS",
+    title: "Markdown notes & code to X cards",
+    subtitle: "Replace blurry phone screenshots with crisp 2x timeline graphics.",
+    inputLabel: "Thread Note",
+    input: "# Ship Faster\n- Cut scope, not polish\n- Measure real actions\n- Show real outputs",
+    outputLabel: "Timeline PNG",
+    outputs: ["Code blocks intact", "Attach up to 4 cards", "Browser-local export"],
+    footer: "X Thread Card",
+    accent: "#0B1220",
+  },
 };
 
 async function loadImageDataUrl(path: string, type = "image/png") {
@@ -87,6 +162,13 @@ async function loadFonts() {
       weight: 700 as const,
     },
   ];
+}
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return Object.keys(toolCards).map(tool => ({ tool }));
 }
 
 export async function GET(
@@ -362,7 +444,7 @@ export async function GET(
       ...size,
       fonts,
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+        "Cache-Control": "public, max-age=86400, s-maxage=31536000, immutable",
       },
     },
   );

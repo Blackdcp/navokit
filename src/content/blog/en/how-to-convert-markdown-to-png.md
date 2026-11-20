@@ -1,14 +1,31 @@
 ---
-title: "How to Convert Markdown to PNG"
-description: "A practical workflow for turning Markdown, AI answers, and structured notes into clean PNG image cards."
-date: "2026-06-29"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image"]
-intent: "how_to"
-difficulty: "beginner"
+title: How to Convert Markdown to PNG
+description: >-
+  A practical workflow for turning Markdown, AI answers, and structured notes
+  into clean PNG image cards.
+date: '2026-06-29'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  To convert Markdown into a crisp PNG without screenshots or design tools,
+  paste your GitHub Flavored Markdown (headings, lists, tables, or code blocks)
+  into a browser-local Markdown-to-Image renderer and export at 2x pixel
+  density. Rendering locally in the browser keeps drafts private and preserves
+  exact typography.
+sources:
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
+  - title: CommonMark Specification
+    url: 'https://spec.commonmark.org/'
+  - title: 'MDN Web Docs: Canvas API'
+    url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API'
 ---
 
 Markdown is excellent for writing, but it is not always easy to share. Many social platforms, chat apps, team tools, and visual workflows do not preserve Markdown formatting. A heading may lose its hierarchy, a list may collapse into plain text, or a code block may become hard to read.

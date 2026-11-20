@@ -1,14 +1,19 @@
 ---
-title: "如何用文本提示词生成 AI 视频"
-description: "从编写视频提示词、选择画面比例，到生成短视频和检查结果的一套实用流程。"
-date: "2026-06-28"
-updatedAt: "2026-07-01"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: 如何用文本提示词生成 AI 视频
+description: 从编写视频提示词、选择画面比例，到生成短视频和检查结果的一套实用流程。
+date: '2026-06-28'
+updatedAt: '2026-07-01'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 5
+tldr: >-
+  写出稳定出片的文生视频提示词，关键在于“一次只描述一个镜头”：明确主体、具体动作、环境细节、镜头运动、光线风格与画面比例，并把单次生成视为可筛选迭代的视觉草稿，而不是试图一句提示词生成多场景成片。
 ---
 
 用文本生成 AI 视频时，最容易犯的错误是把提示词写成一个“想法”，而不是一个“镜头”。例如“帮我做一个高级感产品广告”听起来很合理，但对文生视频模型来说太宽泛。更好的方式，是像给摄影师或导演描述一个短镜头：画面里有什么、它在做什么、环境在哪里、镜头怎么动、光线是什么感觉。

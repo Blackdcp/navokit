@@ -24,6 +24,31 @@ const nextConfig: NextConfig = {
         destination: '/:lang/blog/how-to-draft-social-posts-with-ai',
         permanent: true,
       },
+      {
+        source: '/:lang(en|zh)/blog/ai-video-character-consistency',
+        destination: '/:lang/blog/ai-video-consistent-characters',
+        permanent: true,
+      },
+      {
+        source: '/:lang(en|zh)/blog/ai-video-foley-sound-design-dynamics',
+        destination: '/:lang/blog/ai-video-sound-design-audio-sync-foley',
+        permanent: true,
+      },
+      {
+        source: '/:lang(en|zh)/blog/github-readme-visual-facade-design',
+        destination: '/:lang/blog/github-readme-visual-structure',
+        permanent: true,
+      },
+      {
+        source: '/:lang(en|zh)/blog/long-context-window-illusion',
+        destination: '/:lang/blog/lost-in-the-middle-long-context-u-shaped-attention',
+        permanent: true,
+      },
+      {
+        source: '/:lang(en|zh)/blog/lost-in-the-middle-long-context-illusion',
+        destination: '/:lang/blog/lost-in-the-middle-long-context-u-shaped-attention',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

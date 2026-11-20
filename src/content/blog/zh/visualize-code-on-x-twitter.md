@@ -1,10 +1,21 @@
 ---
-title: "复杂代码可视化：为什么在 X/Twitter 上发纯文本代码已经失效（以及如何破局）"
-description: "别再发干瘪的代码块了。掌握“四维视觉锚点”策略，将代码转化为极具视觉冲击力的图片，让你的技术自媒体互动率飙升 10 倍。"
-date: "2026-07-26"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: 复杂代码可视化：为什么在 X/Twitter 上发纯文本代码已经失效（以及如何破局）
+description: 别再发干瘪的代码块了。掌握“四维视觉锚点”策略，将代码转化为极具视觉冲击力的图片，让你的技术自媒体互动率飙升 10 倍。
+date: '2026-07-26'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  X (Twitter) 纯文本推文无法优雅展示代码块与表格。把 10~20 行精简代码搭配一句核心结论写成 Markdown，导出 2x 高清 PNG
+  卡片并附加到推文（单条最多 4 张），在移动端信息流中可读性与收藏率都远高于纯文字或随意截屏。
+sources:
+  - title: X 帮助中心：如何发帖
+    url: 'https://help.x.com/en/using-x/how-to-post'
+  - title: GitHub Flavored Markdown 规范
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
 ---
 
 如果你现在还在往 Twitter/X 的信息流里直接复制粘贴原生代码块，那我得和你说句大实话：你正在给自己限流。

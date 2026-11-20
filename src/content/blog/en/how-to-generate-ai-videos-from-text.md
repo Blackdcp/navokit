@@ -1,14 +1,25 @@
 ---
-title: "How to Generate AI Videos from Text: Prompt-to-Clip Workflow"
-description: "Use NavoKit's Free AI Video Generator to turn one clear shot prompt into a short AI video, with real prompt examples, settings, result checks, and retry notes."
-date: "2026-06-28"
-updatedAt: "2026-07-04"
-workflowId: "ai-video"
-toolIds: ["free-ai-video-generator"]
-relatedTools: ["free-ai-video-generator", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: 'How to Generate AI Videos from Text: Prompt-to-Clip Workflow'
+description: >-
+  Use NavoKit's Free AI Video Generator to turn one clear shot prompt into a
+  short AI video, with real prompt examples, settings, result checks, and retry
+  notes.
+date: '2026-06-28'
+updatedAt: '2026-07-04'
+workflowId: ai-video
+toolIds:
+  - free-ai-video-generator
+relatedTools:
+  - free-ai-video-generator
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 10
+tldr: >-
+  Reliable text-to-video prompts specify one clear shot rather than a
+  multi-scene script: define the subject, concrete motion, environment, camera
+  movement, lighting, and target aspect ratio. Treat each generation as a short
+  visual draft to review and iterate rather than a deterministic final cut.
 ---
 
 Text-to-video works best when you treat the prompt like a single shot direction, not a full film brief.

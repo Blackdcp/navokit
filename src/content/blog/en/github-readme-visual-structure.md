@@ -1,10 +1,25 @@
 ---
-title: "GitHub READMEs are broken: Visualizing your repo structure instantly"
-description: "Why text-heavy READMEs kill your OSS adoption rates and how to fix the repo bounce rate using the README Conversion Funnel and visual architecture."
-date: "2026-08-16"
-intent: "tool_guide"
-difficulty: "advanced"
-updatedAt: "2026-10-09"
+title: 'GitHub READMEs are broken: Visualizing your repo structure instantly'
+description: >-
+  Why text-heavy READMEs kill your OSS adoption rates and how to fix the repo
+  bounce rate using the README Conversion Funnel and visual architecture.
+date: '2026-08-16'
+intent: tool_guide
+difficulty: advanced
+updatedAt: '2026-10-09'
+tldr: >-
+  A high-clarity GitHub README answers three questions above the fold: what the
+  project does, how to run it in under 60 seconds, and how it compares to
+  alternatives. Pair concise GFM tables and clean visual cards with real CLI
+  examples instead of burying setup instructions below long prose.
+sources:
+  - title: 'GitHub Docs: About READMEs'
+    url: >-
+      https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
+relatedTools:
+  - markdown-to-image
 ---
 
 You've just spent the last six months building a game-changing open-source project. The codebase is pristine, the test coverage is at 99%, and the performance benchmarks are off the charts. You hit publish, drop a link on Hacker News, X, and Reddit, and wait for the stars to roll in. 

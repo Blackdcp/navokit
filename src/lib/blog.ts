@@ -20,6 +20,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   description: string;
+  tldr?: string;
   date: string;
   updatedAt?: string;
   author?: BlogAuthor;
@@ -127,6 +128,7 @@ export function getBlogPosts(lang: 'en' | 'zh'): BlogPost[] {
         slug,
         title: data.title || '',
         description: data.description || '',
+        tldr: typeof data.tldr === "string" && data.tldr.trim() ? data.tldr.trim() : undefined,
         date: data.date || '',
         updatedAt: typeof data.updatedAt === "string" ? data.updatedAt : undefined,
         author: normalizeAuthor(data.author),

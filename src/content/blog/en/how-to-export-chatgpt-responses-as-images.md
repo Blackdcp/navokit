@@ -1,14 +1,29 @@
 ---
-title: "How to Export ChatGPT Responses as Images"
-description: "Turn useful AI responses into clean, shareable image cards without losing headings, lists, tables, or code formatting."
-date: "2026-06-29"
-updatedAt: "2026-07-01"
-workflowId: "content-export"
-toolIds: ["markdown-to-image"]
-relatedTools: ["markdown-to-image", "ai-social-booster"]
-intent: "how_to"
-difficulty: "beginner"
+title: How to Export ChatGPT Responses as Images
+description: >-
+  Turn useful AI responses into clean, shareable image cards without losing
+  headings, lists, tables, or code formatting.
+date: '2026-06-29'
+updatedAt: '2026-07-01'
+workflowId: content-export
+toolIds:
+  - markdown-to-image
+relatedTools:
+  - markdown-to-image
+  - ai-social-booster
+intent: how_to
+difficulty: beginner
 readingTime: 7
+tldr: >-
+  Instead of taking tall, cropped mobile screenshots of ChatGPT, click the Copy
+  icon beneath a ChatGPT message to copy raw Markdown, trim introductory filler,
+  and render it into a 2x PNG card locally in your browser. Headings, numbered
+  steps, tables, and code blocks remain crisp and readable.
+sources:
+  - title: 'OpenAI Help Center: What is ChatGPT?'
+    url: 'https://help.openai.com/en/articles/6783457-what-is-chatgpt'
+  - title: GitHub Flavored Markdown Spec
+    url: 'https://github.github.com/gfm/'
 ---
 
 ChatGPT and other AI assistants often produce useful structured answers: checklists, summaries, prompt templates, code snippets, comparison tables, and step-by-step explanations. The problem is that the value is usually trapped inside a chat interface.
