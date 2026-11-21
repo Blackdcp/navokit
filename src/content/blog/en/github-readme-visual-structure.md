@@ -1,12 +1,12 @@
 ---
-title: 'GitHub READMEs are broken: Visualizing your repo structure instantly'
+title: 'How to Visualize Your GitHub README Structure (Free Diagrams & Visual Cards)'
 description: >-
-  Why text-heavy READMEs kill your OSS adoption rates and how to fix the repo
-  bounce rate using the README Conversion Funnel and visual architecture.
+  Fix high repo bounce rates in 3 seconds: turn text-heavy GitHub READMEs into
+  crisp visual cards, GFM tables, and Figma-ready Mermaid architecture diagrams.
 date: '2026-08-16'
 intent: tool_guide
 difficulty: advanced
-updatedAt: '2026-10-09'
+updatedAt: '2026-11-22'
 tldr: >-
   A high-clarity GitHub README answers three questions above the fold: what the
   project does, how to run it in under 60 seconds, and how it compares to
@@ -19,6 +19,7 @@ sources:
   - title: GitHub Flavored Markdown Spec
     url: 'https://github.github.com/gfm/'
 relatedTools:
+  - mermaid-to-image
   - markdown-to-image
 ---
 

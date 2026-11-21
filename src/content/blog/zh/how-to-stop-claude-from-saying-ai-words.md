@@ -1,73 +1,84 @@
 ---
-title: "如何阻止 Claude 和 ChatGPT 满嘴“AI 腔调”？"
-description: "受够了“深入探讨”和“不可否认”？教你如何用一段系统提示词，强制大模型好好说人话，并生成精美卡片分享给团队。"
+title: "Claude 高频“AI 味”禁用词清单（2026）：如何彻底消除 AI 腔调与套话"
+description: "整理 Claude 最常滥用的中英文 AI 套话清单（深入探讨、不可否认、诚实说、Delve、Honest take），附可一键复制的系统提示词与 Claude Code 去废话配置。"
 date: "2026-07-15"
-updatedAt: "2026-07-15"
+updatedAt: "2026-11-22"
 workflowId: "content-export"
 toolIds: ["markdown-to-image"]
 relatedTools: ["markdown-to-image", "ai-social-booster"]
 intent: "how_to"
 difficulty: "beginner"
-readingTime: 4
+readingTime: 6
+tldr: "Claude 最常滥用的“AI 味”词汇包括“深入探讨 / Delve”、“老实说 / Honest take”、“不可否认”、“至关重要”、“本质上是一场……”以及冗长的寒暄过渡句。最有效的解决方式，是在 Claude Projects 系统提示词或 Claude Code 的 CLAUDE.md 中加入显式负面禁用词清单与直接结论规则。"
+sources:
+  - title: "Anthropic 官方文档：Prompt Engineering 指南"
+    url: "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"
+  - title: "Anthropic 官方文档：使用 System Prompt 设定角色与约束"
+    url: "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/system-prompts"
 ---
 
-如果你经常使用 AI 来辅助写作或写代码，你一定注意到了一个极其烦人的现象：AI 已经发展出了一套自己的“方言”。
+如果你经常用 Claude 写作、做调研或写代码，一定对它那套固定“AI 方言”深有体会。
 
-无论是一开口就说“让我们深入探讨 (Delve into)”，还是结尾强行“不可否认 (Undeniably)”，这些被滥用的词汇就像是给你的文字盖上了一个“我是 AI 生成的”大红章。它们不仅冲淡了你要表达的核心信息，还让你的内容显得极其机械和敷衍。
+无论是英文里反复出现的 *"Delve"*、*"Honest take"*、*"Load-bearing seams"*，还是中文里动辄“让我们深入探讨”、“不可否认”、“值得注意的是”、“总而言之”，这些高频套话不仅稀释信息密度，还会一眼暴露“这是 AI 写的”。
 
-最近，Hacker News 上的极客们甚至开始编写自动化拦截脚本，就为了在本地环境里屏蔽这些“AI 废话”。但其实你完全不需要写代码，你只需要在系统提示词里设置一道强有力的“负面约束”。
+下面给你一份可直接落地的 **Claude 高频禁用词对照表**、**一键复制的系统提示词**，以及 **Claude Code 彻底关闭废话输出的 `CLAUDE.md` 配置**。
 
-这篇文章将教你如何强制大模型好好说人话——以及如何把这个技巧优雅地分享给你的团队。
+## Claude 最常滥用的“AI 味”词汇对照表
 
-## “AI 腔调”的重灾区
+大模型在训练中吸收了大量公关稿、客服回复和泛泛的英文长文，在没有明确约束时，会本能地用华丽但空洞的过渡语来显得“礼貌又专业”。
 
-AI 模型在训练时吸收了海量的企业公文和极度礼貌的客服话术。当它们被要求“提供帮助”时，它们会本能地调用这些听起来“很高级”但实际上毫无信息量的词汇。
+| 类别 | 高频“AI 味”套话（中 / 英） | 更自然的人类表达 |
+| --- | --- | --- |
+| **空洞动词** | 深入探讨、深度剖析、赋能、撬动 / *Delve, unpack, leverage, foster* | 拆解、使用、提升、说明 |
+| **夸张形容词** | 至关重要、颠覆性、无缝衔接、极具韧性 / *Crucial, pivotal, seamless, robust* | 关键、直接、稳定（尽量换成具体数字） |
+| **陈旧比喻** | 交织的画卷、双刃剑、范式转移 / *Tapestry, double-edged sword, load-bearing* | 直接说清楚因果和代价 |
+| **虚伪开场白** | 老实说、说实话、好问题！ / *Honest take, Great question, Here's the thing* | 直接删掉，第一句给结论 |
+| **废话过渡句** | 不可否认、值得一提的是、综上所述 / *Undeniably, It's important to note, In conclusion* | 删除，或改用“但 / 因此” |
 
-以下是目前最臭名昭著的几个重灾区：
-- *深入探讨 / 展开说说 (Delve / Tapestry)*
-- *不可否认 / 毫无疑问 (Undeniably)*
-- *需要注意的是 / 值得一提的是 (It's important to note that...)*
-- *综上所述 / 总而言之 (In conclusion)*
-- *说实话 / 老实说 (Honest take - Claude 最近的口头禅)*
+## 一键复制：“反 AI 腔调”系统提示词（Claude Projects 适用）
 
-## 解决方案：“反废话”提示词框架
-
-解决这个问题最有效的方法，是在你的系统指令（System Instructions）、Claude Projects 或者 Custom GPT 的预设中，明确划定一条不可逾越的红线。
-
-我们为你准备了终极的 Markdown 模板。你可以直接复制，保存到你的 AI 预设中，你会瞬间发现它输出的文字变得干练又自然。
-
-### 想要把这个神仙指令分享给同事？
-千万别直接把干巴巴的代码块扔进微信或飞书群，那样很容易被忽略。
-
-请复制下方的 Markdown 代码，粘贴到我们的 [Markdown to Image](/zh/tools/markdown-to-image) 工具中。你只需要一秒钟，就能得到一张排版精美、高度吸睛的视觉卡片，直接发到朋友圈或公司大群里，绝对会被疯狂收藏。
+比起模糊地说“请写得自然一点”，在 Claude Projects 的 System Instructions 中**明确列出黑名单词汇 + 输出结构红线**效果好得多：
 
 ```markdown
-# 🚫 “反 AI 腔调”强制指令
+# 🚫 “反 AI 腔调”系统提示词
 
-请将以下规则刻入你的系统底层。从现在起，你必须像一个正常人类一样交流。
+在所有回复中严格遵守以下写作规则：
 
-## 🛑 绝对禁用的词汇
-在任何情况下，你的回复中都【绝不能】出现以下词汇或句式：
-- “深入探讨” / “展开说说”
-- “说实话” / “老实说” (Honest take)
-- “不可否认” / “毫无疑问”
-- “这就像是一幅交织的画卷”
-- “总而言之” / “综上所述”
-- “需要注意/强调的是...”
+## 🛑 绝对禁用的高频套话
+严禁出现以下中英文词汇与句式：
+- “深入探讨” / “展开说说” / "Delve" / "Unpack"
+- “说实话” / “老实说” / "Honest take"
+- “不可否认” / “毫无疑问” / "Undeniably"
+- “值得注意的是” / “需要强调的是” / "It's important to note"
+- “交织的画卷” / “双刃剑” / “赋能” / "Tapestry" / "Testament to"
+- “总而言之” / “综上所述” / "In conclusion"
 
-## ✍️ 语气与排版准则
-1. **直奔主题：** 不要写任何没有意义的开头寒暄，直接给出答案。
-2. **日常对话：** 想象你是一个聪明的同事，正在 Slack/飞书 上用精炼的语言回复我。
-3. **不要道歉：** 遇到不懂的问题直接说不懂，永远不要为了你的能力限制而道歉。
-4. **零废话：** 如果一句话不能提供新的信息增量，或者不能转化为具体行动，删掉它。
+## ✍️ 语气与结构准则
+1. 第一句话直接给结论，禁止寒暄、夸奖或复述问题。
+2. 用短句和具体事实/数字替代空洞形容词。
+3. 像经验丰富的同事在飞书/Slack 里同步方案一样直接、克制。
+4. 遇到不知道或做不到的事直接说明，不要反复道歉。
+5. 如果一句话不提供新信息或可执行动作，直接删掉。
 ```
+
+### 想做成团队规范卡片发到群里？
+别把干巴巴的代码块直接丢进群聊。直接复制上面的 Markdown 粘贴到 [Claude 回答转图片](/zh/tools/markdown-to-image/claude-to-image) 或 [Markdown 转图片](/zh/tools/markdown-to-image)，浏览器本地 1 秒即可导出 2x/3x 高清 PNG（支持深浅色主题、自定义 `@署名` 与一键复制图片）。
 
 ![使用 NavoKit 导出的“反 AI 腔调”提示词视觉卡片](/blog/anti-ai-buzzwords.png)
 
-## 如何更好地传播这套方法
+## 如何在 Claude Code 中关闭寒暄与冗余废话（`CLAUDE.md`）
 
-当你使用 [Markdown 转图片](/zh/tools/markdown-to-image) 工具生成了卡片后，你已经拥有了一个高赞潜力的社交媒体素材。
+如果你在终端使用 **Claude Code** 写代码，讨厌它每次回复都带“好问题！”、“你完全正确！”或冗长总结，可以把下面几行直接写进项目根目录或全局的 `CLAUDE.md`：
 
-如果你打算把它发到即刻、小红书或 LinkedIn 上，可以使用我们的 [AI Social Post Generator](/zh/tools/ai-social-booster) 帮你配一段炸裂的文案。你只需告诉它：*“我做了一张知识卡片，里面是一段能让 Claude 闭嘴不再说废话的提示词。帮我写一段吸引眼球的开头和配文。”*
+```markdown
+## Output Style (No Flavor Text)
+- 回复保持简短、客观、直奔主题，禁止寒暄、夸奖和情绪化填充词。
+- 不要复述用户的原问题。
+- 只汇报实际改动、文件路径、命令验证结果和剩余风险。
+```
 
-不要再让 AI 决定你的文字品味了。夺回控制权，并用最优雅的方式把你的经验分享出去！
+这样每次启动 Claude Code 都会自动生效，不再输出多余的客套话。
+
+## 延伸工作流
+
+导出团队写作规范卡片后，如果要同步发到 X、LinkedIn 或即刻分享经验，可以顺手用 [AI 社媒文案生成器](/zh/tools/ai-social-booster) 起草几个不同角度的配文初稿，再改成自己的口吻发布。

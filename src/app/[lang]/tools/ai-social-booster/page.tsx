@@ -7,7 +7,7 @@ import { localizedCanonical } from '../../../../lib/site'
 import { SITE_URL } from '../../../../lib/site'
 import { getToolPageContent } from '../../../../lib/toolPageContent'
 import { withToolGuideLinks } from '../../../../lib/toolGuideLinks'
-import { breadcrumbList, safeJsonLd } from '../../../../lib/schema'
+import { breadcrumbList, pageIdentity, safeJsonLd } from '../../../../lib/schema'
 
 export async function generateMetadata({
   params,
@@ -34,7 +34,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/og/tool/ai-social-booster?v=20260708",
+          url: "/og/tool/ai-social-booster",
           width: 1200,
           height: 630,
           alt: title,
@@ -45,7 +45,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["/og/tool/ai-social-booster?v=20260708"],
+      images: ["/og/tool/ai-social-booster"],
     }
   }
 }
@@ -59,13 +59,19 @@ export default async function SocialBoosterPage({
   const lang = resolvedParams.lang
   const dict = await getDictionary(lang)
   const content = withToolGuideLinks(lang, "ai-social-booster", getToolPageContent(lang, "ai-social-booster"))
+  const pageUrl = `${SITE_URL}/${lang}/tools/ai-social-booster`
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebPage",
+        ...pageIdentity(pageUrl, lang),
+        name: lang === "zh" ? "AI 社交媒体文案生成器 | NavoKit" : "AI Social Post Generator | NavoKit",
+      },
+      {
         "@type": "WebApplication",
         name: lang === "zh" ? "AI 社交媒体文案生成器" : "AI Social Post Generator",
-        url: `${SITE_URL}/${lang}/tools/ai-social-booster`,
+        url: pageUrl,
         applicationCategory: "UtilitiesApplication",
         operatingSystem: "Web",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

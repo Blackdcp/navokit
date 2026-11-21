@@ -50,6 +50,9 @@ export default function HomePage({ lang }: { lang: "en" | "zh" }) {
               <button type="submit" aria-label={zh ? "搜索产品" : "Search products"}><ArrowRight size={20} /></button>
             </form>
             <div className="discover-quicklinks">
+              <Link href={`/${lang}/tools/markdown-to-image`}>{zh ? "Markdown 转图片" : "Markdown to Image"}<ArrowUpRight size={13} aria-hidden="true" /></Link>
+              <Link href={`/${lang}/tools/mermaid-to-image`}>{zh ? "Mermaid 流程图转图" : "Mermaid to Image"}<ArrowUpRight size={13} aria-hidden="true" /></Link>
+              <Link href={`/${lang}/compare`}>{zh ? "产品对比" : "Comparisons"}<ArrowUpRight size={13} aria-hidden="true" /></Link>
               {categories.filter(category => ["video", "coding", "productivity"].includes(category.id)).map(category => <Link href={getCategoryHref(category.id, lang)} key={category.id}>{category.name}<ArrowUpRight size={13} aria-hidden="true" /></Link>)}
             </div>
           </div>

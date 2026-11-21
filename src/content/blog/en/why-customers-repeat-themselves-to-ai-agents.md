@@ -1,8 +1,9 @@
 ---
-title: "Why Customers Repeat Themselves to AI Agents"
-description: "A destination label does not describe an active support case. How MemOS helps AI agents maintain customer context across handoffs, without losing track of previous troubleshooting steps."
+title: "Why Customers Repeat Themselves to AI Support Agents (And How to Fix Handoffs)"
+description: "Why routing tickets to specialist AI agents breaks customer context—and how structured agent memory prevents customers from repeating themselves across handoffs."
 date: "2026-10-30"
-updatedAt: "2026-10-30T10:00:00Z"
+updatedAt: "2026-11-22"
+tldr: "Customers repeat themselves to AI support agents when ticket routing transfers a category label without transferring verified case state. Fixing multi-agent handoffs requires binding structured memory to a stable customer user_id, tagging each turn by agent_id, and separating customer-reported claims from authoritative order or system records."
 intent: "industry_analysis"
 difficulty: "intermediate"
 readingTime: 5

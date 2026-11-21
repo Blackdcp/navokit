@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { localizedCanonical, SITE_URL } from "../../../../lib/site";
 import { getToolPageContent } from "../../../../lib/toolPageContent";
 import { withToolGuideLinks } from "../../../../lib/toolGuideLinks";
-import { breadcrumbList, safeJsonLd } from "../../../../lib/schema";
+import { breadcrumbList, pageIdentity, safeJsonLd } from "../../../../lib/schema";
 import AiVideoClient from "./ClientPage";
 
 export async function generateMetadata({
@@ -29,13 +29,13 @@ export async function generateMetadata({
       description,
       type: "website",
       url: `${SITE_URL}/${lang}/tools/free-ai-video-generator`,
-      images: [{ url: "/og/tool/free-ai-video-generator?v=20260708", width: 1200, height: 630, alt: title }],
+      images: [{ url: "/og/tool/free-ai-video-generator", width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/og/tool/free-ai-video-generator?v=20260708"],
+      images: ["/og/tool/free-ai-video-generator"],
     },
   };
 }
@@ -47,13 +47,19 @@ export default async function AiVideoPage({
 }) {
   const { lang } = await params;
   const content = withToolGuideLinks(lang, "free-ai-video-generator", getToolPageContent(lang, "free-ai-video-generator"));
+  const pageUrl = `${SITE_URL}/${lang}/tools/free-ai-video-generator`;
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebPage",
+        ...pageIdentity(pageUrl, lang),
+        name: lang === "zh" ? "免费 AI 视频生成器 - 文本生成视频 | NavoKit" : "Free AI Video Generator - Create Videos from Text | NavoKit",
+      },
+      {
         "@type": "WebApplication",
         name: lang === "zh" ? "NavoKit 免费 AI 视频生成器" : "NavoKit Free AI Video Generator",
-        url: `${SITE_URL}/${lang}/tools/free-ai-video-generator`,
+        url: pageUrl,
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Web",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },

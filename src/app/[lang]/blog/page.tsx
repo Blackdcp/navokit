@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import UpdatesPage from "../../../components/updates/UpdatesPage";
-import { localizedCanonical, siteSocialMetadata } from "../../../lib/site";
+import { breadcrumbList, pageIdentity, safeJsonLd } from "../../../lib/schema";
+import { localizedCanonical, SITE_URL, siteSocialMetadata } from "../../../lib/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: "en" | "zh" }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -13,5 +14,25 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: "en
 
 export default async function BlogListPage({ params, searchParams }: { params: Promise<{ lang: "en" | "zh" }>; searchParams: Promise<{ topic?: string | string[]; q?: string | string[] }> }) {
   const [{ lang }, filters] = await Promise.all([params, searchParams]);
-  return <UpdatesPage lang={lang} archive initialTopic={typeof filters.topic === "string" ? filters.topic : "all"} initialQuery={typeof filters.q === "string" ? filters.q : ""} />;
+  const url = `${SITE_URL}/${lang}/blog`;
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        ...pageIdentity(url, lang),
+        name: lang === "zh" ? "NavoKit 指南与观点" : "NavoKit Guides & Perspectives",
+      },
+      breadcrumbList([
+        { name: "NavoKit", url: `${SITE_URL}/${lang}` },
+        { name: lang === "zh" ? "文章档案" : "Articles", url },
+      ]),
+    ],
+  };
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(schema) }} />
+      <UpdatesPage lang={lang} archive initialTopic={typeof filters.topic === "string" ? filters.topic : "all"} initialQuery={typeof filters.q === "string" ? filters.q : ""} />
+    </>
+  );
 }
