@@ -20,6 +20,8 @@ export interface MarkdownUseCaseCopy {
 export interface MarkdownUseCase {
   slug: string;
   exportFilename: string;
+  defaultRatio?: "auto" | "4:5" | "16:9";
+  defaultTheme?: "light" | "dark";
   guideSlug?: string;
   en: MarkdownUseCaseCopy;
   zh: MarkdownUseCaseCopy;
@@ -324,6 +326,7 @@ Start with **browser-local execution** whenever the task can run client-side—i
   {
     slug: "linkedin-carousel",
     exportFilename: "navokit-linkedin-card.png",
+    defaultRatio: "4:5",
     guideSlug: "markdown-to-image-for-linkedin-posts",
     en: {
       metaTitle: "Markdown to LinkedIn Image Card — Clean Visual Posts | NavoKit",
@@ -528,6 +531,7 @@ Start with **browser-local execution** whenever the task can run client-side—i
   {
     slug: "x-thread-card",
     exportFilename: "navokit-x-card.png",
+    defaultRatio: "16:9",
     guideSlug: "visualize-code-on-x-twitter",
     en: {
       metaTitle: "Markdown to X (Twitter) Image Card — Clean Long-Form Visuals | NavoKit",

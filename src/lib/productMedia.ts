@@ -18,6 +18,16 @@ export const productMedia: Record<string, ProductMedia> = {
     imageSourceUrl: "/images/tool-examples/markdown-social-card.png",
     checkedAt: "2026-10-09",
   },
+  "mermaid-to-image": {
+    image: "/images/tool-examples/mermaid-diagram-card.png",
+    imageAlt: {
+      en: "A NavoKit Mermaid to Image diagram showing browser-local export to 2x PNG and vector SVG.",
+      zh: "Mermaid 转图片工具示例，展示浏览器本地渲染并导出 2x PNG 与矢量 SVG。",
+    },
+    sourceUrl: "https://www.navokit.com/en/tools/mermaid-to-image",
+    imageSourceUrl: "/images/tool-examples/mermaid-diagram-card.png",
+    checkedAt: "2026-11-21",
+  },
   "ai-social-booster": {
     image: "/images/tool-examples/social-workspace-launch.png",
     imageAlt: {

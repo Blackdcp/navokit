@@ -249,8 +249,13 @@ const products: ProductEntry[] = [
   },
   {
     slug: "markdown-to-image", website: "https://www.navokit.com/en/tools/markdown-to-image", internalPath: "/tools/markdown-to-image", kind: "utility", pricing: "free", categoryIds: ["productivity"], topicIds: ["creator-essentials"], icon: "Md", accent: "#0B1220", platforms: ["Web"], sourceUrls: ["https://www.navokit.com/en/tools/markdown-to-image"],
-    en: { name: "Markdown to Image", tagline: "Turn notes and AI answers into shareable image cards.", description: "A NavoKit utility for rendering Markdown in your browser and exporting a PNG image.", features: ["Local browser rendering", "Markdown formatting", "PNG export"] },
-    zh: { name: "Markdown 转图片", tagline: "将笔记与 AI 回答整理成可分享的图片卡片。", description: "NavoKit 的实用工具，在浏览器中渲染 Markdown 并导出 PNG 图片。", features: ["浏览器本地渲染", "Markdown 排版", "PNG 导出"] },
+    en: { name: "Markdown to Image", tagline: "Turn notes and AI answers into shareable image cards.", description: "A NavoKit utility for rendering Markdown in your browser and exporting or copying a PNG image.", features: ["Local browser rendering", "Light & dark themes with 4:5 and 16:9 presets", "Copy PNG or download 2x PNG"] },
+    zh: { name: "Markdown 转图片", tagline: "将笔记与 AI 回答整理成可分享的图片卡片。", description: "NavoKit 的实用工具，在浏览器中渲染 Markdown 并支持一键复制或导出 2x PNG 图片。", features: ["浏览器本地渲染", "浅色/深色主题与 4:5、16:9 画幅预设", "一键复制或下载 2x PNG"] },
+  },
+  {
+    slug: "mermaid-to-image", website: "https://www.navokit.com/en/tools/mermaid-to-image", internalPath: "/tools/mermaid-to-image", kind: "utility", pricing: "free", categoryIds: ["coding", "productivity"], topicIds: ["creator-essentials"], icon: "Mm", accent: "#0B1220", platforms: ["Web"], sourceUrls: ["https://www.navokit.com/en/tools/mermaid-to-image"],
+    en: { name: "Mermaid to Image", tagline: "Render Mermaid flowcharts, sequence diagrams, and ER models into PNG or SVG locally.", description: "A browser-local NavoKit utility that converts Mermaid diagram syntax from ChatGPT, Claude, or technical docs into crisp 2x PNG or vector SVG.", features: ["100% browser-local Mermaid rendering", "Copy PNG, download 2x PNG, or export vector SVG", "Light & dark themes with starter diagram templates"] },
+    zh: { name: "Mermaid 转图片", tagline: "在浏览器本地把 Mermaid 流程图、时序图与架构图导出为 PNG 或 SVG。", description: "NavoKit 的纯前端图表工具，将 ChatGPT、Claude 或文档里的 Mermaid 语法转为 2x 高清 PNG 与矢量 SVG。", features: ["纯浏览器本地渲染，架构图不上传", "支持一键复制 PNG、下载 2x PNG 与矢量 SVG", "内置浅色/深色主题与 4 种常用图表模板"] },
   },
   {
     slug: "ai-social-booster", website: "https://www.navokit.com/en/tools/ai-social-booster", internalPath: "/tools/ai-social-booster", kind: "utility", pricing: "free", categoryIds: ["writing"], topicIds: ["creator-essentials"], icon: "Aa", accent: "#0B1220", platforms: ["Web"], sourceUrls: ["https://www.navokit.com/en/tools/ai-social-booster"],

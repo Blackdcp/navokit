@@ -168,10 +168,11 @@ const markdownToImageContent: ToolContentFactory = lang => {
       { title: zh ? "支持 ChatGPT 回复吗？" : "Does it work with ChatGPT responses?", text: zh ? "支持。复制回复中的 Markdown 并粘贴到编辑器即可。" : "Yes. Copy the Markdown-formatted response and paste it into the editor." },
       { title: zh ? "支持哪些 Markdown 语法？" : "Which Markdown syntax is supported?", text: zh ? "支持标题、加粗、斜体、列表、链接、引用、表格和代码块等常见语法。" : "It supports common syntax including headings, emphasis, lists, links, quotes, tables, and code blocks." },
       { title: zh ? "需要注册吗？" : "Do I need to sign up?", text: zh ? "不需要。当前版本打开即可使用。" : "No. The current version is ready to use without an account." },
+      { title: zh ? "支持哪些配色、字体与画幅比例？" : "Which themes, fonts, and aspect ratios are supported?", text: zh ? "内置纸白、雾蓝、暖米、午夜、石墨 5 套视觉预设，支持无衬线 / 衬线 / 等宽字体、S/M/L 字号、自适应 / 4:5 / 16:9 / 1:1 画幅、可选底部作者署名，以及 2x / 3x 高清 PNG 一键复制或下载。" : "Includes 5 studio presets (Paper, Mist, Cream, Midnight, Graphite), Sans/Serif/Mono typography, S/M/L sizing, Auto/4:5/16:9/1:1 ratios, optional author byline, and 2x/3x PNG copy or download." },
       { title: zh ? "为什么图片包含品牌标识？" : "Why does the image include a brand mark?", text: zh ? "免费版本使用克制的 NavoKit 水印，帮助支持工具持续运营。" : "The free version includes a restrained NavoKit watermark to support the tool." },
     ],
     related: [
-      { title: zh ? "AI 视频生成器" : "AI Video Generator", description: zh ? "将文本提示词变成短视频。" : "Turn a text prompt into a short video.", href: `/${lang}/tools/free-ai-video-generator` },
+      { title: zh ? "Mermaid 流程图转图片" : "Mermaid to Image", description: zh ? "把 Mermaid 流程图、时序图与架构图在本地导出为 PNG 或 SVG。" : "Render Mermaid flowcharts, sequence, and ER diagrams locally into PNG or SVG.", href: `/${lang}/tools/mermaid-to-image` },
       { title: zh ? "AI 社交媒体文案" : "AI Social Post Generator", description: zh ? "从一个想法起草社交媒体文案。" : "Draft social posts from one idea.", href: `/${lang}/tools/ai-social-booster` },
     ],
     guide: { title: zh ? "如何把 Markdown 转成 PNG" : "How to convert Markdown to PNG", description: zh ? "从结构化文本到清晰分享图片的实用流程。" : "A practical workflow from structured text to a clean shareable image.", href: `/${lang}/blog/how-to-convert-markdown-to-png` },

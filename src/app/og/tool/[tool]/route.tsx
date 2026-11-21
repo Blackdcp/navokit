@@ -7,6 +7,7 @@ type ToolSlug =
   | "free-ai-video-generator"
   | "ai-social-booster"
   | "markdown-to-image"
+  | "mermaid-to-image"
   | "chatgpt-to-image"
   | "claude-to-image"
   | "obsidian-to-image"
@@ -64,6 +65,17 @@ const toolCards: Record<ToolSlug, OgToolConfig> = {
     outputLabel: "Preview",
     outputs: ["Clean headings", "Readable bullets", "NavoKit watermark"],
     footer: "Markdown to Image",
+    accent: "#0B1220",
+  },
+  "mermaid-to-image": {
+    eyebrow: "MERMAID TO IMAGE",
+    title: "Mermaid diagrams to 2x PNG & SVG",
+    subtitle: "Render flowcharts, sequence, and ER diagrams locally in your browser.",
+    inputLabel: "Mermaid",
+    input: "flowchart LR\n  A[Syntax] --> B[Browser]\n  B --> C[2x PNG]\n  B --> D[Vector SVG]",
+    outputLabel: "Export",
+    outputs: ["Copy PNG in 1 click", "Lossless SVG download", "Light & Dark themes"],
+    footer: "Mermaid to Image",
     accent: "#0B1220",
   },
   "chatgpt-to-image": {

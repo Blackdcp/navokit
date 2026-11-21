@@ -1,10 +1,22 @@
 ---
-title: "分享技术架构图：单独渲染 Mermaid，再整理清晰的文字说明"
-description: "整理适合分享的架构图和文字说明。Mermaid 需要专门的渲染工具，NavoKit 可将配套 Markdown 文字导出为 PNG 卡片。"
-date: "2026-09-28"
-intent: "tool_guide"
-difficulty: "intermediate"
-updatedAt: "2026-10-09"
+title: 分享技术架构图：单独渲染 Mermaid，再整理清晰的文字说明
+description: 整理适合分享的架构图和文字说明。Mermaid 需要专门的渲染工具，NavoKit 可将配套 Markdown 文字导出为 PNG 卡片。
+date: '2026-09-28'
+intent: tool_guide
+difficulty: intermediate
+updatedAt: '2026-10-09'
+tldr: >-
+  想把原始 Mermaid 语法变成适合放进 PPT、技术文档或博客的高清架构图，直接在浏览器本地以 strict 模式渲染，并按需导出无损矢量 SVG 或
+  2x 高清 PNG（搭配浅色/深色主题与统一留白），既清晰又能保护内部架构隐私。
+sources:
+  - title: Mermaid.js 官方文档
+    url: 'https://mermaid.js.org/intro/'
+  - title: GitHub 文档：使用 Mermaid 创建图表
+    url: >-
+      https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams
+relatedTools:
+  - mermaid-to-image
+  - markdown-to-image
 ---
 
 如果你经常编写技术文档、系统设计方案（RFC）或维护开源 GitHub 仓库，你一定对 **Mermaid.js** 的强大威力深有体会。仅仅需要寥寥数行简洁的声明式文本，你就能精确勾勒出一个高并发微服务集群、一条基于 Kafka 的流式处理管道，或者一段严密的分布式共识算法时序：

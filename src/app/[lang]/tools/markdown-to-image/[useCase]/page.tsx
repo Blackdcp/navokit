@@ -146,6 +146,8 @@ export default async function MarkdownUseCasePage({ params }: Props) {
         content={content}
         initialMarkdown={copy.initialMarkdown}
         exportFilename={entry.exportFilename}
+        defaultRatio={entry.defaultRatio}
+        defaultTheme={entry.defaultTheme}
         heroBadge={copy.badge}
         heroTitle={copy.heroTitle}
         heroSubtitle={copy.heroSubtitle}

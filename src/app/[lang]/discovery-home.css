@@ -84,7 +84,7 @@
 .discover-category-count { margin-left: auto; color: var(--color-navo-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .discover-category-grid a:hover { border-color: var(--color-navo-muted); background: var(--color-navo-surface); }
 .discover-utilities { border-top: 1px solid var(--color-navo-border); padding-block: 36px 50px; }
-.discover-utility-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.discover-utility-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 32px; }
 .discover-utility-grid > a { display: flex; align-items: flex-start; gap: 14px; padding: 20px 0; border-top: 1px solid var(--color-navo-border); text-decoration: none; }
 .discover-utility-grid > a > div { flex: 1; min-width: 0; }
 .discover-utility-grid h3 { font-size: 16px; line-height: 1.5; font-weight: 650; }

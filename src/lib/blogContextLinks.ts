@@ -40,6 +40,13 @@ export function getBlogContextLinks(post: BlogPost): BlogContextLink[] {
   const links: BlogContextLink[] = [];
   const seen = new Set<string>();
 
+  if (/(mermaid|flowchart|sequence|diagram|architecture|流程图|架构图|时序图)/.test(text)) {
+    const href = `/${lang}/tools/mermaid-to-image`;
+    if (!seen.has(href)) {
+      seen.add(href);
+      links.push({ label: lang === "zh" ? "Mermaid 流程图转高清 PNG / SVG" : "Mermaid to PNG & SVG Converter", href, kind: "workflow" });
+    }
+  }
   if (/(chatgpt|openai|prompt-guide|提示词)/.test(text)) {
     addUseCase(links, seen, "chatgpt-to-image", lang);
   }

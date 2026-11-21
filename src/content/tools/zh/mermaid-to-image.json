@@ -1,0 +1,23 @@
+{
+  "id": "mermaid-to-image",
+  "categoryId": "text_export",
+  "categoryName": "图表与导出",
+  "title": "Mermaid 转图片",
+  "subtitle": "在浏览器本地将 Mermaid 流程图、时序图与 ER 图渲染导出为 2x 高清 PNG 或矢量 SVG。",
+  "tags": ["Mermaid", "图表导出", "本地渲染"],
+  "features": [
+    "纯浏览器本地渲染（strict 安全模式），私有架构图不上传服务器",
+    "支持一键复制 PNG、下载 2x 高清 PNG 与无损矢量 SVG",
+    "内置浅色与深色两套高对比度主题",
+    "内置流程图、时序图、状态机与 ER 图快捷模板"
+  ],
+  "status": "available",
+  "processingNote": "所有渲染与导出均在你的浏览器本地完成。",
+  "isFeatured": false,
+  "homePriority": 3,
+  "homeAccent": "blue",
+  "homeIcon": "◈",
+  "homePreviewTitle": "flowchart LR",
+  "homePreviewText": "把 ChatGPT、Claude 或文档里的 Mermaid 代码一键转为高清 PNG 与 SVG。",
+  "homePreviewMeta": "本地渲染 · PNG & SVG"
+}

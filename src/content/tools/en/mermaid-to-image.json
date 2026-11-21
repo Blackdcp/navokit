@@ -1,0 +1,23 @@
+{
+  "id": "mermaid-to-image",
+  "categoryId": "text_export",
+  "categoryName": "Diagrams & Export",
+  "title": "Mermaid to Image",
+  "subtitle": "Render Mermaid flowcharts, sequence diagrams, and ER models locally into crisp 2x PNG or vector SVG.",
+  "tags": ["Mermaid", "Diagram export", "Local rendering"],
+  "features": [
+    "100% browser-local Mermaid rendering in strict security mode",
+    "One-click Copy PNG, 2x PNG download, and lossless vector SVG export",
+    "Light and dark editorial themes",
+    "Built-in templates for flowcharts, sequence, state, and ER diagrams"
+  ],
+  "status": "available",
+  "processingNote": "Rendering and export happen locally in your browser.",
+  "isFeatured": false,
+  "homePriority": 3,
+  "homeAccent": "blue",
+  "homeIcon": "◈",
+  "homePreviewTitle": "flowchart LR",
+  "homePreviewText": "Turn Mermaid syntax from ChatGPT, Claude, or docs into crisp PNG & SVG.",
+  "homePreviewMeta": "Local render · PNG & SVG"
+}

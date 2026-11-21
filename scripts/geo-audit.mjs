@@ -205,6 +205,7 @@ async function main() {
       ["/compare/aqua-voice-vs-willow-voice", "FAQPage"],
       ["/alternatives/flora", "CollectionPage"],
       ["/tools/markdown-to-image/chatgpt-to-image", "WebApplication"],
+      ["/tools/mermaid-to-image", "WebApplication"],
     ]) {
       const pathname = `/${lang}${suffix}`;
       const page = await getPage(base.origin, pathname);

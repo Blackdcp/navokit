@@ -45,9 +45,9 @@ export default async function ToolsPage({ params }: { params: Promise<{ lang: Lo
         <h1>{zh ? "发现下一个值得尝试的产品。" : "Find something worth trying."}</h1>
         <p>{zh ? "关注有新想法、能解决具体问题的产品。按你的用途探索，看看它如何工作，再决定是否试一试。" : "Fresh ideas for specific tasks. Explore what a product does, where it fits, and whether it is right for your next project."}</p>
         <div className="geo-inline-links">
-          <Link href={`/${lang}/compare`} className="geo-pill-link">{zh ? "产品对比与替代方案 →" : "Comparisons & alternatives →"}</Link>
+          <Link href={`/${lang}/tools/mermaid-to-image`} className="geo-pill-link">{zh ? "Mermaid 流程图转 PNG/SVG →" : "Mermaid to PNG & SVG →"}</Link>
           <Link href={`/${lang}/tools/markdown-to-image/chatgpt-to-image`} className="geo-pill-link">{zh ? "ChatGPT 回答转图片 →" : "ChatGPT to Image →"}</Link>
-          <Link href={`/${lang}/tools/markdown-to-image/linkedin-carousel`} className="geo-pill-link">{zh ? "Markdown 转 LinkedIn 卡片 →" : "LinkedIn Visual Cards →"}</Link>
+          <Link href={`/${lang}/compare`} className="geo-pill-link">{zh ? "产品对比与替代方案 →" : "Comparisons & alternatives →"}</Link>
         </div>
       </header>
       <Suspense fallback={<div className="cat-product-grid">{products.map(product => <ProductCard key={product.slug} product={product} lang={lang} />)}</div>}><ProductDirectory products={products} categories={categories} topics={topics} lang={lang} /></Suspense>

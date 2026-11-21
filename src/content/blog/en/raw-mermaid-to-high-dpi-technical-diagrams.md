@@ -1,10 +1,29 @@
 ---
-title: "Sharing Technical Diagrams: Render Mermaid Separately and Prepare a Readable Explanation"
-description: "Prepare a technical diagram and its explanation for sharing. Mermaid needs a dedicated renderer; NavoKit exports the accompanying Markdown text as a PNG card."
-date: "2026-09-28"
-intent: "tool_guide"
-difficulty: "intermediate"
-updatedAt: "2026-10-09"
+title: >-
+  Sharing Technical Diagrams: Render Mermaid Separately and Prepare a Readable
+  Explanation
+description: >-
+  Prepare a technical diagram and its explanation for sharing. Mermaid needs a
+  dedicated renderer; NavoKit exports the accompanying Markdown text as a PNG
+  card.
+date: '2026-09-28'
+intent: tool_guide
+difficulty: intermediate
+updatedAt: '2026-10-09'
+tldr: >-
+  To convert raw Mermaid syntax into crisp technical diagrams for slides,
+  READMEs, or social feeds, render Mermaid locally in your browser using strict
+  mode and export either lossless vector SVG or a 2x high-DPI PNG with clean
+  padding and consistent light/dark contrast.
+sources:
+  - title: Mermaid.js Official Documentation
+    url: 'https://mermaid.js.org/intro/'
+  - title: 'GitHub Docs: Creating Diagrams with Mermaid'
+    url: >-
+      https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams
+relatedTools:
+  - mermaid-to-image
+  - markdown-to-image
 ---
 
 If you write technical documentation, RFCs, or GitHub READMEs, you already know the extraordinary power of **Mermaid.js**. With a dozen lines of declarative text, you can describe a multi-tier microservice cluster, an event-driven Kafka pipeline, or a complex distributed consensus protocol:
